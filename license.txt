@@ -5,7 +5,7 @@ Copyright (c) 2025 Getastrothemes
 Permission is hereby granted to use this theme (the "Theme") in personal or commercial projects, subject to the following conditions:
 
 1. Attribution Required  
-A visible link back to [https://getastrothemes.com](https://getastrothemes.com) must be included in the website footer or credits when using this Theme.
+A visible link back to https://getastrothemes.com must be included in the website footer or credits when using this Theme.
 
 2. No Redistribution or Resale  
 You may not sublicense, redistribute, resell, or repackage this Theme, whether modified or unmodified, on any marketplace, theme store, or personal website.

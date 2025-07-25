@@ -16,15 +16,10 @@
     "type": "git",
     "url": "https://github.com/getastrothemes/folex-lite-astro.git"
   },
-  "engines": {
-    "node": ">=18.0.0",
-    "yarn": ">=1.22.0"
-  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro check && astro build && yarn remove-draft-from-sitemap",
     "preview": "astro build && yarn remove-draft-from-sitemap && astro preview",
-    "start": "astro preview",
     "check": "astro check",
     "format": "prettier --write ./src",
     "generate-favicons": "node ./scripts/generate-favicons.mjs",

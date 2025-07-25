@@ -52,6 +52,7 @@
     "smoothscroll-for-websites": "^1.5.1",
     "swiper": "^11.2.10",
     "toml": "^3.0.0",
+    "unist-util-visit": "^5.0.0",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {

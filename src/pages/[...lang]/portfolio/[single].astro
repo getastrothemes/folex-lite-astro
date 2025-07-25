@@ -1,0 +1,60 @@
+---
+import Base from "@/layouts/Base.astro";
+import extractSlug from "@/lib/utils/extractSlug";
+import { getEntryCTM } from "@/lib/customContentLoader.astro";
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+import { getCollectionCTM } from "@/lib/customContentLoader.astro";
+import PortfolioSingle from "@/components/PortfolioSingle.astro";
+import Breadcrumbs from "@/components/widgets/Breadcrumbs.astro";
+import { supportedLanguages } from "@/lib/utils/i18nUtils";
+
+export async function getStaticPaths() {
+  const paths = await Promise.all(
+    supportedLanguages.map(async (lang) => {
+      const config = parseTomlToJson();
+      const { portfolioFolder }: { portfolioFolder: "portfolio" } =
+        config.settings;
+      const { defaultLanguage, showDefaultLangInUrl } =
+        config.settings.multilingual;
+
+      const portfolioIndex = await getEntryCTM(
+        portfolioFolder,
+        "-index",
+        lang.languageCode,
+      );
+
+      let portfolios = await getCollectionCTM(
+        portfolioFolder,
+        lang.languageCode,
+      );
+
+      // If draft true in index.md file frontmatter don't include any page related to this page collection in production
+      if (portfolioIndex?.data.draft && import.meta.env.PROD) {
+        return [];
+      }
+
+      return portfolios.map((portfolio) => ({
+        params: {
+          lang:
+            lang.languageCode === defaultLanguage && !showDefaultLangInUrl
+              ? undefined
+              : lang.languageCode,
+          single: extractSlug(portfolio).split("/").pop(),
+        },
+        props: {
+          portfolio,
+        },
+      }));
+    }),
+  );
+
+  return paths.flat();
+}
+
+const { portfolio } = Astro.props;
+---
+
+<Base {...portfolio.data}>
+  <Breadcrumbs breadcrumbExcludedPaths={["Portfolio"]} />
+  <PortfolioSingle content={portfolio} />
+</Base>

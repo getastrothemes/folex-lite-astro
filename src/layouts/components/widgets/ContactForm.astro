@@ -1,0 +1,379 @@
+---
+import { markdownify, toLowerCase } from "@/lib/utils/textConverter";
+import CustomButton from "@/components/CustomButton.astro";
+import type { z } from "astro/zod";
+import type { contactFormSchema } from "@/sections.schema";
+import type { inputFieldSchema } from "@/sections.schema";
+import { getPrelineSelectConfig } from "@/lib/utils/preline";
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+
+interface Props {
+  form: z.infer<typeof contactFormSchema>;
+  class?: string;
+}
+
+const config = parseTomlToJson();
+const {
+  settings: { contactFormAction, contactFormProvider },
+} = config;
+
+// Generate ID from label (Required for Input Radio and Checkbox)
+const genIdFromLabel = (label: string) => toLowerCase(label).replace(" ", "-");
+
+// Combine same group radio to show them together without space
+const combineRadio = (list: z.infer<typeof inputFieldSchema>[]) => {
+  const groupMap: Record<
+    string,
+    {
+      index: number;
+      groupLabel?: string;
+      items: z.infer<typeof inputFieldSchema>[];
+    }
+  > = {};
+  const result: any[] = [...list];
+
+  list.forEach((item, index) => {
+    if (item.group) {
+      // Track the group items, their first position, and groupLabel
+      if (!groupMap[item.group]) {
+        groupMap[item.group] = {
+          index,
+          groupLabel: item.groupLabel || "", // Capture groupLabel from the first occurrence
+          items: [],
+        };
+      }
+      groupMap[item.group].items.push(item);
+    }
+  });
+
+  // Replace first occurrence of group with combined object and remove others
+  Object.entries(groupMap).forEach(
+    ([groupName, { index, groupLabel, items }]) => {
+      // Replace the first occurrence with the combined group object
+      result[index] = { group: groupName, groupLabel, items };
+
+      // Remove other occurrences from the result array
+      for (let i = result.length - 1; i > index; i--) {
+        if (result[i].group === groupName) {
+          result.splice(i, 1);
+        }
+      }
+    },
+  );
+
+  return result;
+};
+
+let { form } = Astro.props;
+form = {
+  ...form,
+  inputs: combineRadio(form.inputs),
+};
+
+const noteStyles = {
+  info: "border-[#1e90ff]/80 bg-[#f2f7fc]",
+  warning: "border-[#FFA500]/80 bg-[#FFF4E5]",
+  success: "border-[#32CD32]/80 bg-[#E6FFE6]",
+  deprecated: "border-[#4CAF50]/80 bg-[#F1F8F1]",
+  hint: "border-[#8A2BE2]/80 bg-[#F4E6FF]",
+};
+---
+
+<form
+  id="contact-form"
+  {...{
+    "data-action": contactFormAction,
+    "data-provider": contactFormProvider,
+    "data-netlify": contactFormProvider === "netlify" ? "true" : undefined,
+    action: contactFormProvider === "netlify" ? contactFormAction : undefined,
+  }}
+  method="post"
+  class:list={["grid grid-cols-2 gap-x-4 gap-y-6", Astro.props.class]}>
+  {/* Some Hidden Inputs For Provider Like Netlify, Formspree Etc. */}
+  {
+    form.emailSubject && (
+      <input
+        type="hidden"
+        name={
+          ["formsubmit.co", "formspree"].includes(contactFormProvider)
+            ? "_subject"
+            : "subject"
+        }
+        value={form.emailSubject}
+      />
+    )
+  }
+
+  {
+    contactFormProvider === "formsubmit.co" && (
+      <input type="hidden" name="_template" value="table" />
+    )
+  }
+
+  {
+    form.inputs.map((input) => (
+      <div
+        input-wrapper
+        class:list={[
+          "flex flex-col",
+          input.halfWidth ? "max-sm:col-span-2" : "col-span-2",
+          input.parentClass,
+        ]}>
+        {!input.note &&
+          input.type !== "checkbox" &&
+          input.type !== "radio" &&
+          (input.groupLabel || input.label) && (
+            <label for="name" class="form-label">
+              {input.groupLabel || input.label || "Please set label"}
+              {input.required && <span class="text-primary">*</span>}
+            </label>
+          )}
+        {input.dropdown ? (
+          <div id="validation-target">
+            <select
+              {...(input.id && { id: input.id })}
+              data-name={input.name || input.label || "Please set name value"}
+              data-hs-select={JSON.stringify(
+                getPrelineSelectConfig({
+                  placeholder: input.placeholder || "Please set placeholder",
+                  searchPlaceholder: input.dropdown?.search?.placeholder,
+                  hasSearch: input.dropdown?.type === "search",
+                }),
+              )}
+              class="hidden">
+              <option value="">Choose</option>
+              {input.dropdown?.items?.map((option) => (
+                <option
+                  {...(option.selected && { selected: true })}
+                  value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <p class="hs-error:block mt-2 hidden text-sm text-red-600">
+              Please select a valid state.
+            </p>
+            <p class="hs-success:flex text-dark mt-2 hidden text-sm">
+              Perfect!
+            </p>
+          </div>
+        ) : input.tag === "textarea" ? (
+          <textarea
+            rows={input.rows || "4"}
+            name={input.name || input.label || "Please set name value"}
+            placeholder={input.placeholder || "Please set placeholder"}
+            class="form-input"
+            {...(input.required && { required: true })}
+            set:html={input.defaultValue || ""}
+          />
+        ) : input.items ? (
+          <div class="form-check-wrapper">
+            {input.items?.map((input) => (
+              <div class="form-check">
+                <input
+                  {...{
+                    value:
+                      typeof input.value === "boolean"
+                        ? String(input.value)
+                        : input.value || input.label,
+                    checked: input.checked ? true : undefined,
+                  }}
+                  type={input.type || "text"}
+                  name={
+                    input.name || input.groupLabel || "Please set name value"
+                  }
+                  id={input.id || genIdFromLabel(input.label || "example-id")}
+                  class:list={[
+                    input.type === "radio" ? "form-radio" : "form-checkbox",
+                  ]}
+                  {...(input.required && { required: true })}
+                />
+                <label
+                  for={input.id || genIdFromLabel(input.label || "example-id")}
+                  class="form-check-label"
+                  set:html={markdownify(input.label) || "Example Label"}
+                />
+              </div>
+            ))}
+          </div>
+        ) : input.type === "checkbox" || input.type === "radio" ? (
+          <div class="form-check">
+            <input
+              {...{
+                value:
+                  typeof input.value === "boolean"
+                    ? String(input.value)
+                    : input.value || input.label,
+                checked: input.checked ? true : undefined,
+              }}
+              type={input.type || "text"}
+              name={input.name || "Please set name value"}
+              id={input.id || genIdFromLabel(input.label || "example-id")}
+              placeholder={input.placeholder || "Please set placeholder"}
+              class:list={[
+                input.type === "radio" ? "form-radio" : "form-checkbox",
+              ]}
+              {...(input.required && { required: true })}
+            />
+            <label
+              for={input.id || genIdFromLabel(input.label || "example-id")}
+              class="form-check-label"
+              set:html={
+                (input.label && markdownify(input.label)) ||
+                input.label ||
+                "Example Label"
+              }
+            />
+          </div>
+        ) : input.note ? (
+          <div
+            {...{ "data-default": input.content }}
+            class:list={[
+              "prose-styles border px-4 py-2 [font-size:inherit]",
+              noteStyles[input.note] || "border-gray-200 bg-gray-50/25",
+            ]}
+            set:html={markdownify(input.content || "", true)}
+          />
+        ) : (
+          <input
+            {...(input.defaultValue && {
+              value: input.defaultValue,
+            })}
+            type={input.type || "text"}
+            name={input.name || input.label || "Please set name value"}
+            placeholder={input.placeholder || "Please set placeholder"}
+            class="form-input"
+            {...(input.required && { required: true })}
+          />
+        )}
+      </div>
+    ))
+  }
+
+  {
+    form.submitButton && (
+      <div class="col-span-2 mt-4 flex flex-col">
+        <CustomButton
+          tag="button"
+          type="submit"
+          hoverEffect="creative-fill"
+          class="text-base-sm effect-color-light w-fit md:text-base"
+          {...form.submitButton}
+        />
+      </div>
+    )
+  }
+  {
+    form.note && (
+      <div
+        class="prose-a:text-primary prose-a:underline prose-a:underline-offset-2 col-span-2 flex flex-col text-sm/normal"
+        set:html={markdownify(form.note, true)}
+      />
+    )
+  }
+</form>
+
+<script>
+  import "@preline/select";
+  import {
+    formspreeSubmit,
+    netlifySubmit,
+    formSubmit,
+    isFormFilled,
+    setMessage,
+    validateSelectTag,
+  } from "@/lib/utils/HandleForm";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById(
+      "contact-form",
+    ) as HTMLFormElement | null;
+
+    let selectTags = form?.querySelectorAll(
+      "[input-wrapper]:not(.hidden) select[data-hs-select]",
+    ) as NodeListOf<HTMLSelectElement>;
+
+    function isSelectStatus(items: HTMLSelectElement[]) {
+      items.forEach((item) => {
+        if (item.value !== "") {
+          item.classList.add("hs-select-active");
+        } else {
+          item.classList.remove("hs-select-active");
+        }
+      });
+    }
+
+    isSelectStatus(Array.from(selectTags));
+
+    selectTags.forEach((tag) => {
+      tag.addEventListener("change", () => {
+        // Ensure only visible select tag value should submitted
+        selectTags.forEach((tag) => {
+          const name = tag.getAttribute("data-name");
+          tag.setAttribute("name", name || "");
+        });
+
+        validateSelectTag(tag);
+
+        isSelectStatus(Array.from(selectTags));
+      });
+    });
+
+    form?.addEventListener("submit", async (e: Event) => {
+      e.preventDefault();
+
+      const provider = form?.getAttribute("data-provider") || "";
+      const action = form?.getAttribute("data-action") || "";
+
+      selectTags = form?.querySelectorAll(
+        "[input-wrapper]:not(.hidden) select[data-hs-select]",
+      ) as NodeListOf<HTMLSelectElement>;
+
+      // Validate all preline select tags
+      selectTags.forEach(validateSelectTag);
+
+      if (isFormFilled(form)) {
+        // Console form data for debugging
+        const formData = Object.fromEntries(new FormData(form).entries());
+        console.log(
+          Object.entries(formData)
+            .map(([key, value]) => `${key}: ${value}`)
+            .join("\n\n"),
+        );
+
+        setMessage("Form Submitting!...", true, true, form);
+
+        try {
+          switch (provider) {
+            case "netlify":
+              await netlifySubmit(form, action);
+              break;
+            case "formsubmit.co":
+              await formSubmit({
+                form,
+                action,
+              });
+              break;
+            case "formspree":
+              await formspreeSubmit(
+                Object.fromEntries(new FormData(form).entries()),
+                5000,
+                form,
+              );
+              break;
+            default:
+              throw new Error("Unknown form provider.");
+          }
+        } catch (error) {
+          setMessage(
+            error +
+              "! Please use this mail - [folex-astro-theme@gmail.com](mailto:folex-astro-theme@gmail.com) to submit a ticket!",
+            false,
+            false,
+            form,
+          );
+        }
+      }
+    });
+  });
+</script>

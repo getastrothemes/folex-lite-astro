@@ -1,0 +1,128 @@
+# Site Configuration
+[site]
+  title            = "Folex" # Shared title for SEO and OpenGraph
+  description      = "A highly customizable creative agency business theme built with Tailwind CSS and Astro Js" # Shared description for SEO and OpenGraph
+  tagline          = "Creative Agency & Personal Portfolio Business Theme"
+  taglineSeparator = "" # default is " - " 
+  baseUrl          = "https://folex-astro.netlify.app" # Base URL for the site and used in OpenGraph meta tags.
+  logo             = "/images/logo.svg" # Path to the site's logo
+  logoAlternate    = "/images/logo-light.svg" # Path to the site's alternate logo
+  logoText         = "" # Text displayed next to the logo
+  logoWidth        = "86px" # Width of the logo
+  logoHeight       = "24px" # Height of the logo
+
+  # Add a trailing slash at the end of URLs (e.g., https://example.com/, https://example.com/contact/)
+  # Note: Manually restart your server when you change this value
+  trailingSlash = true
+
+  # Add your site logo in image path below and open your terminal and run "npm run generate-favicons" to generate favicons for different devices and platform (https://realfavicongenerator.net/checker)
+  [site.favicon]
+    path  = "/images/favicons" # favicon images path (No need to change it)
+    image = "/images/favicon.png" # Add your site logo path here and follow upper instruction
+
+
+# SEO Metadata
+# Specific SEO configurations that complement the general site settings.
+# -----------------------------------------------------------------------------------------------------------------------------------
+[seo]
+  author = "Getastrothemes"
+  keywords = [
+    "free digital agency",
+    "free astro template",
+    "free astro theme",
+    "free astro agency template",
+    "free astro agency theme",
+  ]
+  robots = "index, follow" # Instructs search engines on how to crawl and index the pages.
+
+  [seo.robotsTxt]
+    enable = true # Enables or disables robots.txt file generation on site build
+    disallow = [
+      "/_astro/",
+      "/cdn-cgi/",
+    ] # Disallow specific paths (e.g., "/_astro/", "/cdn-cgi/")
+
+  [seo.sitemap]
+    enable  = true # Enables or disables sitemap generation on site build
+    exclude = [] # exclude all pages that include these folder names
+
+
+# Different theme settings
+# -----------------------------------------------------------------------------------------------------------------------------------
+[settings]
+  # If you change value of any of the following three, make sure to change the folder name also from
+  # - "src/content" folder
+  # - "src/[...lang]/pages" folder
+  # - "src/content.config.ts" collection object
+  blogFolder      = "blog" # Folder where blog posts are stored
+  servicesFolder  = "services" # Folder where services are stored
+  portfolioFolder = "portfolio" # Folder where portfolio/projects are stored
+
+  stickyHeader = true # Enables scroll-aware sticky behavior (e.g., hide on scroll down), not applicable to fixed headers
+
+  # Contact form settings
+  # Available providers: "formspree", "formsubmit.co", "netlify"
+  # Available actions: "https://formspree.io/f/form_id", "https://formsubmit.co/your_email@example.com", "/"
+  contactFormAction   = "https://formsubmit.co/your_email@example.com"
+  contactFormProvider = "formsubmit.co"
+
+  footerDescription = "" # Check src/i18n/en.json and src/i18n/fr.json for changing the footer description in different languages or directly add value here if you are not using internationalization feature
+
+  # For changing footer description and footer copyright in different languages see src/i18n/en.json and src/i18n/fr.json
+  # We kindly appreciate it if you retain the theme copyright. Thank you for supporting Getastrothemes!
+  [settings.copyright]
+    enable = true
+    text   = "" # Check src/i18n/en.json and src/i18n/fr.json for changing the copyright text in different languages or directly add value here if you are not using internationalization feature
+
+  # Multilingual settings (check src/config/language.json for changing the languages)
+  # NOTE: Manually restart your server when you change the following multilingual table values
+  [settings.multilingual]
+    # Set `enable` to `true` for enabling the multilingual feature or `false` for disabling it.
+    # Run `npm run remove-multilingual` for removing multilingual content files after disabling the feature.
+    enable               = true
+    defaultLanguage      = "en"
+    disableLanguages     = [] # List of languages to disable (eg: ["fr", "es"])
+    showDefaultLangInUrl = false # Show default language in URL (eg: https://getastrothemes.com/en/)
+
+  # Global Contact Information
+  [settings.contactInfo]
+    address = "27 Division St, New York, <br /> NY 10002, USA"
+    email   = "[folex.agency@mail.com](mailto:folex.agency@mail.com)"
+    phone   = "[+1 800 123 654 987](tel:+1800123654987)"
+
+  # Header Offcanvas Configuration
+  # Update social links in `src/config/social.json`
+  [settings.headerOffcanvas]
+    enable      = true
+    logo        = "/images/logo-light.svg"
+    description = "" # Check src/i18n/en.json and src/i18n/fr.json for changing the description in different languages or directly add value here if you are not using internationalization feature. This is also used in footer of personal-portfolio homepage
+
+    # Call To Action Button
+    [settings.headerOffcanvas.button]
+      enable = true
+      label  = "" # Check src/i18n/en.json and src/i18n/fr.json for changing the button label in different languages or directly add value here if you are not using internationalization feature
+      url    = "/"
+
+# Navigation Button In Header
+[settings.navigationButton]
+  enable = true
+  label  = "" # Check src/i18n/en.json and src/i18n/fr.json for changing the navigation button label in different languages or directly add value here if you are not using internationalization feature
+  url    = "/"
+
+
+# OpenGraph Metadata
+# Specific OpenGraph settings, using values from the [site] section where possible.
+# -----------------------------------------------------------------------------------------------------------------------------------
+[opengraph]
+  image       = "/images/og-image.jpg" # Image used in OpenGraph previews
+  ogLocale    = "en_US" # Locale setting for OpenGraph
+  ogType      = "website" # Type of content for OpenGraph protocol
+  twitter     = "" # Twitter handle for Twitter Card meta tags
+  twitterCard = "summary_large_image" # Type of Twitter Card to use in social sharing
+
+# [head] (Add custom scripts, stylesheets, and meta tags to be rendered in the <head> section of the page)
+# -----------------------------------------------------------------------------------------------------------------------------------
+[head]
+  content = """
+  <script defer async src="/umami.is.js" data-website-id=""></script>
+  """

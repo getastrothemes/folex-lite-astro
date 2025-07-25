@@ -1,0 +1,91 @@
+---
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+import { markdownify } from "@/lib/utils/textConverter";
+import { splitProtectedText } from "@/lib/utils/splitProtectedText";
+import SocialComponent from "@/components/widgets/Social.astro";
+import social from "@/config/social.json";
+import { useTranslations } from "@/lib/utils/i18nUtils";
+import { getEntryCTM } from "@/lib/customContentLoader.astro";
+import ContactForm from "../widgets/ContactForm.astro";
+
+const config = parseTomlToJson();
+const t = await useTranslations(Astro.currentLocale as string);
+
+let {
+  copyright,
+  footerDescription,
+  contactInfo: { address, email, phone },
+} = config.settings;
+const { footerSpaceTop = true } = Astro.props;
+
+const {
+  data: { title, description },
+} = await getEntryCTM("sections", "call-to-action", Astro.currentLocale);
+
+let { form } = (
+  await getEntryCTM("sections", "contact-section", Astro.currentLocale)
+)?.data;
+
+footerDescription = footerDescription || t("footer.description") || "";
+
+const copyrightText = copyright.text || t("footer.copyright") || "";
+const copyrightParts = splitProtectedText(copyrightText);
+---
+
+<footer
+  id="footer-with-contact"
+  class:list={["bg-accent", !footerSpaceTop && "mt-0"]}>
+  <div class="container pb-8 md:pb-16">
+    <div
+      class="grid grid-cols-1 gap-y-10 border-b-2 border-black py-16 md:py-24 lg:grid-cols-2 lg:gap-x-20 xl:gap-x-10">
+      <div class="space-y-10">
+        {
+          title && (
+            <h2
+              class="text-display-6 xs:text-display-5 md:text-display-4"
+              set:html={markdownify(title)}
+            />
+          )
+        }
+        {
+          description && (
+            <div
+              class="w-full max-w-lg text-lg"
+              set:html={markdownify(description, true)}
+            />
+          )
+        }
+        <div class="space-y-4">
+          {
+            config.settings.copyright?.enable && (
+              <ul class="has-list has-list-slash prose-a:text-inherit flex flex-wrap gap-y-2">
+                {copyrightParts.map((value) => (
+                  <li class="prose-a:text-text-default/70 prose-a:hover:text-text-default">
+                    <span set:html={markdownify(value)} />
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+
+          <SocialComponent
+            size="lg"
+            layout="dark"
+            class="gap-5"
+            linkType="follow"
+            list={social.main.filter((s) => s.enable)}
+          />
+        </div>
+      </div>
+      <ContactForm form={form} />
+    </div>
+    <div
+      class="font-secondary flex flex-wrap items-center justify-between gap-x-8 gap-y-6 pt-6 text-sm leading-loose font-semibold uppercase">
+      {address && <p set:html={markdownify(address)} />}
+      <div class="md:text-end">
+        {phone && <p set:html={markdownify(phone)} />}
+        {email && <p set:html={markdownify(email)} />}
+      </div>
+    </div>
+  </div>
+</footer>

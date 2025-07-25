@@ -1,0 +1,94 @@
+---
+import { AstroFont } from "astro-font";
+import fonts from "@/config/fonts.json";
+import type { FontConfig } from "@/types";
+
+type FontObject = FontConfig & {
+  locallyHosted?: boolean;
+  provider?: "google-fonts" | "local-hosted";
+};
+
+const fontFamily = fonts.fontFamily as FontObject[];
+
+// Utility function to format font names for URLs
+const formatFontName = (name: string): string =>
+  name.replace(/\s+/g, "+") || "sans-serif";
+
+// Generates a font configuration object
+const createFontConfig = (fontOBJ: FontObject): FontObject => {
+  let {
+    name,
+    cssVariable,
+    display = "swap",
+    fallback = "sans-serif",
+    preload,
+    fetch,
+    locallyHosted,
+    provider = "local-hosted",
+    src,
+  } = fontOBJ;
+
+  // Use array some
+  const isLocalFont = src.some((source: any) =>
+    source.path?.includes("public/"),
+  );
+
+  const isGoogleFonts = provider === "google-fonts";
+  let googleFontsURL;
+
+  if (isGoogleFonts && src.length > 0) {
+    // If source files are provided, create a Google-friendly weight string.
+    // Otherwise, fallback to the provided `weights` value.
+    const googleFriendlyWeights =
+      src.length > 0
+        ? src
+            .map((source: any) =>
+              source.weight.replace(/[0-9]+/, (match: string) => `${match}`),
+            )
+            .join(";")
+        : undefined;
+
+    // Build the Google Fonts URL only if needed.
+    googleFontsURL = isGoogleFonts
+      ? `https://fonts.googleapis.com/css2?family=${formatFontName(
+          name,
+        )}:wght@${googleFriendlyWeights}&display=swap`
+      : undefined;
+
+    // Provide empty src array if isGoogleFonts true
+    src = [];
+  }
+
+  if (!isGoogleFonts && isLocalFont) {
+    src = src.map((source: any) => {
+      return {
+        path: source.path,
+        style: source.style,
+        weight: source.weight,
+      };
+    });
+  }
+
+  // Determine if the font should be fetched.
+  // (e.g. for Google fonts that also have local source information)
+  fetch = !isLocalFont && fontOBJ.src.length > 0 && locallyHosted;
+
+  return {
+    src,
+    fetch,
+    display,
+    preload,
+    name: name || "sans-serif",
+    fallback,
+    cssVariable,
+    ...(googleFontsURL ? { googleFontsURL } : {}),
+  };
+};
+
+// Example: Assuming `fontFamily` is an array of FontObject items
+const fontConfigs: FontObject[] = fontFamily.map((ff) => {
+  return createFontConfig({ ...ff, fetch: ff.locallyHosted });
+});
+---
+
+<AstroFont config={fontConfigs as any[]} />

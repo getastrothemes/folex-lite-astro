@@ -1,0 +1,90 @@
+---
+import type { Section } from "@/types";
+import type { z } from "astro:content";
+import { markdownify } from "@/lib/utils/textConverter";
+import { getEntryCTM } from "@/lib/customContentLoader.astro";
+import overrideObjects from "@/lib/utils/overrideObjects.ts";
+import type { clientsSectionSchema } from "@/sections.schema";
+import OptimizedImage from "../utilities/OptimizedImage.astro";
+
+export type ClientsSection = Section & z.infer<typeof clientsSectionSchema>;
+
+type Props = {
+  content?: ClientsSection;
+};
+
+let defaultContent = (
+  await getEntryCTM("sections", "clients", Astro.currentLocale)
+)?.data as ClientsSection;
+
+let actualContent = overrideObjects(
+  { ...defaultContent },
+  Astro.props.content,
+) as ClientsSection;
+
+let {
+  enable = true,
+  title,
+  list,
+  options: { columnsPerRow, appearance } = {},
+} = actualContent;
+
+const isDarkAppearance = appearance === "dark";
+
+if (!enable) {
+  return null;
+}
+---
+
+<section>
+  <div class="container space-y-8 md:space-y-16">
+    {
+      title && (
+        <div class="mx-auto lg:max-w-3xl">
+          <h2
+            class:list={[
+              "text-h1-sm md:text-h1 text-center",
+              isDarkAppearance && "text-light",
+            ]}
+            set:html={markdownify(title)}
+          />
+        </div>
+      )
+    }
+    <ul
+      class:list={[
+        "grid grid-cols-2 justify-center gap-0 overflow-hidden outline",
+        isDarkAppearance && "outline-white",
+        columnsPerRow === 6
+          ? "w-full md:grid-cols-3 lg:grid-cols-6"
+          : "mx-auto max-w-4xl lg:grid-cols-4",
+      ]}>
+      {
+        list?.map((item) => (
+          <li
+            class:list={[
+              "group flex h-32 w-full items-center justify-center border",
+              isDarkAppearance && "border-white",
+            ]}>
+            <div class="relative h-8 grow overflow-hidden px-8">
+              <OptimizedImage
+                width={140}
+                height={32}
+                src={item.src}
+                alt={item.alt}
+                class="mx-auto h-8 transition-all duration-300 group-hover:-translate-y-8"
+              />
+              <OptimizedImage
+                width={140}
+                height={32}
+                src={item.src}
+                alt={item.alt}
+                class="mx-auto h-8 transition-all duration-300 group-hover:-translate-y-8"
+              />
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

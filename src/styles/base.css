@@ -1,0 +1,93 @@
+html {
+  @apply max-md:text-base-sm scroll-smooth;
+}
+
+body {
+  @apply bg-body font-primary text-text-default leading-body font-normal;
+}
+
+/* Global Section Spacing */
+main section {
+  @apply section-spacing;
+}
+
+/* If the page has no CTA section, add top margin to the footer for better visual spacing */
+body > main:not(:has(section.cta-section)) + footer {
+  @apply section-spacing-m;
+}
+
+/* If current page has no CTA section, remove top padding from appropriate footers */
+body > main:not(:has(section.cta-section)) + footer .has-footer-padding {
+  @apply !pt-0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-secondary text-dark leading-tight font-semibold tracking-wide break-words;
+
+  br {
+    @apply max-md:hidden;
+  }
+}
+
+h1 {
+  @apply text-h1-sm md:text-h1;
+}
+
+h2 {
+  @apply text-h2-sm md:text-h2;
+}
+
+h3 {
+  @apply text-h3-sm md:text-h3;
+}
+
+h4 {
+  @apply text-h4-sm md:text-h4 leading-snug;
+}
+
+h5 {
+  @apply text-h5 leading-snug;
+}
+
+h6 {
+  @apply text-h6 leading-snug;
+}
+
+b,
+strong {
+  @apply text-dark/80;
+}
+
+code {
+  @apply after:border-none;
+}
+
+a {
+  @apply transition-colors duration-300;
+}
+
+p {
+  br {
+    @apply max-md:hidden;
+  }
+}
+
+button:not(:disabled),
+[role="button"]:not(:disabled) {
+  cursor: pointer;
+}
+
+* {
+  @apply border-border-dark;
+}
+
+/* Adds pointer cursor to buttons */
+button:not(:disabled),
+[role="button"]:not(:disabled) {
+  cursor: pointer;
+}

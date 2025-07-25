@@ -1,0 +1,116 @@
+---
+import type { z } from "astro/zod";
+import type { Section } from "@/types";
+import { getEntryCTM } from "@/lib/customContentLoader.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import CustomButton from "@/components/CustomButton.astro";
+import overrideObjects from "@/lib/utils/overrideObjects.ts";
+import type { bannerAgencySectionSchema } from "@/sections.schema";
+import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
+
+// Type for this section data
+type bannerAgency = Section &
+  NonNullable<z.infer<typeof bannerAgencySectionSchema>>;
+
+type Props = {
+  content?: bannerAgency;
+};
+
+// Fetching the default content for the this section
+let defaultContent = (
+  await getEntryCTM("sections", "banner", Astro.currentLocale)
+)?.data as bannerAgency;
+
+// Enables content customization (e.g., title, description) with a fallback to 'defaultContent' if not provided.
+// The 'content' prop should match the structure of 'defaultContent'.
+// Allows using this section with different content across multiple pages.
+// If 'content' is missing, 'defaultContent' will be used.
+let actualContent = overrideObjects(
+  { ...defaultContent },
+  Astro.props.content,
+) as bannerAgency;
+
+// Extracting required values from 'content' object
+let { title, image, titleSize, description, button } =
+  actualContent as bannerAgency;
+
+// Font sizes for the heading (useful if you have a long heading)
+const fontSizeMap: Record<NonNullable<typeof titleSize>, string> = {
+  "display-1": "text-display-3 lg:text-display-2 xl:text-display-1",
+  "display-2": "text-display-5 md:text-display-3 xl:text-display-2",
+  "display-3": "text-display-5 md:text-display-4 xl:text-display-3",
+};
+
+const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
+---
+
+<section class="text-light mb-24 bg-black pt-52 md:mb-32">
+  <div class="container">
+    <div class="mx-auto max-w-7xl space-y-7 text-center md:space-y-10">
+      {
+        title && (
+          <h1
+            data-aos="reveal-anim-top"
+            data-aos-duration="1500"
+            class:list={[
+              "text-inherit",
+              fontSize,
+              "block leading-tight font-bold break-words text-inherit",
+            ]}
+            set:html={markdownify(title)}
+          />
+        )
+      }
+      {
+        button?.enable ? (
+          <div
+            data-aos="reveal-anim-top"
+            data-aos-duration="1500"
+            data-aos-delay="200"
+            class="mx-auto max-w-2xl space-y-6">
+            {description && (
+              <p
+                class="text-lg text-inherit opacity-80"
+                set:html={markdownify(description)}
+              />
+            )}
+            {button && button.enable && (
+              <CustomButton
+                hoverEffect="creative-fill"
+                class="btn-accent effect-color-dark mx-auto"
+                {...button}
+              />
+            )}
+          </div>
+        ) : (
+          description && (
+            <p
+              data-aos="reveal-anim-top"
+              data-aos-delay="200"
+              data-aos-duration="1500"
+              class="mx-auto max-w-2xl text-lg text-inherit opacity-80"
+              set:html={markdownify(description)}
+            />
+          )
+        )
+      }
+
+      {
+        image && (
+          <div
+            data-aos="reveal-anim-top"
+            data-aos-duration="1500"
+            data-aos-delay="300"
+            data-aos-offset="0"
+            class="mx-auto mt-10 -mb-24 max-w-4xl md:mt-20 md:-mb-32">
+            <OptimizedImage
+              src={image}
+              alt={title || "Banner"}
+              class="h-110 w-full object-cover md:h-135"
+            />
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

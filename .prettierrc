@@ -1,0 +1,29 @@
+{
+  "plugins": [
+    "prettier-plugin-astro",
+    "prettier-plugin-toml",
+    "prettier-plugin-tailwindcss"
+  ],
+  "overrides": [
+    {
+      "files": ["*.astro"],
+      "options": {
+        "parser": "astro",
+        "bracketSameLine": true,
+        "htmlWhitespaceSensitivity": "ignore",
+        "trailingComma": "all"
+      }
+    },
+    {
+      "files": ["*.toml"],
+      "options": {
+        "parser": "toml",
+        "alignEntries": true,
+        "alignComments": false,
+        "indentTables": true,
+        "allowedBlankLines": 4,
+        "indentEntries": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+---
+import type { z } from "astro/zod";
+import ReactIcons from "@/helpers/ReactIcons.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import type { pricingSectionSchema } from "@/sections.schema";
+import CustomButton from "../CustomButton.astro";
+
+type PricingCardType = NonNullable<
+  z.infer<typeof pricingSectionSchema>
+>["list"][0];
+
+type Props = {
+  content: PricingCardType;
+  class?: string;
+};
+
+const {
+  class: className,
+  content: { enable, name, price, description, features, button },
+  ...rest
+} = Astro.props;
+---
+
+{
+  enable && (
+    <div
+      class:list={[
+        "bg-theme-light flex flex-col justify-between space-y-10 p-8",
+        className,
+      ]}
+      {...rest}>
+      <div class="space-y-4">
+        <div>
+          {name && (
+            <h3
+              class="text-h5 md:text-h4 font-semibold"
+              set:html={markdownify(name)}
+            />
+          )}
+          {price && (
+            <div class="sm:text-display-5 text-display-6 md:text-display-4 font-secondary font-semibold text-black">
+              {price.prependValue}
+              {price.value}
+              <span class="text-lg">{price.appendValue}</span>
+            </div>
+          )}
+        </div>
+        {description && (
+          <p class="text-lg" set:html={markdownify(description)} />
+        )}
+      </div>
+      {features && (
+        <ul class="font-secondary space-y-4 text-sm font-medium text-black">
+          {features.map((feature) => (
+            <li class="flex items-center gap-2">
+              <ReactIcons icon="IoMdCheckmark" class="text-xl text-black" />
+              <span set:html={markdownify(feature)} />
+            </li>
+          ))}
+        </ul>
+      )}
+      {button?.enable && (
+        <CustomButton
+          class="effect-color-accent text-center"
+          hoverEffect="creative-fill"
+          {...button}
+        />
+      )}
+    </div>
+  )
+}

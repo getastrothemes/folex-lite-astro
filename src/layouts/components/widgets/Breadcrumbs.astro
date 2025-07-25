@@ -1,0 +1,84 @@
+---
+import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
+import { humanize } from "@/lib/utils/textConverter";
+
+// Props
+interface Props {
+  class?: string;
+  breadcrumbExcludedPaths?: string[];
+}
+
+const { breadcrumbExcludedPaths, class: className, ...rest } = Astro.props;
+
+// Helper function to create breadcrumb parts
+const createBreadcrumbParts = (pathname: string) => {
+  let segments = pathname.split("/").filter((segment) => segment);
+
+  // Remove locale from segments
+  if (segments[0] === Astro.currentLocale) {
+    segments = segments.slice(1);
+  }
+
+  const breadcrumbParts = [
+    {
+      label: "Home",
+      href: getLocaleUrlCTM("/", Astro.currentLocale),
+      "aria-label": pathname === "/" ? "page" : undefined,
+    },
+  ];
+
+  segments.forEach((segment, index) => {
+    const href = getLocaleUrlCTM(
+      `/${segments.slice(0, index + 1).join("/")}`,
+      Astro.currentLocale,
+    );
+    if (segment !== "page") {
+      breadcrumbParts.push({
+        label:
+          humanize(segment.replace(".html", "").replace(/[-_]/g, " ")) || "",
+        href,
+        "aria-label": pathname === href ? "page" : undefined,
+      });
+    }
+  });
+
+  return breadcrumbParts;
+};
+
+// Generate breadcrumb parts
+let breadcrumbParts = createBreadcrumbParts(Astro.url.pathname);
+
+// Removed hidden paths
+if (breadcrumbExcludedPaths && breadcrumbExcludedPaths.length > 0) {
+  breadcrumbParts = breadcrumbParts.map((part) => {
+    return {
+      ...part,
+      href: !breadcrumbExcludedPaths?.includes(part.label) ? part.href : "",
+    };
+  });
+}
+---
+
+<section class:list={["bg-theme-light pt-0", className]}>
+  <div class="xl:container-12xl relative py-4 max-xl:container">
+    <nav aria-label="Breadcrumb" class:list={[className]} {...rest}>
+      <ol
+        class="has-list has-list-slash slash-dark inline-flex flex-wrap gap-x-2 gap-y-3"
+        role="list">
+        {
+          breadcrumbParts.map(({ label, ...attrs }, index) => (
+            <li class="capitalize" role="listitem">
+              {index !== breadcrumbParts.length - 1 && attrs.href !== "" ? (
+                <a class="text-primary" {...attrs}>
+                  {label}
+                </a>
+              ) : (
+                <span class="text-text-default/70" set:html={label} />
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+  </div>
+</section>

@@ -1,0 +1,69 @@
+---
+import OptimizedImage from "./utilities/OptimizedImage.astro";
+import formatRelativeDate from "@/lib/utils/formatRelativeDate";
+import { markdownify } from "@/lib/utils/textConverter";
+import { render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  content: CollectionEntry<"pages">;
+  [key: string]: any;
+}
+
+const { content, class: className } = Astro.props;
+let { title, date, image, categories } = content.data;
+
+// Process markdown content if function is provided
+let Content: any;
+if (typeof content.render === "function") {
+  ({ Content } = await render(content));
+}
+---
+
+<section>
+  <div class="container">
+    <div
+      class:list={["has-video-modal max-w-full space-y-10 lg:p-5", className]}>
+      {
+        image && Content && (
+          <OptimizedImage
+            width={896}
+            height={500}
+            alt={title}
+            src={image as string}
+            class:list={["h-125 w-full object-cover"]}
+          />
+        )
+      }
+
+      <div class="space-y-2">
+        <ul
+          class="text-dark flex flex-wrap items-center gap-x-5 gap-y-1 tracking-wide">
+          {
+            date && (
+              <li>
+                {date && markdownify(formatRelativeDate(date, "dd MMM, yyyy"))}
+              </li>
+            )
+          }
+
+          {
+            categories?.map((category: string) => (
+              <li class="before:bg-dark relative pe-5 before:absolute before:end-0 before:top-1/2 before:h-1 before:w-1 before:-translate-y-1/2 before:rounded-full before:content-['']">
+                {markdownify(category)}
+              </li>
+            ))
+          }
+        </ul>
+        {title && <h1 class="text-h2-sm md:text-h2" set:html={title} />}
+      </div>
+      {
+        Content && (
+          <div class="prose-styles content has-video-modal prose-headings:mb-6 prose-headings:mt-10">
+            <Content />
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

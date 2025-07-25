@@ -1,0 +1,80 @@
+---
+import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
+import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
+import { markdownify, toSentenceCase } from "@/lib/utils/textConverter";
+
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+const config = parseTomlToJson();
+
+type Props = {
+  src?: string;
+  class?: string;
+  width?: string;
+  height?: string;
+  [key: string]: any;
+};
+
+let { src, class: className } = Astro.props;
+
+let {
+  logo,
+  logoWidth = "1.8125rem",
+  logoHeight = "1.8125rem",
+  logoText,
+  logoAlternate,
+  title,
+}: {
+  logo: string;
+  logoAlternate: string;
+  logoWidth: string;
+  logoHeight: string;
+  logoText: string;
+  title: string;
+} = config.site;
+
+if (Astro.props.width) {
+  logoWidth = Astro.props.width;
+}
+if (Astro.props.height) {
+  logoHeight = Astro.props.height;
+}
+---
+
+<a
+  href={getLocaleUrlCTM("/", Astro.currentLocale)}
+  class:list={["logo-wrapper", className]}>
+  {
+    src || logoAlternate || logo ? (
+      <>
+        <OptimizedImage
+          src={src ? src : logo}
+          class="logo"
+          alt={toSentenceCase("Brand logo of " + title)}
+          style={{
+            height: logoHeight,
+            width: logoWidth,
+          }}
+        />
+        {logoAlternate && (
+          <OptimizedImage
+            src={logoAlternate}
+            class="logo-alternate"
+            alt={toSentenceCase("Brand logo of " + title)}
+            style={{
+              height: logoHeight,
+              width: logoWidth,
+            }}
+          />
+        )}
+
+        {logoText && (
+          <span class="logo-text" set:html={markdownify(logoText)} />
+        )}
+      </>
+    ) : logoText ? (
+      logoText
+    ) : (
+      title
+    )
+  }
+</a>

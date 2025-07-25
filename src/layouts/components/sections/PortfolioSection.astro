@@ -1,0 +1,106 @@
+---
+import type { Section } from "@/types";
+import PortfolioCard from "@/components/cards/PortfolioCard.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import overrideObjects from "@/lib/utils/overrideObjects.ts";
+import { useTranslations } from "@/lib/utils/i18nUtils";
+import { getCollectionCTM, getEntryCTM } from "@/lib/customContentLoader.astro";
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+import type { CollectionEntry } from "astro:content";
+
+// Type for this section data
+export type PortfolioInterface = Section & {
+  options?: CollectionEntry<"portfolio">["data"]["options"];
+};
+
+type Props = {
+  content?: PortfolioInterface;
+};
+
+// Fetching the default content for the this section
+let defaultContent = (
+  await getEntryCTM("sections", "portfolio-section", Astro.currentLocale)
+)?.data as PortfolioInterface;
+
+// Enables content customization (e.g., title, description) with a fallback to 'defaultContent' if not provided.
+// The 'content' prop should match the structure of 'defaultContent'.
+// Allows using this section with different content across multiple pages.
+// If 'content' is missing, 'defaultContent' will be used.
+let actualContent = overrideObjects(
+  { ...defaultContent },
+  Astro.props.content,
+) as PortfolioInterface;
+
+const config = parseTomlToJson();
+const t = await useTranslations(Astro.currentLocale as string);
+
+// Extracting required values from 'content' object
+let { enable = true, title, options } = actualContent as PortfolioInterface;
+
+const { layout, appearance, limit } = options || {};
+
+let projects = await getCollectionCTM(
+  config.settings.portfolioFolder as "portfolio",
+  Astro.currentLocale,
+);
+
+const isDarkAppearance = appearance === "dark";
+
+// Limiting the number of projects to be displayed
+projects = limit ? projects.slice(0, limit as number) : projects;
+
+if (!enable) {
+  return null;
+}
+---
+
+<section id="projects">
+  <div
+    class:list={[
+      isDarkAppearance && "bg-theme-darker py-20 md:py-32",
+      layout === "slider" && "overflow-hidden",
+    ]}>
+    <div class="container space-y-14">
+      {
+        title && (
+          <h2
+            class:list={[
+              "text-h1-sm md:text-h1 mx-auto max-w-4xl text-center",
+              isDarkAppearance && "text-light",
+            ]}
+            set:html={markdownify(title)}
+          />
+        )
+      }
+      {
+        layout === "masonry" || layout === "grid" ? (
+          <div
+            class:list={[
+              "gap-x-20 lg:columns-2",
+              layout === "grid" && "space-y-10",
+            ]}>
+            {projects.map((item, index) => (
+              <PortfolioCard
+                class:list={["space-y-4 overflow-hidden"]}
+                options={options}
+                translations={t}
+                content={item}
+                index={index}
+              />
+            ))}
+          </div>
+        ) : layout === "slider" ? (
+          <div class="py-8 text-center text-sm text-gray-400 italic">
+            Portfolio "Slider" layout is only available in the Pro version.
+            Purchase Folex premium version to unlock this layout.
+          </div>
+        ) : layout === "full-width" ? (
+          <div class="py-8 text-center text-sm text-gray-400 italic">
+            Portfolio "full-width" layout is only available in the Pro version.
+            Purchase Folex premium version to unlock this layout.
+          </div>
+        ) : null
+      }
+    </div>
+  </div>
+</section>

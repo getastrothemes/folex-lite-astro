@@ -1,0 +1,41 @@
+---
+import { render } from "astro:content";
+import OptimizedImage from "./utilities/OptimizedImage.astro";
+
+const {
+  data: { title, image },
+} = Astro.props.content;
+
+const { Content } = await render(Astro.props.content);
+---
+
+<section class="overflow-hidden pt-16 md:pt-32">
+  <div class="container">
+    <div class="mx-auto w-full max-w-6xl space-y-12 md:space-y-20">
+      {
+        image && (
+          <OptimizedImage
+            src={image}
+            width={896}
+            height={384}
+            alt={title}
+            class="h-96 w-full object-cover lg:max-w-6xl"
+          />
+        )
+      }
+
+      <div class="mx-auto max-w-full space-y-8 lg:max-w-4xl">
+        {title && <h1 class="text-h2-sm md:text-h2" set:html={title} />}
+
+        <!-- Main Content -->
+        {
+          Content && (
+            <div class="prose-styles content has-video-modal [&_.image-list-component]:xl:-ms-31.5 [&_.image-list-component]:xl:w-6xl">
+              <Content />
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

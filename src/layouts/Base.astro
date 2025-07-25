@@ -1,0 +1,152 @@
+---
+import "aos/dist/aos.css";
+import "@/styles/globals.css";
+import Head from "@/components/global/Head.astro";
+import removeEmptyKeys from "@/lib/utils/removeEmptyKeys";
+import Header from "@/components/global/header/Header.astro";
+import type { JSONLDProps } from "@/lib/utils/JsonLdGenerator";
+import HelperButtons from "@/components/utilities/HelperButtons.astro";
+import BreakpointIndicator from "@/components/widgets/BreakpointIndicator.astro";
+import FooterThree from "@/components/global/FooterThree.astro";
+
+interface Props extends JSONLDProps {
+  className?: string;
+  fitToScreen?: boolean;
+  footerSpaceTop?: boolean;
+  headerPosition?: "fixed" | "static" | "sticky";
+  hasHeaderDarkBackground?: boolean;
+  hasBodyDarkBackground?: boolean;
+  hideOffcanvas?: boolean;
+  draft?: boolean;
+  metaTitle?: string;
+  metaDescription?: string;
+  robots?: string;
+  excludeFromSitemap?: boolean;
+  customSlug?: string;
+  canonical?: string;
+  keywords?: string[];
+  disableTagline?: boolean;
+  structuredData?: Props;
+  footerLayout?: "footer-1" | "footer-2" | "footer-3";
+}
+
+// destructure frontmatter
+let {
+  className,
+  structuredData,
+  headerPosition = "sticky",
+  hideOffcanvas = false,
+  hasHeaderDarkBackground = false,
+  hasBodyDarkBackground = false,
+  footerSpaceTop = true,
+  footerLayout = "footer-3",
+  fitToScreen = true,
+} = Astro.props;
+
+// Exclude empty key value weather it may empty string, object or array from Astro.props
+let props = removeEmptyKeys(Astro.props);
+
+// Conditionally add min-h-[102vh] class to prevent FOUC (flash of unstyled content) while fast navigation
+className = fitToScreen
+  ? (className ? className + " " : "") + "fit-to-screen"
+  : className;
+---
+
+<!doctype html>
+<html lang="en">
+  <Head {...props} structuredData={structuredData} />
+  <body class:list={[hasBodyDarkBackground && "bg-body-dark"]}>
+    <Header
+      position={headerPosition}
+      hasDarkBackground={hasHeaderDarkBackground}
+      hideOffcanvas={hideOffcanvas}
+    />
+
+    <main class:list={[className]}>
+      <slot />
+    </main>
+
+    {
+      footerLayout === "footer-1" ? (
+        <div class="py-8 text-center text-sm text-gray-400 italic">
+          "Footer Layout One" is only available in the Pro version. Purchase
+          Folex premium version to unlock this layout.
+        </div>
+      ) : footerLayout === "footer-2" ? (
+        <div class="py-8 text-center text-sm text-gray-400 italic">
+          "Footer Layout Two" is only available in the Pro version. Purchase
+          Folex premium version to unlock this layout.
+        </div>
+      ) : footerLayout === "footer-3" ? (
+        <FooterThree footerSpaceTop={footerSpaceTop} />
+      ) : null
+    }
+
+    <HelperButtons />
+    <script>
+      // @ts-nocheck
+      import AOS from "aos";
+      import SmoothScroll from "smoothscroll-for-websites";
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        // AOS - https://github.com/michalsnik/aos
+        // -----------------------------------------------------
+        AOS.init({
+          duration: 1300,
+          easing: "reveal-ease-out",
+          disable: "mobile",
+          once: true,
+        });
+
+        // Smooth Scroll - https://github.com/gblazex/smoothscroll-for-websites/wiki
+        // -----------------------------------------------------
+        SmoothScroll({
+          animationTime: 600, // [ms]
+          stepSize: 60, // [px]
+          touchpadSupport: true,
+        });
+
+        // Fix: Support horizontal scrolling by using the mouse wheel + shift (Needed when using smooth scrolling js library - SmoothScroll)
+        document.addEventListener(
+          "wheel",
+          (event) => {
+            // Only process when the shift key is held down
+            if (!event.shiftKey) return;
+
+            let target = event.target;
+            // Traverse up the DOM to find the nearest scrollable element
+            while (target && target !== document.body) {
+              if (target.scrollWidth > target.clientWidth) {
+                event.preventDefault();
+                target.scrollBy({
+                  left: event.deltaY * 3,
+                  behavior: "smooth",
+                });
+                break;
+              }
+              target = target.parentElement;
+            }
+          },
+          { passive: false },
+        );
+
+        // Button Hover Animation
+        // ------------------------------------------
+        document.addEventListener("mouseover", function (e) {
+          const target = e.target.closest(".creative-hover-anim");
+          if (target) {
+            const hoverBg = target.querySelector(".hover-bg");
+            if (hoverBg) {
+              const parentOffset = target.getBoundingClientRect();
+              const relX = e.clientX - parentOffset.left;
+              const relY = e.clientY - parentOffset.top;
+              hoverBg.style.setProperty("--creative-hover-top", `${relY}px`);
+              hoverBg.style.setProperty("--creative-hover-left", `${relX}px`);
+            }
+          }
+        });
+      });
+    </script>
+    <BreakpointIndicator />
+  </body>
+</html>

@@ -1,0 +1,170 @@
+---
+import Logo from "@/components/global/Logo.astro";
+import Offcanvas from "../../widgets/Offcanvas.astro";
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+import { useTranslations } from "@/lib/utils/i18nUtils";
+import NavbarToggler from "@/layouts/components/global/header/NavbarToggler.astro";
+import HeaderOffcanvasContent from "@/components/widgets/HeaderOffcanvasContent.astro";
+import LanguageSwitcher from "@/layouts/components/global/header/LanguageSwitcher.astro";
+import Navbar from "./Navbar.astro";
+import CustomButton from "@/components/CustomButton.astro";
+
+const config = parseTomlToJson();
+const t = await useTranslations(Astro.currentLocale as string);
+
+const isCategoryFilteredPage = ["/category/", "/tag/"].some((path) =>
+  Astro.url.pathname.includes(`/${config.settings.blogFolder}${path}`),
+);
+
+const {
+  site: { logoAlternate },
+  settings: { stickyHeader, navigationButton, headerOffcanvas },
+} = config;
+
+const {
+  position,
+  hasDarkBackground,
+  hideOffcanvas,
+  class: ClassName,
+} = Astro.props;
+---
+
+<header
+  class:list={[
+    "header group/header transform",
+    { sticky: position === "sticky" },
+    { fixed: position === "fixed" },
+    { "has-dark-background": hasDarkBackground },
+    { "has-sticky-behavior": stickyHeader || position === "fixed" },
+    ClassName,
+  ]}>
+  <nav class="xl:container-12xl relative max-xl:container">
+    <div
+      class="hs-dropdown relative flex items-center justify-between py-6 [--auto-close:inside] [--gpu-acceleration:false] [--strategy:absolute] lg:[--strategy:static]">
+      {hasDarkBackground ? <Logo src={logoAlternate} /> : <Logo />}
+
+      <!-- Navbar For Header -->
+      <Navbar />
+
+      {/* Language Switcher For Small Devices */}
+      {
+        config.settings.multilingual.enable && !isCategoryFilteredPage && (
+          <div class="ms-auto me-4 flex lg:hidden">
+            <LanguageSwitcher
+              appearance={hasDarkBackground ? "light" : "dark"}
+            />
+          </div>
+        )
+      }
+
+      {/* Navigation Button For Large Devices */}
+      {
+        (navigationButton.enable || config.settings.multilingual.enable) && (
+          <div class="hidden gap-3.5 max-lg:ms-auto max-lg:me-4 lg:flex lg:items-center">
+            {config.settings.multilingual.enable && !isCategoryFilteredPage && (
+              <LanguageSwitcher
+                appearance={hasDarkBackground ? "light" : "dark"}
+              />
+            )}
+            {navigationButton.enable && (
+              <CustomButton
+                variant="fill"
+                label={t("navigation.buttonLabel")}
+                hoverEffect="creative-fill"
+                {...navigationButton}
+                class:list={[
+                  hasDarkBackground
+                    ? "btn-accent effect-color-dark"
+                    : "btn-primary effect-color-accent",
+                ]}
+              />
+            )}
+          </div>
+        )
+      }
+
+      {/* Desktop Sidebar Offcanvas Toggle Button */}
+      {
+        headerOffcanvas?.enable && (
+          <NavbarToggler
+            title="Open sidebar content"
+            appearance={hasDarkBackground ? "light" : "dark"}
+            isOffcanvasToggler={true}
+            class:list={[
+              "ring-primary/25 rounded-full duration-500 ease-out hover:ring-4",
+              hideOffcanvas ? "lg:hidden" : "",
+            ]}
+            aria-haspopup="dialog"
+            aria-expanded="false"
+            aria-controls="offcanvas-main"
+            data-hs-overlay="#offcanvas-main"
+            data-hs-overlay-options='{"emulateScrollbarSpace": true}'
+          />
+        )
+      }
+    </div>
+  </nav>
+</header>
+
+<div>
+  {/* Desktop Sidebar Offcanvas */}
+  {
+    headerOffcanvas?.enable && (
+      <Offcanvas
+        class={hideOffcanvas ? "lg:hidden" : ""}
+        id="offcanvas-main"
+        direction="right"
+        size="md">
+        <HeaderOffcanvasContent offcanvas={"offcanvas-main"} />
+      </Offcanvas>
+    )
+  }
+  <script>
+    import "@/plugins/preline/dropdown";
+    import "@preline/overlay";
+    import "@preline/accordion";
+
+    function stickyHeader(): void {
+      const header = document.querySelector(
+        ".has-sticky-behavior",
+      ) as HTMLElement | null;
+      if (!header) return;
+
+      let prevScrollPos = window.scrollY;
+      const startStickyAt = 0; // Start adding classes after scrolling this much
+      const minScrollDiff = 50; // Minimum scroll difference to toggle classes
+
+      const handleScroll = (initial = false) => {
+        const currentScrollPos = window.scrollY;
+        const scrollDiff = Math.abs(currentScrollPos - prevScrollPos);
+
+        if (currentScrollPos === 0) {
+          header.classList.remove("scroll-up", "scroll-down");
+          prevScrollPos = currentScrollPos;
+          return;
+        }
+
+        if (currentScrollPos > startStickyAt) {
+          if (initial || scrollDiff >= minScrollDiff) {
+            if (currentScrollPos > prevScrollPos) {
+              header.classList.remove("scroll-up");
+              header.classList.add("scroll-down");
+            } else {
+              header.classList.remove("scroll-down");
+              header.classList.add("scroll-up");
+            }
+
+            prevScrollPos = currentScrollPos;
+          }
+        }
+      };
+
+      window.addEventListener("scroll", () => handleScroll());
+      handleScroll(true);
+    }
+
+    window.addEventListener("load", () => {
+      setTimeout(() => stickyHeader(), 0);
+    });
+  </script>
+</div>

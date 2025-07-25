@@ -1,0 +1,40 @@
+---
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+import NavMenuItem from "@/layouts/components/global/header/MenuItem.astro";
+import { useTranslations } from "@/lib/utils/i18nUtils";
+import type { NavigationLink } from "@/types";
+import { filteredEnabled } from "@/lib/utils/filteredEnabled";
+import CustomButton from "@/components/CustomButton.astro";
+
+interface Props {
+  isMobile?: boolean;
+}
+
+const config = parseTomlToJson();
+const t = await useTranslations(Astro.currentLocale as string);
+let main = t("headerPrimary") as NavigationLink[];
+main = filteredEnabled(main);
+
+const { isMobile } = Astro.props;
+const { navigationButton } = config.settings;
+---
+
+<ul
+  id="nav-menu"
+  class:list={["navbar", isMobile && "navbar-mobile"]}
+  role="menu">
+  {main.map((menu) => <NavMenuItem isMobile={isMobile} menu={menu} />)}
+  {/* Navigation Button For Small Devices */}
+  {
+    navigationButton.enable && (
+      <li class="max-lg:pt-2 lg:hidden" role="menuitem">
+        <CustomButton
+          hoverEffect="creative-fill"
+          class="btn-accent effect-color-dark"
+          label={t("navigation.buttonLabel")}
+          {...navigationButton}
+        />
+      </li>
+    )
+  }
+</ul>

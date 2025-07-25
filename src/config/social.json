@@ -1,0 +1,28 @@
+{
+  "main": [
+    {
+      "enable": true,
+      "label": "facebook",
+      "icon": "FaFacebook",
+      "url": "https://www.facebook.com/folex"
+    },
+    {
+      "enable": true,
+      "label": "twitter",
+      "icon": "FaXTwitter",
+      "url": "https://twitter.com/folex"
+    },
+    {
+      "enable": true,
+      "label": "instagram",
+      "icon": "FaInstagram",
+      "url": "https://www.instagram.com/folex"
+    },
+    {
+      "enable": true,
+      "label": "linkedin",
+      "icon": "FaLinkedin",
+      "url": "https://www.linkedin.com/folex"
+    }
+  ]
+}

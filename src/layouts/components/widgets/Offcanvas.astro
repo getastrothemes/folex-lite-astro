@@ -1,0 +1,41 @@
+---
+interface Props {
+  class?: string;
+  initiallyOpen?: boolean;
+  id: string;
+  size?: "sm" | "md" | "lg";
+  showDefault?: boolean;
+  direction?: "left" | "right";
+}
+
+const {
+  class: ClassName,
+  initiallyOpen = false,
+  id,
+  direction = "left",
+  size = "sm",
+} = Astro.props;
+---
+
+<div
+  id={id}
+  class:list={[
+    "offcanvas hs-overlay fixed z-50 h-full w-full transform bg-white transition-all duration-300",
+    direction === "left"
+      ? initiallyOpen
+        ? "start-0 top-0 translate-x-0"
+        : "hs-overlay-open:translate-x-0 start-0 top-0 -translate-x-full"
+      : initiallyOpen
+        ? "end-0 top-0 translate-x-0"
+        : "hs-overlay-open:translate-x-0 end-0 top-0 translate-x-full",
+    size === "sm" && "max-w-lg",
+    size === "md" && "max-w-xl",
+    size === "lg" && "max-w-2xl",
+    ClassName,
+  ]}
+  role="dialog"
+  tabindex="-1"
+  aria-labelledby={id + "-label"}>
+  <slot />
+  <div id={id + "-label"} class="sr-only">Offcanvas</div>
+</div>

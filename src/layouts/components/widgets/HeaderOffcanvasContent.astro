@@ -1,0 +1,75 @@
+---
+import social from "@/config/social.json";
+import ReactIcons from "@/helpers/ReactIcons.astro";
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+import Logo from "../global/Logo.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import Social from "./Social.astro";
+import CustomButton from "@/components/CustomButton.astro";
+import Navbar from "../global/header/Navbar.astro";
+import { useTranslations } from "@/lib/utils/i18nUtils";
+
+const {
+  settings: {
+    headerOffcanvas: { enable, logo, description, button },
+    contactInfo: { address, phone, email },
+  },
+} = parseTomlToJson();
+
+const t = await useTranslations(Astro.currentLocale as string);
+
+const { offcanvas } = Astro.props;
+
+if (!enable) {
+  return null;
+}
+---
+
+<div
+  class="text-light h-screen space-y-10 overflow-auto bg-black px-8 pt-20 pb-5 md:px-16 md:pt-32 md:pb-10">
+  <button
+    type="button"
+    data-hs-overlay={`#${offcanvas}`}
+    title="Close offcanvas"
+    class="border-border-light text-light hover:border-border-dark absolute end-7 top-5 z-20 inline-flex h-14 w-14 items-center justify-center gap-x-2 rounded-full border-2 bg-black text-sm font-medium transition-all duration-500 ease-out hover:rotate-90 hover:bg-white/25"
+    aria-expanded="true">
+    <ReactIcons icon="IoMdClose" class="text-2xl" />
+  </button>
+
+  <Logo class="justify-start" width="11.25rem" height="3.125rem" src={logo} />
+  <div class="lg:border-b lg:pb-10">
+    {
+      (description || t("headerOffcanvas.description")) && (
+        <p
+          class="text-lg"
+          set:html={markdownify(
+            description || t("headerOffcanvas.description"),
+          )}
+        />
+      )
+    }
+  </div>
+  <div class="border-y py-10 lg:hidden">
+    <Navbar isMobile={true} />
+  </div>
+
+  <div
+    class="prose-a:hover:text-accent prose-a:text-light font-secondary text-sm/loose uppercase">
+    {address && <address class="not-italic" set:html={markdownify(address)} />}
+    {phone && <p class="mt-4 md:mt-6" set:html={markdownify(phone)} />}
+    {email && <p set:html={markdownify(email)} />}
+  </div>
+
+  <Social
+    linkType="follow"
+    size="md"
+    list={social.main.filter((social) => social.enable)}
+  />
+
+  <CustomButton
+    variant="circle"
+    class="btn-accent m-0 ms-auto hidden justify-center lg:flex"
+    label={button?.label || t("headerOffcanvas.buttonLabel")}
+    {...button}
+  />
+</div>

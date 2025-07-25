@@ -1,0 +1,57 @@
+---
+import { humanize } from "@/lib/utils/textConverter";
+import Breadcrumbs from "@/layouts/components/widgets/Breadcrumbs.astro";
+import OptimizedImage from "../utilities/OptimizedImage.astro";
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+
+type Props = {
+  content: {
+    title?: string;
+    image?: string;
+    breadcrumb?: boolean;
+    paddingBottom?: boolean;
+    hiddenPaths?: string[];
+  };
+};
+
+const config = parseTomlToJson();
+
+const {
+  title,
+  hiddenPaths,
+  breadcrumb = false,
+  image = config.settings.pageHeaderDefaultImage,
+  paddingBottom = true,
+} = Astro.props.content;
+---
+
+<section
+  class:list={[
+    "after:bg-theme-dark/25 relative pt-32 after:absolute after:inset-0 after:z-0 after:size-full md:pt-48",
+    { "pb-32 md:pb-48": paddingBottom },
+  ]}>
+  <div
+    class="container flex flex-col items-center justify-center gap-y-5 text-center">
+    {
+      image && (
+        <OptimizedImage
+          class="absolute inset-0 -z-10 h-full w-full object-cover"
+          src={image}
+          alt={title}
+        />
+      )
+    }
+    {
+      title && (
+        <h1 class="sm:text-display-5 text-display-6 md:text-display-4 relative z-10 text-white">
+          {humanize(title)}
+        </h1>
+      )
+    }
+    {
+      breadcrumb && (
+        <Breadcrumbs class="" breadcrumbExcludedPaths={hiddenPaths} />
+      )
+    }
+  </div>
+</section>

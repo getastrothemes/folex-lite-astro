@@ -1,0 +1,81 @@
+{
+  "name": "folex-lite-astro",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A highly customizable creative agency & personal portfolio business theme built with Tailwind CSS and Astro Js",
+  "author": "getastrothemes",
+  "license": "UNLICENSED",
+  "packageManager": "yarn@1.22.19",
+  "private": true,
+  "keywords": [
+    "astro",
+    "template",
+    "tailwindcss"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getastrothemes/folex-lite-astro.git"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "yarn": ">=1.22.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build && yarn remove-draft-from-sitemap",
+    "preview": "astro build && yarn remove-draft-from-sitemap && astro preview",
+    "start": "astro preview",
+    "check": "astro check",
+    "format": "prettier --write ./src",
+    "generate-favicons": "node ./scripts/generate-favicons.mjs",
+    "remove-multilingual": "node ./scripts/remove-multilingual.mjs",
+    "remove-draft-from-sitemap": "node ./scripts/remove-draft-from-sitemap.mjs"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^4.3.1",
+    "@astrojs/react": "^4.3.0",
+    "@astrojs/sitemap": "^3.4.1",
+    "@popperjs/core": "^2.11.8",
+    "@preline/accordion": "^3.0.0",
+    "@preline/collapse": "^3.0.0",
+    "@preline/overlay": "^3.0.0",
+    "@preline/select": "^3.0.0",
+    "@tailwindcss/vite": "^4.1.11",
+    "aos": "^2.3.4",
+    "astro": "^5.12.0",
+    "astro-font": "^1.1.0",
+    "date-fns": "^4.1.0",
+    "gray-matter": "^4.0.3",
+    "marked": "^16.1.1",
+    "preline": "^3.0.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.0.1",
+    "rehype-external-links": "^3.0.0",
+    "remark-toc": "^9.0.0",
+    "smoothscroll-for-websites": "^1.5.1",
+    "swiper": "^11.2.10",
+    "toml": "^3.0.0",
+    "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "@realfavicongenerator/generate-favicon": "^0.4.6",
+    "@realfavicongenerator/image-adapter-node": "^0.4.6",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "prettier": "^3.6.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwindcss": "^0.6.13",
+    "prettier-plugin-toml": "^2.0.6",
+    "slugify": "^1.6.6",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.7.3"
+  },
+  "resolutions": {
+    "sharp": "^0.33.2",
+    "@taplo/lib": "0.4.0-alpha.2"
+  }
+}

@@ -1,0 +1,71 @@
+---
+import SEO from "@/components/seo/Seo.astro";
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+import JsonLD from "../widgets/JsonLD.astro";
+import Favicons from "../seo/Favicons.astro";
+import OpenGraph from "../seo/OpenGraph.astro";
+import Font from "../widgets/Font.astro";
+
+const config = parseTomlToJson();
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Language" content={Astro.currentLocale} />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=5"
+  />
+  <SEO
+    content={{
+      title: Astro.props.title,
+      metaTitle: Astro.props.metaTitle,
+      description: Astro.props.description,
+      metaDescription: Astro.props.metaDescription,
+      canonical: Astro.props.canonical,
+    }}
+    config={config}
+  />
+  <meta
+    name="theme-color"
+    media="(prefers-color-scheme: light)"
+    content={"#fff"}
+  />
+  <meta
+    name="theme-color"
+    media="(prefers-color-scheme: dark)"
+    content="#000"
+  />
+  <meta name="generator" content={Astro.generator} />
+  {
+    config.head?.content && (
+      // Injecting custom scripts such as Google Analytics, Google Tag Manager, etc. tracking code,
+      // which should be placed in <head> tag
+      <Fragment set:html={config.head?.content} />
+    )
+  }
+  <OpenGraph
+    content={{
+      title: Astro.props.title,
+      metaTitle: Astro.props.metaTitle,
+      description: Astro.props.description,
+      metaDescription: Astro.props.metaDescription,
+      disableTagline: Astro.props.disableTagline,
+    }}
+    config={config}
+  />
+  <Favicons config={config} />
+  <JsonLD
+    content={{
+      title: Astro.props.title,
+      metaTitle: Astro.props.metaTitle,
+      description: Astro.props.description,
+      metaDescription: Astro.props.metaDescription,
+      disableTagline: Astro.props.disableTagline,
+      pageType: Astro.props.pageType,
+    }}
+  />
+
+  <!------------------------ Google Fonts ------------------------>
+  <Font />
+</head>

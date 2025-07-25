@@ -1,0 +1,71 @@
+---
+import { absoluteUrl } from "@/lib/utils/absoluteUrl";
+import { plainify, removeWhitespace } from "@/lib/utils/textConverter";
+
+const config = Astro.props.config;
+
+// Destructure Astro.props with fallbacks
+const {
+  title,
+  metaTitle,
+  description,
+  metaDescription,
+  disableTagline,
+  image = config.opengraph.image,
+  twitter = config.opengraph.twitter,
+  twitterCard = config.opengraph.twitterCard,
+  ogType = config.opengraph.ogType,
+  ogLocale = config.opengraph.ogLocale,
+} = Astro.props.content;
+
+// Resolved title and description
+let resolvedTitle = plainify(metaTitle ?? title ?? config.site.title);
+let resolvedDescription = plainify(
+  metaDescription ?? description ?? config.site.description,
+);
+
+// Add tagline if not disabled
+if (!disableTagline && config.site.tagline) {
+  const separator = config.site.taglineSeparator || " - ";
+  resolvedTitle += separator + config.site.tagline;
+}
+
+// Clean up whitespace
+resolvedTitle = removeWhitespace(resolvedTitle);
+resolvedDescription = removeWhitespace(resolvedDescription);
+
+// Page URL
+const pageUrl = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!------------------------ Open Graph Meta Tags ------------------------>{
+  image && <meta property="og:image" content={absoluteUrl(image, Astro)} />
+}
+{resolvedTitle && <meta property="og:title" content={resolvedTitle} />}
+{
+  config.site.title && (
+    <meta
+      property="og:site_name"
+      content={removeWhitespace(config.site.title)}
+    />
+  )
+}
+{
+  resolvedDescription && (
+    <meta property="og:description" content={resolvedDescription} />
+  )
+}
+{ogType && <meta property="og:type" content={ogType} />}
+{ogLocale && <meta property="og:locale" content={ogLocale} />}
+{pageUrl && <meta property="og:url" content={pageUrl.toString()} />}
+
+<!------------------------ Twitter Meta Tags ------------------------>
+{twitter && <meta name="twitter:creator" content={removeWhitespace(twitter)} />}
+{resolvedTitle && <meta name="twitter:title" content={resolvedTitle} />}
+{
+  resolvedDescription && (
+    <meta name="twitter:description" content={resolvedDescription} />
+  )
+}
+{twitterCard && <meta name="twitter:card" content={twitterCard} />}
+{image && <meta name="twitter:image" content={absoluteUrl(image, Astro)} />}

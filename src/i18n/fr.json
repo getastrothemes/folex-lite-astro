@@ -1,0 +1,21 @@
+{
+  "common": {
+    "viewDetails": "Voir les détails",
+    "learnMoreAbout": "En apprendre davantage sur",
+    "paginationPrevious": "Précédent",
+    "paginationNext": "Suivant",
+    "paginationPortfolioPrev": "Portfolio précédent",
+    "paginationPortfolioNext": "Portfolio suivant"
+  },
+  "headerOffcanvas": {
+    "description": "Nous sommes une agence numérique qui aide les entreprises à créer des expériences immersives.",
+    "buttonLabel": "Discutons ensemble"
+  },
+  "navigation": {
+    "buttonLabel": "Commencer"
+  },
+  "footer": {
+    "copyright": "Droits d’auteur © {{ year }} Folex / Réalisé avec [Getastrothemes](https://getastrothemes.com/)",
+    "_comment": "Nous vous serions reconnaissants de conserver le copyright du thème. Merci de soutenir Getastrothemes !"
+  }
+}

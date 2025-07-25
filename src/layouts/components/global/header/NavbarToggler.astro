@@ -1,0 +1,93 @@
+---
+interface Props {
+  class?: string;
+  isOffcanvasToggler?: boolean;
+  appearance?: "dark" | "light";
+  [key: string]: any;
+}
+
+const {
+  class: ClassName,
+  isOffcanvasToggler = false,
+  appearance = "dark",
+  ...rest
+} = Astro.props;
+
+const isLightToggler = appearance === "light";
+---
+
+<button
+  aria-label="Toggle navigation"
+  class:list={[
+    "group nav-toggler ms-2 lg:ms-4",
+    !isOffcanvasToggler && "hs-dropdown-toggle relative lg:hidden",
+    ClassName,
+  ]}
+  {...rest}>
+  <div
+    class:list={[
+      "ring-opacity-30 relative flex h-14 w-14 transform flex-col items-center justify-center overflow-hidden rounded-full border duration-200",
+      isLightToggler ? "border-border-light" : "border-border-dark",
+    ]}>
+    <div
+      class="hs-dropdown-open:translate-y-2 hs-dropdown-open:rotate-0 -translate-y-10 rotate-45 transform overflow-hidden transition-transform duration-300">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        class:list={[isLightToggler ? "text-light" : "text-dark"]}
+        width="24px"
+        height="24px"
+        viewBox="0 0 24 24"
+        version="1.1"
+        xml:space="preserve"
+        fill="currentColor">
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+
+        <g
+          id="SVGRepo_tracerCarrier"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+        </g>
+
+        <g id="SVGRepo_iconCarrier">
+          <style type="text/css">
+            .st0 {
+              opacity: 0.2;
+              fill: none;
+              stroke-width: 5e-2;
+              stroke-miterlimit: 10;
+            }
+          </style>
+          <g id="grid_system"></g>
+          <g id="_icons">
+            <path
+              d="M5.3,18.7C5.5,18.9,5.7,19,6,19s0.5-0.1,0.7-0.3l5.3-5.3l5.3,5.3c0.2,0.2,0.5,0.3,0.7,0.3s0.5-0.1,0.7-0.3 c0.4-0.4,0.4-1,0-1.4L13.4,12l5.3-5.3c0.4-0.4,0.4-1,0-1.4s-1-0.4-1.4,0L12,10.6L6.7,5.3c-0.4-0.4-1-0.4-1.4,0s-0.4,1,0,1.4 l5.3,5.3l-5.3,5.3C4.9,17.7,4.9,18.3,5.3,18.7z">
+            </path>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div
+      class="flex h-4 w-4 origin-center -translate-y-3 transform flex-col justify-between overflow-hidden transition-transform duration-300">
+      <div
+        class:list={[
+          "hs-dropdown-open:translate-y-6 mb-1.5 h-1 w-7 origin-left transform transition-transform duration-300 group-hover:rotate-12",
+          isLightToggler ? "bg-theme-light" : "bg-theme-dark",
+        ]}>
+      </div>
+      <div
+        class:list={[
+          "hs-dropdown-open:translate-y-6 mb-1.5 h-1 w-7 transform rounded transition-transform delay-75 duration-300 group-hover:rotate-12",
+          isLightToggler ? "bg-theme-light" : "bg-theme-dark",
+        ]}>
+      </div>
+      <div
+        class:list={[
+          "hs-dropdown-open:translate-y-6 h-1 w-7 origin-left transform transition-transform delay-100 duration-300 group-hover:-rotate-12",
+          isLightToggler ? "bg-theme-light" : "bg-theme-dark",
+        ]}>
+      </div>
+    </div>
+  </div>
+</button>

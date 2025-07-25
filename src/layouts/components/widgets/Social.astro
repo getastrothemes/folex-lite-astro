@@ -1,0 +1,143 @@
+---
+import ReactIcons from "@/helpers/ReactIcons.astro";
+import extractSlug from "@/lib/utils/extractSlug";
+import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
+import { slugifyyy } from "@/lib/utils/textConverter";
+import type { SocialLink } from "@/types";
+
+interface BaseProps {
+  size?: "sm" | "md" | "lg";
+  class?: string;
+  list: SocialLink[];
+  linkType: "share" | "follow"; // Remove the optional type; it's always defined in Props.
+  layout?: "dark" | "light" | "dark-modern";
+  [key: string]: any;
+}
+
+interface ShareProps extends BaseProps {
+  linkType: "share";
+  title?: string;
+  description?: string;
+  disabled?: string[];
+}
+
+interface FollowProps extends BaseProps {
+  linkType: "follow";
+}
+
+type Props = ShareProps | FollowProps;
+
+// Correctly define Astro.props to match Props
+let {
+  list,
+  size = "sm",
+  disabled,
+  layout = "light",
+  linkType,
+  currentPage,
+  class: className,
+  ...rest
+} = Astro.props as Props; // Ensure Astro.props is typed as Props
+
+let slug: string | undefined,
+  shareLinks = {} as Record<string, string>;
+if (linkType === "share" && currentPage) {
+  if (!currentPage) {
+    console.error(
+      "[Social.astro] Prop `currentPage` is required when `linkType` is set to 'share'.",
+    );
+    return;
+  }
+
+  slug = getLocaleUrlCTM(
+    extractSlug(currentPage),
+    Astro.currentLocale,
+    currentPage?.collection,
+  );
+
+  if (!slug) return;
+
+  const baseURL = Astro.url.origin;
+  slug = new URL(slug, baseURL).href;
+  list = linkType === "share" ? list : list.filter((social) => social.url);
+
+  function getShareLink(
+    platform: string,
+    title?: string,
+    description?: string,
+  ): string {
+    switch (platform) {
+      case "facebook":
+        return `https://www.facebook.com/sharer/sharer.php?u=${slug}`;
+      case "twitter":
+        return `https://twitter.com/intent/tweet/${title ? `?text=${slugifyyy(title)}` : ""}?url=${slug}`;
+      case "linkedin":
+        return `https://www.linkedin.com/shareArticle?mini=true&url=${slug}${title ? `&title=${slugifyyy(title)}` : ""}${description ? `&summary=&source=${slugifyyy(description)}` : ""}`;
+      case "pinterest":
+        return `https://pinterest.com/pin/create/button/?url=${slug}${description ? `&media=&description=${slugifyyy(description)}` : ""}`;
+      default:
+        return "";
+    }
+  }
+
+  shareLinks = Object.fromEntries(
+    list
+      .filter((social) => social.label)
+      .map((social) => {
+        const link = getShareLink(social.label);
+
+        return link ? [social.label, link] : [];
+      }),
+  );
+
+  if (disabled) {
+    list = list.filter((social) => !disabled.includes(social.label));
+  }
+
+  if (linkType === "share") {
+    list = list.filter((social) => shareLinks[social.label]);
+  }
+}
+---
+
+{
+  list && list[0] && (
+    <ul
+      class:list={["flex flex-wrap items-center gap-3.5", className]}
+      {...rest}>
+      {list.map((social) => (
+        <li>
+          <a
+            aria-label={social.label}
+            href={linkType === "share" ? shareLinks[social.label] : social.url}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            class:list={[
+              "group relative flex items-center justify-center transition duration-300",
+              layout === "dark" &&
+                "group text-text-default relative flex items-center justify-center transition duration-300",
+              layout === "light" &&
+                "group text-light relative flex items-center justify-center transition duration-300",
+              layout === "dark-modern" &&
+                "group text-text-default bg-theme-light hover:bg-theme-dark hover:text-light relative flex h-12 w-12 items-center justify-center rounded-full transition duration-300",
+            ]}>
+            <span class="sr-only">{social.label}</span>
+            {social.icon && (
+              <ReactIcons
+                icon={social.icon}
+                class:list={[
+                  "has-inherited-colors relative z-10 transition duration-300",
+                  size === "sm" && "text-base",
+                  size === "md" && "text-xl",
+                  size === "lg" && "text-[1.375rem]",
+                  layout === "dark" && "hover:scale-110",
+                  layout === "light" && "hover:text-accent",
+                ]}
+              />
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

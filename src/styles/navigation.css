@@ -1,0 +1,239 @@
+/* Header */
+.header {
+  @apply relative z-30 w-full;
+
+  &.has-sticky-behavior {
+    @apply top-0 z-40 transition-[transform,_opacity,_0.3s_background] duration-500;
+  }
+
+  &.has-sticky-behavior {
+    @apply bg-transparent;
+  }
+
+  /* Sticky Animation On Fixed Header */
+  &.scroll-down.has-sticky-behavior:not(.has-dark-background),
+  &.scroll-up.has-sticky-behavior:not(.has-dark-background) {
+    @apply bg-white/80 backdrop-blur-lg;
+  }
+
+  &.scroll-down.has-sticky-behavior.has-dark-background,
+  &.scroll-up.has-sticky-behavior.has-dark-background {
+    @apply bg-black/80 backdrop-blur-lg;
+  }
+
+  /* Following Code Make Sticky Upwards */
+  &.scroll-down {
+    @apply pointer-events-none -translate-y-4 opacity-0;
+  }
+
+  &.scroll-up {
+    @apply pointer-events-auto translate-y-0 opacity-100;
+  }
+
+  &.scroll-down .hs-dropdown-menu.mega-menu {
+    @apply !pointer-events-none;
+  }
+
+  &.scroll-up .hs-dropdown-menu.mega-menu {
+    @apply pointer-events-auto;
+  }
+}
+
+/* Language Switcher */
+.language-switcher {
+  @apply relative;
+
+  .language-switcher-button {
+    @apply btn text-text-default flex items-center gap-2 border px-4 uppercase;
+
+    svg * {
+      @apply !stroke-current;
+    }
+  }
+
+  .language-switcher-dropdown {
+    @apply border-border-dark hs-dropdown-open:opacity-100 divide-border-light absolute end-0 top-[calc(100%+0.5rem)] min-w-32 divide-y border bg-white opacity-0 transition-[opacity,margin];
+
+    li a {
+      @apply btn text-text-default hover:bg-primary hover:text-light block bg-white text-center transition-colors duration-300;
+      &.active {
+        @apply bg-theme-dark text-light;
+      }
+    }
+  }
+
+  &.language-switcher-light {
+    .language-switcher-button {
+      @apply border-light text-light;
+    }
+    .language-switcher-dropdown li a {
+      @apply text-text-default hover:bg-accent hover:text-dark;
+    }
+  }
+}
+
+/* Common Navbar Base Styles */
+.navbar {
+  /* Base layout */
+  @apply flex max-h-[80vh] lg:relative lg:mx-auto lg:items-center lg:bg-transparent;
+
+  /* Mobile overlay behavior */
+  @apply max-lg:hs-dropdown-open:opacity-100 max-lg:top-full max-lg:z-40 max-lg:hidden max-lg:w-full max-lg:flex-col max-lg:space-y-1 max-lg:border max-lg:bg-white max-lg:p-2 max-lg:opacity-0 max-lg:transition-[opacity,margin];
+
+  /* Nav Items & Links */
+  .nav-item,
+  .nav-dropdown-item {
+    @apply mb-0 bg-transparent;
+
+    .nav-toggle {
+      @apply cursor-pointer justify-between gap-2 select-none;
+
+      .nav-toggle-icon {
+        @apply hs-dropdown-open:rotate-180 ms-2 inline-block h-4 w-4 transition duration-300;
+      }
+    }
+
+    .nav-link,
+    .nav-dropdown-link {
+      @apply font-secondary text-text-default hover:bg-primary/5 hover:text-primary relative flex w-full items-center px-5 py-3 text-sm font-normal uppercase transition duration-300;
+
+      &.nav-link-active {
+        @apply max-lg:text-accent;
+      }
+    }
+  }
+
+  /* Dropdown List Styles */
+  .nav-dropdown-list {
+    @apply hs-dropdown-open:pointer-events-auto hs-dropdown-open:opacity-100 border-border-dark pointer-events-none absolute top-0 z-10 mt-4 hidden min-w-72 border bg-white p-1 opacity-0 transition-[opacity,margin] max-lg:!static max-lg:!transform-none lg:start-1/2 lg:!mx-2 lg:-translate-x-1/2;
+  }
+
+  .nav-dropdown-link {
+    @apply font-secondary hover:bg-primary/5 hover:text-primary px-2.5 py-2 text-inherit lg:px-5;
+  }
+
+  .nav-dropdown .nav-toggle {
+    @apply lg:hs-dropdown-open:bg-primary/5 lg:text-primary;
+  }
+
+  /* Navbar for Mobile */
+  &.navbar-mobile {
+    @apply flex max-h-fit border-0 bg-transparent px-0 py-0 opacity-100 lg:!hidden;
+
+    .nav-link,
+    .nav-dropdown-link {
+      @apply hover:!text-accent !px-0 text-white;
+    }
+
+    .nav-item.open,
+    .nav-dropdown.open {
+      .nav-dropdown-list,
+      > .nav-toggle {
+        @apply border-border-dark;
+      }
+      > .nav-toggle {
+        @apply !text-accent/80;
+      }
+    }
+
+    .nav-item > .nav-toggle {
+      @apply justify-between;
+    }
+
+    .nav-dropdown-list .nav-dropdown > .nav-toggle {
+      @apply border-s border-transparent;
+    }
+
+    .nav-dropdown-list,
+    .mega-menu {
+      @apply border-y-0 border-e-0 bg-transparent p-0 ps-5 text-sm;
+
+      .nav-dropdown-link {
+        @apply px-4 py-3;
+      }
+    }
+  }
+}
+
+/* Dark Header Variant */
+.header.has-dark-background {
+  .nav-link {
+    @apply text-light hover:text-accent;
+  }
+}
+
+/* Badge */
+.navbar .badge {
+  @apply relative inline-block;
+
+  &:not(.badge-dot) {
+    @apply relative ms-3 inline-block px-1.5 py-1 !text-xs font-normal;
+  }
+
+  &.badge-dot {
+    @apply absolute -end-3 top-1 h-1.5 w-1.5 rounded-full lg:-top-1;
+  }
+
+  &.badge-primary {
+    @apply bg-primary text-light;
+
+    &.badge-dot {
+      @apply bg-primary;
+    }
+  }
+
+  &.badge-info {
+    @apply bg-blue-100 text-blue-800;
+
+    &.badge-dot {
+      @apply bg-blue-400;
+    }
+  }
+
+  &.badge-accent {
+    @apply bg-purple-100 text-purple-800;
+
+    &.badge-dot {
+      @apply bg-purple-400;
+    }
+  }
+
+  &.badge-success {
+    @apply bg-emerald-100 text-emerald-800;
+
+    &.badge-dot {
+      @apply bg-emerald-400;
+    }
+  }
+
+  &.badge-danger {
+    @apply bg-rose-100 text-rose-800;
+
+    &.badge-dot {
+      @apply bg-rose-400;
+    }
+  }
+}
+
+/* Changing Badges That Appearing badly On Dark Header */
+header.has-dark-background .navbar .badge {
+  &.badge-primary {
+    @apply bg-primary text-light;
+  }
+
+  &.badge-info {
+    @apply bg-blue-300;
+  }
+
+  &.badge-accent {
+    @apply bg-purple-300;
+  }
+
+  &.badge-success {
+    @apply bg-emerald-700 text-emerald-100;
+  }
+
+  &.badge-danger {
+    @apply bg-rose-600 text-rose-50;
+  }
+}

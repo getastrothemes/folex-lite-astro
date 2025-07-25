@@ -1,0 +1,59 @@
+/* ====================================================== */
+/* Button Style */
+/* ====================================================== */
+
+@utility btn {
+  @apply font-secondary text-light inline-block overflow-hidden px-6 py-4 text-sm font-normal whitespace-nowrap uppercase disabled:cursor-not-allowed xl:px-9 xl:py-5;
+}
+
+@utility btn-circle {
+  @apply font-secondary inline-flex h-44 w-44 items-center justify-center rounded-full px-8 py-3 text-center text-sm;
+}
+
+@utility btn-accent {
+  @apply bg-accent text-dark;
+}
+
+@utility btn-primary {
+  @apply bg-primary text-light;
+}
+
+.creative-hover-anim:not([disabled="true"]) {
+  @apply relative z-10 overflow-hidden delay-100;
+
+  .hover-bg {
+    @apply translate-centered absolute start-[var(--creative-hover-left)] top-[var(--creative-hover-top)] -z-10 block h-0 w-0 rounded-full;
+    transition:
+      width 0.6s ease,
+      height 0.6s ease;
+  }
+
+  &:hover .hover-bg {
+    width: 56.25rem;
+    height: 56.25rem;
+  }
+
+  &.effect-color-primary .hover-bg {
+    background: var(--color-theme-primary);
+  }
+  &.effect-color-light .hover-bg {
+    background: var(--color-theme-light);
+  }
+  &.effect-color-dark .hover-bg {
+    background: var(--color-theme-dark);
+  }
+  &.effect-color-accent .hover-bg {
+    background: var(--color-accent);
+  }
+
+  &:hover {
+    &.effect-color-primary,
+    &.effect-color-dark {
+      color: var(--color-light) !important;
+    }
+    &.effect-color-light,
+    &.effect-color-accent {
+      color: var(--color-dark) !important;
+    }
+  }
+}

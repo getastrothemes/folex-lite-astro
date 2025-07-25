@@ -1,0 +1,114 @@
+---
+/**
+ * Example Usage
+
+  // Default button (anchor tag)
+  <CustomButton label="Visit Home" url="/" />
+
+  // Outline variant linking externally
+  <CustomButton variant="outline" label="Astro Docs" url="https://astro.build" />
+
+  // Text variant with hover effect
+  <CustomButton variant="text" hoverEffect="text-flip" label="Learn More" url="/learn" />
+
+  // Button tag for form actions
+  <CustomButton tag="button" label="Submit" onClick={() => alert('Submitted!')} />
+
+  // Creative hover effect with fill variant
+  <CustomButton hoverEffect="creative-fill" label="Explore" url="/explore" />
+
+  // Magnetic hover effect with circle variant
+  <CustomButton hoverEffect="magnetic" variant="circle" label="Go" url="/go" />
+
+  // Magnetic text flip with outline variant
+  <CustomButton hoverEffect="magnetic-text-flip" variant="outline" label="Join Now" url="/join" />
+
+  // Custom icon
+  <CustomButton label="Contact Us" icon="/icons/mail.svg" url="/contact" />
+ */
+
+import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
+import CustomButtonContent from "./CustomButtonContent.astro";
+import type { sharedButton, sharedButtonTag } from "@/sections.schema";
+import type { z } from "astro/zod";
+
+type Props = z.infer<typeof sharedButton | typeof sharedButtonTag>;
+
+const {
+  enable = true,
+  tag = "a",
+  title,
+  label,
+  url = "#",
+  rel,
+  target,
+  hoverEffect,
+  icon = "/images/icons/svg/arrow-top-right.svg",
+  variant = "fill",
+  class: className,
+  ...rest
+} = Astro.props;
+
+if (!enable) return;
+
+const isCreativeHoverEffect = hoverEffect === "creative-fill";
+
+// Show upgrade message if using any hover effect not supported in the free version
+if (hoverEffect && hoverEffect !== "creative-fill") {
+  console.warn(
+    `${hoverEffect} hover effect is a pro feature and only available in the Pro version of this template.`,
+  );
+}
+
+const resolvedRel = url.startsWith("http")
+  ? rel || "noopener noreferrer"
+  : rel || undefined;
+const resolvedTarget = url.startsWith("http")
+  ? target || "_blank"
+  : target || undefined;
+
+const buttonClasses = [
+  variant !== "circle" && "btn",
+  {
+    "btn-circle": variant === "circle",
+    "creative-hover-anim": isCreativeHoverEffect,
+    "btn-primary":
+      (variant === "circle" || variant === "fill") &&
+      !className?.includes("btn-"),
+  },
+  className,
+];
+---
+
+{
+  tag === "a" ? (
+    <a
+      rel={resolvedRel}
+      target={resolvedTarget}
+      class:list={buttonClasses}
+      href={getLocaleUrlCTM(url, Astro.currentLocale)}
+      {...rest}>
+      <CustomButtonContent
+        {...{
+          label,
+          title,
+          variant,
+          icon,
+          isCreativeHoverEffect,
+        }}
+      />
+    </a>
+  ) : (
+    <button class:list={buttonClasses} {...rest}>
+      <CustomButtonContent
+        {...{
+          label,
+          title,
+          variant,
+          icon,
+          isCreativeHoverEffect,
+        }}
+      />
+    </button>
+  )
+}

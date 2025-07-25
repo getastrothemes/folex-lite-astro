@@ -1,0 +1,144 @@
+@import "./buttons.css";
+@import "./utilities.css";
+
+/* ----------------------------
+   Form Styling
+----------------------------- */
+form {
+  @apply prose-a:text-primary prose-a:underline prose-a:underline-offset-2;
+}
+
+/* Selected state style for Preline select component */
+.hs-select select:not(.hs-select-active) + button span[data-title] {
+  @apply opacity-70;
+}
+
+/* ----------------------------
+   Input Field Styles
+----------------------------- */
+.form-input,
+.hs-select input.form-input,
+.hs-select button.form-input {
+  @apply border-body-dark text-dark placeholder:text-dark h-full w-full border-2 border-x-0 border-t-0 bg-transparent px-0 pt-0 pb-4 outline-0 [--tw-ring-offset-shadow:none] placeholder:opacity-70 focus:bg-transparent focus:!shadow-none focus:!ring-0;
+  @apply [&_[data-title]]:text-dark;
+}
+
+/* Focus styles for input types */
+[type="text"]:focus,
+input:where(:not([type])):focus,
+[type="email"]:focus,
+[type="url"]:focus,
+[type="password"]:focus,
+[type="number"]:focus,
+[type="date"]:focus,
+[type="datetime-local"]:focus,
+[type="month"]:focus,
+[type="search"]:focus,
+[type="tel"]:focus,
+[type="time"]:focus,
+[type="week"]:focus,
+[multiple]:focus,
+textarea:focus,
+select:focus {
+  @apply border-primary;
+}
+
+/* Label Styling */
+.form-label {
+  @apply text-dark mb-4 block font-normal;
+}
+
+/* ----------------------------
+   Checkbox and Radio Styling
+----------------------------- */
+.form-check-wrapper {
+  @apply space-y-2;
+}
+
+.form-check {
+  @apply flex items-start gap-4;
+}
+
+.form-check-label {
+  @apply cursor-pointer leading-relaxed;
+}
+
+.form-radio,
+.form-checkbox {
+  @apply shrink-0 cursor-pointer transition-colors duration-500;
+  @apply bg-primary/15 ring-primary mt-1 h-4 w-4 border-0 ring-0 outline-0;
+  @apply focus:ring-0 focus:ring-offset-0 focus:outline-0;
+  @apply checked:bg-primary checked:ring-primary/15 checked:ms-2 checked:mt-[9px] checked:h-2 checked:w-2 checked:bg-none checked:ring-[0.375rem];
+}
+
+.form-radio {
+  @apply -ms-px h-[1.125rem] w-[1.125rem] checked:ms-[0.2188rem] checked:me-[0.2813rem] checked:h-[0.5625rem] checked:w-[0.5625rem] checked:ring-[0.3rem];
+}
+
+.form-checkbox {
+  @apply me-px h-[1rem] w-[1rem] checked:ms-[4.4px] checked:me-[0.375rem] checked:h-[0.375rem] checked:w-[0.4063rem] checked:ring-[0.3125rem];
+}
+
+/* ----------------------------
+   Dropdown Base Styles
+----------------------------- */
+[data-hs-select-dropdown] {
+  @apply bg-theme-dark border-transparent p-1;
+}
+
+/* Dropdown Option Item Styles */
+[data-hs-select-dropdown] > div[data-value] {
+  @apply text-light hover:text-light px-3 py-1 hover:bg-white/15 focus:bg-white/15 focus:outline-none;
+}
+
+/* Dropdown Search Input Wrapper */
+.dropdown-search-input-wrapper {
+  @apply p-0 focus:shadow-none focus:ring-0 focus:outline-none;
+}
+
+.dropdown-search-input-wrapper input {
+  @apply placeholder:text-base-sm border-border-light !p-2 !ps-3 placeholder:opacity-50 placeholder:md:text-base;
+}
+
+/* Dropdown 'Not Found' Message */
+[data-hs-select-dropdown] > span {
+  @apply text-light text-base-sm block px-3 py-2.5 opacity-80 md:text-base;
+}
+
+/* Dropdown Icons */
+.dropdown-icon {
+  @apply text-dark;
+}
+
+.dropdown-selected-icon {
+  @apply text-light;
+}
+
+/* ----------------------------
+   SVG Icon Color Matching
+   Automatically replace fill/stroke with brand color
+----------------------------- */
+[data-icon]:not(.match-brand-color),
+.has-inherited-colors {
+  *[fill*="#"] {
+    @apply ![fill:currentColor];
+  }
+
+  *[stroke*="#"] {
+    @apply ![stroke:currentColor];
+  }
+}
+
+.match-brand-color {
+  *[fill*="#2562FF"] {
+    @apply !fill-primary;
+  }
+
+  *[stroke*="#2562FF"] {
+    @apply !stroke-primary;
+  }
+
+  *[stop-color="#2562FF"] {
+    stop-color: var(--color-primary) !important;
+  }
+}

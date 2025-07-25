@@ -1,0 +1,147 @@
+---
+import { getCollectionCTM, getEntryCTM } from "@/lib/customContentLoader.astro";
+import overrideObjects from "@/lib/utils/overrideObjects.ts";
+import { markdownify } from "@/lib/utils/textConverter";
+import ReactIcons from "@/helpers/ReactIcons.astro";
+import uniqueIdGenerator from "@/lib/utils/uniqueIdGenerator";
+import type { z } from "astro/zod";
+import type { Section } from "@/types";
+import type { servicesSectionSchema } from "@/sections.schema";
+
+// Type for this section data
+type Service = {
+  title: string;
+  description: string;
+};
+
+type ServicesInterface = Section & z.infer<typeof servicesSectionSchema>;
+type Props = {
+  content?: ServicesInterface;
+};
+
+// Fetching the default content for the this section
+let defaultContent = (
+  await getEntryCTM("sections", "services-section", Astro.currentLocale)
+)?.data as ServicesInterface;
+
+// Enables content customization (e.g., title, description) with a fallback to 'defaultContent' if not provided.
+// The 'content' prop should match the structure of 'defaultContent'.
+// Allows using this section with different content across multiple pages.
+// If 'content' is missing, 'defaultContent' will be used.
+let actualContent = overrideObjects(
+  defaultContent,
+  Astro.props.content,
+) as ServicesInterface;
+
+// Extracting required values from 'content' object
+let {
+  enable = true,
+  title,
+  sectionDirection = "vertical",
+  options: { layout = "accordion", appearance, limit = false } = {},
+} = actualContent as ServicesInterface;
+
+let services = (await getCollectionCTM("services", Astro.currentLocale)) as
+  | Service[]
+  | any[];
+
+if (layout === "accordion") {
+  services = services.map((service) => {
+    return {
+      title: service.data.title,
+      description: service.data.description,
+    };
+  }) as Service[];
+}
+
+const isHorizontalSection = sectionDirection === "horizontal";
+
+// limit the number of services to be displayed
+services = limit ? services.slice(0, limit as number) : services;
+
+if (!enable) {
+  return null;
+}
+---
+
+<section id="services">
+  <div
+    class:list={[
+      "container",
+      isHorizontalSection
+        ? "grid grid-cols-1 items-start space-y-14 gap-x-10 lg:grid-cols-2 lg:space-y-0"
+        : "space-y-14",
+    ]}>
+    {
+      title && (
+        <h2
+          class:list={[
+            "text-h1-sm md:text-h1 mx-auto max-w-3xl",
+            appearance === "dark" && "text-light",
+            isHorizontalSection ? "lg:sticky lg:top-32" : "text-center",
+          ]}
+          set:html={markdownify(title)}
+        />
+      )
+    }
+
+    {
+      layout === "accordion" ? (
+        <div class="hs-accordion-group mx-auto w-full max-w-4xl">
+          {services.map((item, index): { item: Service; index: number } => {
+            const id = uniqueIdGenerator(item.title);
+            return (
+              <div
+                class:list={[
+                  "hs-accordion relative border-b py-6 text-start first:border-t lg:pe-20",
+                  "transition-all duration-300 lg:flex lg:flex-row lg:items-start lg:justify-between lg:gap-16",
+                  index === 0 && "active",
+                ]}
+                id={"accordion-" + id}>
+                <div
+                  class="font-secondary mt-2.5 mb-4 text-2xl font-semibold lg:mb-0 lg:text-sm"
+                  set:html={(index <= 9 ? "0" : "") + (index + 1)}
+                />
+                <button
+                  title="show or hide accordion content"
+                  class="hs-accordion-toggle absolute inset-0 size-full"
+                />
+                <button
+                  title="show or hide accordion content"
+                  aria-controls={"accordion-content-" + id}
+                  aria-expanded={index === 0 ? "true" : "false"}
+                  class="hs-accordion-toggle text-dark font-secondary text-h5 w-full pe-20 text-start font-medium lg:pe-0"
+                  set:html={item.title}
+                />
+                <div
+                  role="region"
+                  id={"accordion-content-" + id}
+                  aria-labelledby={"accordion-" + id}
+                  class:list={[
+                    "hs-accordion-content hs-accordion-active:opacity-100 w-full max-w-lg overflow-hidden opacity-0 transition-all duration-300 ease-linear",
+                    index !== 0 && "hidden",
+                  ]}>
+                  <div class="prose-styles prose-p:first:mt-0 prose-p:last:mb-0 pt-3 lg:pt-0">
+                    <div set:html={markdownify(item.description, true)} />
+                  </div>
+                </div>
+
+                <div class="hs-accordion-active:rotate-180 pointer-events-none absolute end-0 top-8 flex transition duration-300">
+                  <ReactIcons
+                    icon="RxArrowTopRight"
+                    class="text-dark text-xl"
+                  />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : layout === "grid" ? (
+        <div class="py-8 text-center text-sm text-gray-400 italic">
+          "Grid Layout" is only available in the Pro version. Purchase Folex
+          premium version to unlock this layout.
+        </div>
+      ) : null
+    }
+  </div>
+</section>

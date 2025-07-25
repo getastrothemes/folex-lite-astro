@@ -1,0 +1,7 @@
+name                   = "folex-lite-theme"
+compatibility_date     = "2025-01-01"
+pages_build_output_dir = "./dist"
+compatibility_flags    = ["nodejs_compat"]
+
+[vars]
+  NODE_VERSION = "22.13.1"

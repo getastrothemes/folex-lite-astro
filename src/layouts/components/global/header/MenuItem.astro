@@ -1,0 +1,40 @@
+---
+import type { NavigationLink } from "@/types";
+import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
+
+const menu = Astro.props.menu as NavigationLink;
+const { pathname } = Astro.url;
+---
+
+{
+  menu.name && (
+    <li class="nav-item" role="menuitem">
+      <a
+        {...{
+          // Set `rel` attribute for external links or use provided value
+          rel: menu.url?.startsWith("http")
+            ? menu.rel || "noopener noreferrer"
+            : menu.rel || undefined,
+
+          // Set `target` to "_blank" for external links unless otherwise specified
+          target: menu.url?.startsWith("http")
+            ? menu.target || "_blank"
+            : menu.target || undefined,
+        }}
+        target={menu.url?.startsWith("http") ? "_blank" : undefined}
+        href={getLocaleUrlCTM(
+          menu.url || Astro.url.origin,
+          Astro.currentLocale,
+        )}
+        class:list={[
+          "nav-link",
+          {
+            "nav-link-active":
+              pathname === `${menu.url}/` || pathname === menu.url,
+          },
+        ]}>
+        {menu.name}
+      </a>
+    </li>
+  )
+}

@@ -1,0 +1,82 @@
+---
+import { parseTomlToJson } from "./utils/tomlUtils";
+import languages from "@/config/language.json";
+import {
+  getCollection,
+  type CollectionEntry,
+  type CollectionKey,
+} from "astro:content";
+
+export const getCollectionCTM = async <C extends CollectionKey>(
+  collectionName: C,
+  lang?: string,
+  sortByDate: boolean = true,
+): Promise<CollectionEntry<C>[]> => {
+  const config = parseTomlToJson();
+  const { defaultLanguage } = config.settings.multilingual;
+
+  const selectedLanguageCode = lang || defaultLanguage;
+
+  const language = languages.find(
+    (l: any) => l.languageCode === selectedLanguageCode,
+  );
+
+  if (!language) throw new Error("Language not found");
+
+  const { contentDir } = language;
+
+  let pages = (await getCollection(
+    collectionName,
+    (item) =>
+      item.filePath?.includes(contentDir) && !item.filePath.includes("-index"),
+  )) as CollectionEntry<C>[];
+
+  if (sortByDate) {
+    pages.sort(
+      (a, b) =>
+        new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+    );
+  }
+
+  if (import.meta.env.PROD) {
+    pages = pages.filter((page) => !page.data.draft);
+  }
+
+  pages = pages.filter((page) => !page.data.excludeFromCollection);
+
+  return pages;
+};
+
+export const getEntryCTM = async <C extends CollectionKey>(
+  collectionName: C,
+  subCollectionName: string,
+  lang?: string, // Optional, defaults to undefined
+): Promise<CollectionEntry<C>> => {
+  const config = parseTomlToJson();
+  const { defaultLanguage } = config.settings.multilingual;
+
+  const selectedLanguageCode = lang || defaultLanguage;
+
+  const language = languages.find(
+    (l: any) => l.languageCode === selectedLanguageCode,
+  );
+
+  if (!language) {
+    throw new Error(`Language '${selectedLanguageCode}' not found.`);
+  }
+
+  const contentDir = language.contentDir;
+  const path = subCollectionName
+    ? `${contentDir}/${subCollectionName}`
+    : contentDir;
+
+  const entries = await getCollection(collectionName, ({ id }: any) => {
+    // Remove extension like .md or .mdx
+    const extensionExcluded = id.replace(/\.mdx?$/, "");
+
+    return extensionExcluded === path;
+  });
+
+  return entries && (entries[0] as CollectionEntry<C>);
+};
+---

@@ -1,0 +1,88 @@
+---
+import { getCollectionCTM } from "@/lib/customContentLoader.astro";
+import { getLocaleUrlCTM, useTranslations } from "@/lib/utils/i18nUtils";
+import CustomButton from "@/components/CustomButton.astro";
+import type { CollectionEntry } from "astro:content";
+import extractSlug from "@/lib/utils/extractSlug";
+
+interface Props {
+  prevBtnText?: string;
+  collection?: string;
+  nextBtnText?: string;
+  currentPage?: CollectionEntry<"portfolio">;
+  class?: string;
+}
+
+const t = await useTranslations(Astro.currentLocale as string);
+
+let {
+  prevBtnText = t("common.paginationPrevious"),
+  nextBtnText = t("common.paginationNext"),
+  collection,
+  currentPage,
+  class: className,
+} = Astro.props;
+
+let pages;
+if (collection) {
+  pages = await getCollectionCTM(
+    collection as "portfolio",
+    Astro.currentLocale,
+  );
+}
+
+if (!pages) return;
+
+const currentIndex = pages.findIndex(
+  (item) => item.filePath === currentPage?.filePath,
+);
+
+// if (import.meta.env.DEV) console.log("Current page index:", currentIndex);
+
+if (currentIndex === -1) {
+  return;
+}
+
+const prevPage = pages[currentIndex - 1];
+const nextPage = pages[currentIndex + 1];
+---
+
+<nav
+  id="pagination"
+  class:list={[
+    "flex w-full flex-wrap items-center justify-between gap-3 font-normal",
+    className,
+  ]}
+  aria-label="Pagination">
+  {/* previous */}
+  {
+    prevPage && (
+      <CustomButton
+        hoverEffect="creative-fill"
+        url={getLocaleUrlCTM(
+          extractSlug(prevPage),
+          Astro.currentLocale,
+          collection,
+        )}
+        label={prevBtnText}
+        class="effect-color-accent me-auto"
+      />
+    )
+  }
+
+  {/* next page */}
+  {
+    nextPage && (
+      <CustomButton
+        hoverEffect="creative-fill"
+        url={getLocaleUrlCTM(
+          extractSlug(nextPage),
+          Astro.currentLocale,
+          collection,
+        )}
+        label={nextBtnText}
+        class="effect-color-accent ms-auto"
+      />
+    )
+  }
+</nav>

@@ -1,0 +1,36 @@
+@utility translate-centered {
+  @apply start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+
+@utility translate-y-centered {
+  @apply top-1/2 -translate-y-1/2;
+}
+
+@utility translate-x-centered {
+  @apply start-1/2 -translate-x-1/2;
+}
+
+@utility stretched-link {
+  @apply relative before:absolute before:inset-0;
+}
+
+/* Custom Scrollbar */
+@utility has-customized-scrollbar {
+  @apply [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-white;
+}
+
+@utility has-customized-scrollbar-dark {
+  @apply [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-track]:bg-transparent;
+}
+
+@utility container-12xl {
+  @apply max-w-[1600px];
+}
+
+@utility section-spacing {
+  @apply pt-20 md:pt-32;
+}
+
+@utility section-spacing-m {
+  @apply mt-20 md:mt-32;
+}

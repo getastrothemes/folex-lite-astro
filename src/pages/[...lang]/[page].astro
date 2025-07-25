@@ -1,0 +1,43 @@
+---
+import Base from "@/layouts/Base.astro";
+import { getCollectionCTM } from "@/lib/customContentLoader.astro";
+import { supportedLanguages } from "@/lib/utils/i18nUtils";
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+import SinglePageLayout from "@/components/SinglePageLayout.astro";
+import extractSlug from "@/lib/utils/extractSlug";
+
+// get static paths for all pages
+export async function getStaticPaths() {
+  const paths = await Promise.all(
+    supportedLanguages.map(async (lang) => {
+      const config = parseTomlToJson();
+      const { defaultLanguage, showDefaultLangInUrl } =
+        config.settings.multilingual;
+
+      let pages = await getCollectionCTM("pages", lang.languageCode);
+
+      // Generate static path entry
+      return pages.map((page) => ({
+        params: {
+          lang:
+            !showDefaultLangInUrl && lang.languageCode === defaultLanguage
+              ? undefined
+              : lang.languageCode,
+          page: extractSlug(page).split("/").pop(),
+        },
+        props: {
+          page,
+        },
+      }));
+    }),
+  );
+
+  return paths.flat();
+}
+
+const { page } = Astro.props;
+---
+
+<Base {...page.data}>
+  <SinglePageLayout content={{ ...page.data, ...page }} />
+</Base>

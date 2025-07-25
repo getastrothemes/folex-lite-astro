@@ -1,0 +1,173 @@
+---
+import ReactIcons from "@/helpers/ReactIcons.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import { useTranslations } from "@/lib/utils/i18nUtils";
+import OptimizedImage from "./utilities/OptimizedImage.astro";
+import PaginationForSingle from "./widgets/PaginationForSingle.astro";
+import { render } from "astro:content";
+import "aos/dist/aos.css";
+
+let {
+  collection,
+  data: { title, images, information },
+}: {
+  render: any;
+  id: string;
+  collection: string;
+  data: {
+    title: string;
+    images: string[];
+    categories: string[];
+    information: { label: string; value: string }[];
+  };
+} = Astro.props.content;
+
+const t = await useTranslations(Astro.currentLocale as string);
+const { Content } = await render(Astro.props.content);
+
+if (Array.isArray(information)) {
+  information = information.map((item) => {
+    const newItem = { ...item };
+    switch (item.value) {
+      case "date":
+        if (Astro.props.content.data.date) {
+          newItem.value = new Date(
+            Astro.props.content.data.date,
+          ).toLocaleDateString(Astro.currentLocale, {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+        }
+        break;
+      case "categories":
+        if (Astro.props.content.data.categories) {
+          newItem.value = Astro.props.content.data.categories.join(", ");
+        }
+        break;
+    }
+    return newItem;
+  });
+}
+---
+
+<section class="overflow-hidden pt-16 md:pt-32">
+  <div class="container">
+    <div class="mx-auto w-full max-w-6xl space-y-10 md:space-y-20">
+      {
+        Array.isArray(images) && images.length > 1 && (
+          <div
+            id="portfolio-slider"
+            class="swiper"
+            aria-label="Portfolio image slider">
+            <div class="swiper-wrapper">
+              {images.map((item: string, index: number) => (
+                <div class="swiper-slide h-auto!">
+                  <OptimizedImage
+                    src={item}
+                    alt={`${title} image ${index + 1}`}
+                    class="h-112.5 w-full object-cover md:h-137.5"
+                  />
+                </div>
+              ))}
+            </div>
+            {/* <!-- Left Arrow --> */}
+            <button
+              class="portfolio-slider-btn-prev hover:bg-accent hover:text-dark absolute start-4 top-1/2 z-10 flex min-h-14 min-w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white transition duration-300 [--swiper-navigation-size:1.25rem]"
+              aria-label="Previous slide">
+              <ReactIcons icon="FaArrowLeftLong" />
+            </button>
+
+            {/* <!-- Right Arrow --> */}
+            <button
+              class="portfolio-slider-btn-next hover:bg-accent hover:text-dark absolute end-4 top-1/2 z-10 flex min-h-14 min-w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white transition duration-300 [--swiper-navigation-size:1.25rem]"
+              aria-label="Next slide">
+              <ReactIcons icon="FaArrowRightLong" />
+            </button>
+          </div>
+        )
+      }
+
+      <div
+        class="grid max-w-full grid-cols-1 max-xl:space-y-8 xl:grid-cols-7 xl:gap-x-20">
+        {
+          information && Array.isArray(information) && (
+            <ul class="space-y-4 xl:order-2 xl:col-span-2">
+              {information.map((item) => (
+                <li class="w-fit">
+                  {item.label && (
+                    <span
+                      class="text-dark/80 font-medium"
+                      set:html={item.label}
+                    />
+                  )}
+                  <div
+                    class="prose-a:underline text-dark font-secondary font-medium capitalize"
+                    set:html={markdownify(item.value, true)}
+                  />
+                </li>
+              ))}
+            </ul>
+          )
+        }
+        <div class="space-y-10 pe-10 xl:col-span-5">
+          {title && <h1 class="md:text-display-5" set:html={title} />}
+
+          {
+            Content && (
+              <div class="prose-styles has-video-modal [&_.image-list-component]:xl:-ms-31.5 [&_.image-list-component]:xl:w-6xl">
+                <Content />
+              </div>
+            )
+          }
+        </div>
+      </div>
+      <div class="mt-10 flex justify-between border-t pt-10">
+        <PaginationForSingle
+          prevBtnText={t("common.paginationPortfolioPrev")}
+          nextBtnText={t("common.paginationPortfolioNext")}
+          currentPage={Astro.props.content}
+          collection={collection}
+        />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if (typeof window !== "undefined") {
+      window.addEventListener("load", async function () {
+        await import("swiper/swiper-bundle.css");
+        const { Swiper } = await import("swiper");
+        const { Autoplay, Pagination, Navigation } = await import(
+          "swiper/modules"
+        );
+
+        // Initialize banner Swiper
+        const portfolioSlider = document.querySelector(
+          "#portfolio-slider",
+        ) as HTMLElement;
+
+        if (portfolioSlider) {
+          // Initialize content Swiper with navigation
+          new Swiper(portfolioSlider, {
+            modules: [Autoplay, Pagination, Navigation],
+            navigation: {
+              nextEl: ".portfolio-slider-btn-next",
+              prevEl: ".portfolio-slider-btn-prev",
+            },
+            speed: 800,
+            spaceBetween: 40,
+            slidesPerView: 1,
+            centeredSlides: true,
+            loopAdditionalSlides: 2,
+            autoplay: {
+              delay: 4000,
+              disableOnInteraction: true,
+            },
+            loop: true,
+          });
+        }
+      });
+    }
+  </script>
+</section>

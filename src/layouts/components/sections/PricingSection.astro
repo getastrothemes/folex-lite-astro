@@ -1,0 +1,52 @@
+---
+import type { z } from "astro/zod";
+import { getEntryCTM } from "@/lib/customContentLoader.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import overrideObjects from "@/lib/utils/overrideObjects.ts";
+import type { pricingSectionSchema } from "@/sections.schema";
+import PricingCard from "@/layouts/components/cards/PricingCard.astro";
+
+// Type for this section data
+type pricingSectionSchema = NonNullable<z.infer<typeof pricingSectionSchema>>;
+
+type Props = {
+  content?: pricingSectionSchema;
+};
+
+// Fetching the default content for the this section
+let defaultContent = (
+  await getEntryCTM("sections", "pricing-section", Astro.currentLocale)
+)?.data as pricingSectionSchema;
+
+// Enables content customization (e.g., title, description) with a fallback to 'defaultContent' if not provided.
+// The 'content' prop should match the structure of 'defaultContent'.
+// Allows using this section with different content across multiple pages.
+// If 'content' is missing, 'defaultContent' will be used.
+let actualContent = overrideObjects(
+  { ...defaultContent },
+  Astro.props.content,
+) as pricingSectionSchema;
+
+// Extracting required values from 'content' object
+let { enable = true, title, list } = actualContent || {};
+
+if (!enable) {
+  return null;
+}
+---
+
+<section id="pricing">
+  <div class="container space-y-14">
+    {
+      title && (
+        <div class="text-center">
+          <h2 class="text-h1-sm md:text-h1" set:html={markdownify(title)} />
+        </div>
+      )
+    }
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {list.map((item) => <PricingCard content={item} />)}
+    </div>
+  </div>
+</section>

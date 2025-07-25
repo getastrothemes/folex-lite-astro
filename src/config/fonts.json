@@ -1,0 +1,50 @@
+{
+  "fontFamily": [
+    {
+      "name": "Poppins",
+      "src": [
+        {
+          "weight": "400"
+        },
+        {
+          "weight": "500"
+        }
+      ],
+      "preload": false,
+      "provider": "google-fonts",
+      "display": "swap",
+      "cssVariable": "font-primary",
+      "fallback": "sans-serif",
+      "locallyHosted": true,
+      "__comment": "set locallyHosted: true if you want to download google fonts and hosted them locally automatically"
+    },
+    {
+      "name": "Unbounded",
+      "src": [
+        {
+          "style": "normal",
+          "weight": "400"
+        },
+        {
+          "style": "normal",
+          "weight": "500"
+        },
+        {
+          "style": "normal",
+          "weight": "600"
+        },
+        {
+          "style": "normal",
+          "weight": "700"
+        }
+      ],
+      "preload": false,
+      "display": "swap",
+      "cssVariable": "font-secondary",
+      "provider": "google-fonts",
+      "fallback": "sans-serif",
+      "locallyHosted": true,
+      "__comment": "set locallyHosted: true if you want to download google fonts and hosted them locally automatically"
+    }
+  ]
+}

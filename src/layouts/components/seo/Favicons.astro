@@ -1,0 +1,68 @@
+---
+const config = Astro.props.config;
+let faviconPath = "/images/favicons";
+
+const favicons: {
+  rel: string;
+  type?: string;
+  sizes?: string;
+  href: string;
+  color?: string;
+}[] = [
+  {
+    rel: "apple-touch-icon",
+    sizes: "180x180",
+    href: `${faviconPath}/apple-touch-icon.png`,
+  },
+  {
+    rel: "icon",
+    type: "image/png",
+    sizes: "96x96",
+    href: `${faviconPath}/favicon-96x96.png`,
+  },
+  {
+    rel: "icon",
+    type: "image/png",
+    sizes: "192x192",
+    href: `${faviconPath}/web-app-manifest-192x192.png`,
+  },
+  {
+    rel: "icon",
+    type: "image/png",
+    sizes: "512x512",
+    href: `${faviconPath}/web-app-manifest-512x512.png`,
+  },
+  {
+    rel: "icon",
+    type: "image/svg+xml",
+    href: `${faviconPath}/favicon.svg`,
+  },
+  {
+    rel: "shortcut icon",
+    href: `${faviconPath}/favicon.ico`,
+  },
+  {
+    rel: "manifest",
+    href: `${faviconPath}/site.webmanifest`,
+  },
+];
+
+const metaTags = [
+  { color: "msapplication-TileColor", content: "#ffffff" },
+  { name: "apple-mobile-web-app-title", content: config.site.title },
+];
+---
+
+<!------------------------ Favicons ------------------------>{
+  favicons.map((favicon) => (
+    <link
+      rel={favicon.rel}
+      type={favicon.type}
+      sizes={favicon.sizes}
+      href={favicon.href}
+      color={favicon.color}
+    />
+  ))
+}
+
+{metaTags.map((meta) => <meta name={meta.name} content={meta.content} />)}

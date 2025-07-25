@@ -1,0 +1,78 @@
+---
+import { getLocaleUrlCTM, supportedLanguages } from "@/lib/utils/i18nUtils";
+import { plainify, removeWhitespace } from "@/lib/utils/textConverter";
+
+// Load configuration
+const config = Astro.props.config;
+
+const {
+  title,
+  metaTitle,
+  description,
+  metaDescription,
+  canonical,
+  keywords: rawKeywords = config.seo.keywords,
+  disableTagline,
+  author = config.seo.author,
+  robots = config.seo.robots,
+} = Astro.props;
+
+// Normalize title and description
+let resolvedTitle = plainify(metaTitle ?? title ?? config.site.title);
+let resolvedDescription = plainify(
+  metaDescription ?? description ?? config.site.description,
+);
+
+// Add tagline if not disabled
+if (!disableTagline && config.site.tagline) {
+  const separator = config.site.taglineSeparator || " - ";
+  resolvedTitle += separator + config.site.tagline;
+}
+
+// Clean up whitespace
+resolvedTitle = removeWhitespace(resolvedTitle);
+resolvedDescription = removeWhitespace(resolvedDescription);
+
+// Keywords
+const keywords = removeWhitespace(rawKeywords.join(", "));
+
+// Canonical URL
+const resolvedCanonical = getLocaleUrlCTM(
+  new URL(canonical || Astro.url.href, Astro.site).href,
+  Astro.currentLocale,
+);
+
+// If multilingual is enabled, add rel alternate link tags
+const alternateTags: Array<{ hreflang: string; href: string }> = [];
+if (
+  config.settings.multilingual.enable &&
+  !resolvedCanonical.includes("blog/category/")
+) {
+  supportedLanguages.forEach((lang) => {
+    alternateTags.push({
+      hreflang: lang.languageCode,
+      href: getLocaleUrlCTM(Astro.url.href, lang.languageCode),
+    });
+  });
+}
+---
+
+{resolvedTitle && <title>{resolvedTitle}</title>}
+{
+  resolvedDescription && (
+    <meta name="description" content={resolvedDescription} />
+  )
+}
+{keywords && <meta name="keywords" content={keywords} />}
+{author && <meta name="author" content={removeWhitespace(author)} />}
+{robots && <meta name="robots" content={removeWhitespace(robots)} />}
+{
+  resolvedCanonical && (
+    <link rel="canonical" href={resolvedCanonical} item-prop="url" />
+  )
+}
+{
+  alternateTags.map((tag) => (
+    <link rel="alternate" hreflang={tag.hreflang} href={tag.href} />
+  ))
+}

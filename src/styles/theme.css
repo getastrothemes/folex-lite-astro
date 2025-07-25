@@ -1,0 +1,55 @@
+/* prettier-ignore */
+@theme inline {
+  /* Configure base font size, type scale, and font families in `src/config/fonts.json` */
+  --leading-body: 1.8;
+  --leading-inherit: inherit;
+
+  /* Colors */
+  --color-primary: #0d0f01;
+  --color-secondary: #bcd4ff;
+  --color-accent: #e3ff04;
+  --color-accent-blue: #1601ac;
+  --color-body: #fff;
+  --color-body-dark: #070800;
+  --color-border-light: #e5e5e5;
+  --color-border-dark: #292525;
+  --color-theme-dark: #0e1118;
+  --color-theme-darker: #131312;
+  --color-theme-light: #f6f5f3;
+  --color-text-default: #2e2e2e;
+  --color-dark: #0a0c00;
+  --color-light: #f6f5f3;
+
+  /* Screen */
+  --breakpoint-*: initial;
+  --breakpoint-sm: 540px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1320px;
+
+  /* Typography */
+  --text-base: 1rem;
+  --text-base-scale: 1.25;
+  --text-base-sm: calc(var(--text-base) * 0.9);
+
+  --text-display-1: calc(var(--text-base) * pow(var(--text-base-scale), 8.8)); /* 115px  */
+  --text-display-2: calc(var(--text-base) * pow(var(--text-base-scale), 8)); /* 95px  */
+  --text-display-3: calc(var(--text-base) * pow(var(--text-base-scale), 7.25)); /* 80px  */
+  --text-display-4: calc(var(--text-base) * pow(var(--text-base-scale), 6.5)); /* 65px  */
+  --text-display-5: calc(var(--text-base) * pow(var(--text-base-scale), 5.5)); /* 50px  */
+  --text-display-6: calc(var(--text-base) * pow(var(--text-base-scale), 4.5)); /* 40px  */
+
+  --text-h1: calc(var(--text-base) * pow(var(--text-base-scale), 6));
+  --text-h2: calc(var(--text-base) * pow(var(--text-base-scale), 5));
+  --text-h3: calc(var(--text-base) * pow(var(--text-base-scale), 4));
+  --text-h4: calc(var(--text-base) * pow(var(--text-base-scale), 3));
+  --text-h5: calc(var(--text-base) * pow(var(--text-base-scale), 2));
+  --text-h6: calc(var(--text-base) * pow(var(--text-base-scale), 1));
+
+  --text-h1-sm: calc(var(--text-h1) * 0.7);
+  --text-h2-sm: calc(var(--text-h2) * 0.75);
+  --text-h3-sm: calc(var(--text-h3) * 0.85);
+  --text-h4-sm: calc(var(--text-h4) * 0.9);
+  --text-h5-sm: calc(var(--text-h5) * 0.9);
+  --text-h6-sm: calc(var(--text-h6) * 0.9);
+}

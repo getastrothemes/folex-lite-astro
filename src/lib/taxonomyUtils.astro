@@ -1,0 +1,55 @@
+---
+import { getCollectionCTM } from "./customContentLoader.astro";
+import { slugifyyy } from "./utils/textConverter.ts";
+import { getLocaleUrlCTM } from "./utils/i18nUtils.ts";
+
+// get all taxonomies from frontmatter
+export const getTaxonomy = async (
+  collection: any,
+  name: string,
+  lang: string,
+) => {
+  const singlePages = await getCollectionCTM(collection, lang);
+
+  const uniqueTaxonomies = new Map<string, { name: string; slug: string }>();
+
+  singlePages.forEach((page: any) => {
+    let taxonomyPages = page.data[name] || [];
+    if (import.meta.env.PROD) {
+      taxonomyPages =
+        !page.data.draft && !page.data.excludeFromSitemap
+          ? page.data[name] || []
+          : [];
+    }
+
+    taxonomyPages = [...taxonomyPages];
+    taxonomyPages.forEach((category: string) => {
+      if (category) {
+        const slug = slugifyyy(category);
+        slug && uniqueTaxonomies.set(category, { name: category, slug });
+      }
+    });
+  });
+
+  return Array.from(uniqueTaxonomies.values());
+};
+
+export const generateCategorySlugs = (
+  categories: string[],
+  lang: string,
+  blogFolder: string,
+) => {
+  return categories.map((category) => {
+    const slug = getLocaleUrlCTM(
+      slugifyyy(category),
+      lang,
+      `/${blogFolder}/category`,
+    );
+
+    return {
+      name: category,
+      slug: slug,
+    };
+  });
+};
+---

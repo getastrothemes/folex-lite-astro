@@ -16,6 +16,12 @@
     "type": "git",
     "url": "https://github.com/getastrothemes/folex-lite-astro.git"
   },
+  "engines": {
+    "node": ">=18.20.8 <19 || >=20.3.0 <21 || >=22.0.0",
+    "npm": ">=9.6.7",
+    "pnpm": ">=8.15.5",
+    "yarn": ">=1.22.22"
+  },
   "scripts": {
     "dev": "astro dev",
     "preview": "astro build && npm run remove-draft-from-sitemap && astro preview",

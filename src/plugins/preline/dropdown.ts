@@ -16,8 +16,8 @@ import {
   isIpadOS,
   menuSearchHistory,
   stringToBoolean,
-} from "../../../node_modules/preline/src/utils/index";
-import type { IMenuSearchHistory } from "../../../node_modules/preline/src/utils/interfaces";
+} from "preline/src/utils/index";
+import type { IMenuSearchHistory } from "preline/src/utils/interfaces";
 
 import {
   autoUpdate,
@@ -32,14 +32,14 @@ import {
 import type {
   IDropdown,
   IHTMLElementFloatingUI,
-} from "../../../node_modules/preline/src/plugins/dropdown/interfaces";
-import HSBasePlugin from "../../../node_modules/preline/src/plugins/base-plugin";
-import type { ICollectionItem } from "../../../node_modules/preline/src/interfaces";
+} from "preline/src/plugins/dropdown/interfaces";
+import HSBasePlugin from "preline/src/plugins/base-plugin";
+import type { ICollectionItem } from "preline/src/interfaces";
 
 import {
   DROPDOWN_ACCESSIBILITY_KEY_SET,
   POSITIONS,
-} from "../../../node_modules/preline/src/constants";
+} from "preline/src/constants";
 
 class HSDropdown
   extends HSBasePlugin<{}, IHTMLElementFloatingUI>

@@ -4,8 +4,8 @@
 @plugin "../plugins/fontTailwindPlugin.js";
 
 /* Preline UI */
-@source "../../node_modules/preline/dist/*.js";
-@import "../../node_modules/preline/variants.css";
+@source "preline/dist/*.js";
+@import "preline/variants.css";
 
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";

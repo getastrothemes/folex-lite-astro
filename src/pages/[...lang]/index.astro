@@ -1,12 +1,12 @@
 ---
 import Base from "@/layouts/Base.astro";
-import { getEntryCTM } from "@/lib/customContentLoader.astro";
-import ServicesSection from "@/components/sections/ServicesSection.astro";
 import { generatePaths } from "@/lib/utils/i18nUtils";
-import PortfolioSection from "@/components/sections/PortfolioSection.astro";
 import Clients from "@/components/sections/Clients.astro";
+import { getEntryCTM } from "@/lib/customContentLoader.astro";
 import BannerAgencyStartup from "@/components/sections/Banner.astro";
 import PricingSection from "@/components/sections/PricingSection.astro";
+import ServicesSection from "@/components/sections/ServicesSection.astro";
+import PortfolioSection from "@/components/sections/PortfolioSection.astro";
 
 export function getStaticPaths() {
   return generatePaths();

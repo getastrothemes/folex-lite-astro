@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "description": "A highly customizable creative agency & personal portfolio business theme built with Tailwind CSS and Astro Js",
   "author": "getastrothemes",
-  "license": "UNLICENSED",
-  "packageManager": "yarn@1.22.19",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "packageManager": "pnpm@8.15.5",
   "private": true,
   "keywords": [
     "astro",
@@ -18,8 +18,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build && yarn remove-draft-from-sitemap",
-    "preview": "astro build && yarn remove-draft-from-sitemap && astro preview",
+    "preview": "astro build && npm run remove-draft-from-sitemap && astro preview",
+    "build": "npm run check && astro build && npm run remove-draft-from-sitemap",
     "check": "astro check",
     "format": "prettier --write ./src",
     "generate-favicons": "node ./scripts/generate-favicons.mjs",
@@ -31,6 +31,7 @@
     "@astrojs/mdx": "^4.3.1",
     "@astrojs/react": "^4.3.0",
     "@astrojs/sitemap": "^3.4.1",
+    "@floating-ui/dom": "^1.7.2",
     "@popperjs/core": "^2.11.8",
     "@preline/accordion": "^3.0.0",
     "@preline/collapse": "^3.0.0",
@@ -49,11 +50,13 @@
     "react-icons": "^5.0.1",
     "rehype-external-links": "^3.0.0",
     "remark-toc": "^9.0.0",
+    "sharp": "0.33.2",
     "smoothscroll-for-websites": "^1.5.1",
     "swiper": "^11.2.10",
     "toml": "^3.0.0",
     "unist-util-visit": "^5.0.0",
-    "xml2js": "^0.6.2"
+    "xml2js": "^0.6.2",
+    "zod": "3.25.76"
   },
   "devDependencies": {
     "@realfavicongenerator/generate-favicon": "^0.4.6",

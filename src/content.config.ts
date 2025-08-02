@@ -1,7 +1,7 @@
-import { parseTomlToJson } from "@/lib/utils/tomlUtils";
 import { defineCollection, z } from "astro:content";
-import { button, sectionsSchema } from "./sections.schema";
 import { glob } from "astro/loaders";
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+import { button, sectionsSchema } from "./sections.schema";
 
 const config = parseTomlToJson();
 const portfolioFolder = config.settings.portfolioFolder || "portfolio";

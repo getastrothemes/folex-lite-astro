@@ -5,12 +5,16 @@
     "ignoreUnknown": false,
     "includes": [
       "**/*.js",
-      "!**/*.is.js",
       "**/*.json",
       "**/*.jsonc",
       "**/*.jsx",
       "**/*.ts",
-      "**/*.tsx"
+      "**/*.tsx",
+      "!dist/**/*",
+      "!**/*.is.js",
+      "!src/lib/**/*",
+      "!src/plugins/**/*",
+      "!.astro/**/*"
     ]
   },
   "formatter": {

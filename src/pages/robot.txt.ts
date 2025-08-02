@@ -1,5 +1,6 @@
-import { parseTomlToJson } from "@/lib/utils/tomlUtils";
 import type { APIRoute } from "astro";
+import { parseTomlToJson } from "@/lib/utils/tomlUtils";
+
 const config = parseTomlToJson();
 
 const { enable, disallow } = config.seo.robotsTxt;

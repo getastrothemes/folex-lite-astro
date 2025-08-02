@@ -23,6 +23,7 @@
     "preview": "astro build && npm run remove-draft-from-sitemap && astro preview",
     "build": "npm run check && astro build && npm run remove-draft-from-sitemap",
     "check": "astro check",
+    "lint": "biome check",
     "format": "biome format --write",
     "pretty": "prettier --write src",
     "generate-favicons": "node ./scripts/generate-favicons.mjs",

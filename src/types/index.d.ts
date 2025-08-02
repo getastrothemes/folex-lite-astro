@@ -38,7 +38,7 @@ interface Source {
     | (string & {})
     | (number & {});
 }
-interface FontConfig {
+export interface FontConfig {
   name: string;
   src: Source[];
   fetch?: boolean;

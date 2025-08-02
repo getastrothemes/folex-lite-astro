@@ -297,7 +297,9 @@ export const getLocaleUrlCTM = (
 
   // prettier-ignore
   // Determine the language prefix for the URL, omitting the default language if necessary
-  const prependLanguage = shouldOmitDefaultLang ? "" : `/${shouldShowDefaultLang ? defaultLanguage : language}`;
+  const prependLanguage = shouldOmitDefaultLang
+    ? ""
+    : `/${shouldShowDefaultLang ? defaultLanguage : language}`;
 
   // Combine the language prefix with the URL with or without its language code
   updatedUrl = path.posix.join(

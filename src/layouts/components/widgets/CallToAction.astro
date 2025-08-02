@@ -1,0 +1,55 @@
+---
+import { markdownify } from "@/lib/utils/textConverter";
+
+type Props = {
+  title: string;
+  description: string;
+  button?: {
+    enable?: boolean;
+    label: string;
+    mailLabel?: string;
+    mailTo?: string;
+    url: string;
+  };
+};
+
+const { title, description, button, ...rest } = Astro.props as Props;
+const onBookCall = `Calendly.initPopupWidget({url: '${button?.url}'});return false;`;
+const onMailTo = `mailto:${button?.mailTo || "emancebo@barracuda.do;cherrera@barracuda.do"}`;
+---
+
+{
+  (
+    <div class="mx-auto max-w-6xl px-4 sm:max-w-2xl sm:px-6 md:max-w-4xl">
+      <div class="text-center">
+        {
+          <h2
+            class="text-display-6 xs:text-display-5 md:text-display-4 mx-auto max-w-md tracking-normal sm:max-w-xl md:max-w-2xl md:leading-none lg:max-w-4xl"
+            set:html={markdownify(title)}
+          />
+        }
+        {
+          <div
+            class="text-md sm:text-md mx-auto mt-3 max-w-md px-12 font-normal sm:mt-5 sm:max-w-xl md:mt-5 md:max-w-xl md:text-xl"
+            set:html={markdownify(description, true)}
+          />
+        }
+        {button && button.enable && (
+          <div class="mx-auto mt-5 max-w-md sm:flex sm:justify-center md:mt-8 md:gap-2">
+            <a
+              href=""
+              onclick={onBookCall}
+              class="btn effect-color-accent btn-primary drop-shadow-2xl drop-shadow-white/10">
+              {button?.label || "Book a Call"}
+            </a>
+            <a
+              href={onMailTo}
+              class="btn effect-color-accent btn-primary drop-shadow-2xl drop-shadow-white/10">
+              {button?.mailLabel || "Write to Us"}
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}

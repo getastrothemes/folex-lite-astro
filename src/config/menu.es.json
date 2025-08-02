@@ -1,0 +1,24 @@
+{
+  "headerPrimary": [
+    {
+      "enable": true,
+      "name": "Inicio",
+      "url": "/"
+    },
+    {
+      "enable": true,
+      "name": "Servicios",
+      "url": "/#services"
+    },
+    {
+      "enable": true,
+      "name": "Sobre Nosotros",
+      "url": "/#why-choose-us"
+    },
+    {
+      "enable": true,
+      "name": "Nuestros Procesos",
+      "url": "/#our-process"
+    }
+  ]
+}

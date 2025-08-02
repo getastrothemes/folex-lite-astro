@@ -1,12 +1,12 @@
 ---
 # For Updating Contact Info Like Email, Phone Number, Address, etc. Please update in `src/config/config.toml` `settings.contactInfo` table
 
-enable: true # Control the visibility of this section across all pages where it is used
-titleSize: "display-2" # If your title text is larger, use a smaller text size like "display-3", "display-2", or "display-1".
-title: "We Help to Grow <br /> Your Business"
+enable: true # Contrôle la visibilité de cette section sur toutes les pages où elle est utilisée
+titleSize: "display-2" # Si votre titre est plus grand, utilisez une taille de texte plus petite comme "display-3", "display-2" ou "display-1"
+title: "We optimize your processes with AI"
 
-image: "/images/banner/startup.png"
-description: "We are digital agency that helps businesses develop immersive and engaging user experiences that drive top level growth"
+image: "/images/banner/christian-velitchkov-mXz64B8-3h0-unsplash.jpg"
+description: "We are a consulting firm that helps companies automate and streamline their processes using Artificial Intelligence"
 
 button:
   # Refer to the `sharedButton` schema in `src/sections.schema.ts` for all available configuration options (e.g., enable, label, url, hoverEffect, variant, icon, tag, rel, class, target, etc.)

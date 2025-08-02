@@ -6,9 +6,15 @@
     "weight": 1
   },
   {
+    "languageName": "Es",
+    "languageCode": "es",
+    "contentDir": "spanish",
+    "weight": 2
+  },
+  {
     "languageName": "Fr",
     "languageCode": "fr",
     "contentDir": "french",
-    "weight": 2
+    "weight": 3
   }
 ]

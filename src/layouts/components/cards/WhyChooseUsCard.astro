@@ -1,0 +1,81 @@
+---
+import { markdownify } from "@/lib/utils/textConverter";
+import type { whyChooseUsSectionSchema } from "@/sections.schema";
+import type { z } from "astro/zod";
+import OptimizedImage from "../utilities/OptimizedImage.astro";
+
+// SEE: https://tailwindflex.com/@noah/features-list-with-images-and-description
+type WhyChooseUsCardType = NonNullable<
+  z.infer<typeof whyChooseUsSectionSchema>
+>["list"][0];
+
+type Props = {
+  content: WhyChooseUsCardType;
+  index: number;
+  class?: string;
+};
+
+const {
+  class: className,
+  content: { enable, title, description, image },
+  index,
+  ...rest
+} = Astro.props;
+---
+
+{
+  enable && (
+    <div class="relative">
+      <div
+        class:list={[
+          "lg:mx-auto lg:grid lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-2 lg:gap-24 lg:px-8",
+          className,
+        ]}
+        {...rest}>
+        <div
+          class:list={[
+            "mx-auto max-w-xl px-6 lg:mx-0 lg:max-w-none lg:px-0 lg:py-16",
+            index % 2 === 0 ? "lg:col-start-2" : "",
+          ]}>
+          <div>
+            <div class="mt-6">
+              {title && (
+                <h2
+                  class="text-h3-sm md:text-h3 order-2 leading-snug text-inherit"
+                  set:html={markdownify(title)}
+                />
+              )}
+              {description && (
+                <p class="mt-4" set:html={markdownify(description)} />
+              )}
+            </div>
+          </div>
+        </div>
+        {image && (
+          <div class="mt-12 sm:mt-16 lg:mt-0">
+            <div
+              class="-mr-48 rounded-2xl pl-6 md:-mr-16 lg:relative lg:m-0 lg:h-full lg:px-0"
+              {...{
+                "data-aos":
+                  index !== undefined &&
+                  ["reveal-anim-left", "reveal-anim-right", "reveal-anim-top"][
+                    index % 3
+                  ],
+              }}>
+              <OptimizedImage
+                width={646}
+                height={485}
+                loading="lazy"
+                src={image}
+                style="color:transparent"
+                class:list={[
+                  "h-100 scale-110 object-cover transition duration-500 group-hover:translate-x-2",
+                ]}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}

@@ -8,14 +8,14 @@
     "paginationPortfolioNext": "Next Portfolio"
   },
   "headerOffcanvas": {
-    "description": "We are a digital agency that helps businesses create immersive experiences.",
-    "buttonLabel": "Let’s Talk With Us"
+    "description": "We are a consulting firm for AI and Software projects.",
+    "buttonLabel": "Let's Talk With Us"
   },
   "navigation": {
-    "buttonLabel": "Get Started"
+    "buttonLabel": "Book a Call"
   },
   "footer": {
-    "copyright": "Copyright © {{ year }} by your company / Crafted with [Getastrothemes](https://getastrothemes.com/)",
+    "copyright": "Copyright © {{ year }} by Barracuda AI / Crafted with [Getastrothemes](https://getastrothemes.com/)",
     "_comment": "We kindly appreciate it if you retain the theme copyright. Thank you for supporting Getastrothemes!"
   }
 }

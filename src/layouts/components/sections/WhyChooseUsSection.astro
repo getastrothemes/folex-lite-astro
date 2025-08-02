@@ -1,0 +1,57 @@
+---
+import { getEntryCTM } from "@/lib/customContentLoader.astro";
+import overrideObjects from "@/lib/utils/overrideObjects.ts";
+import { markdownify } from "@/lib/utils/textConverter";
+import type { whyChooseUsSectionSchema } from "@/sections.schema";
+import type { z } from "astro/zod";
+import WhyChooseUsCard from "../cards/WhyChooseUsCard.astro";
+
+// Type for this section data
+type whyChooseUsSectionSchema = NonNullable<
+  z.infer<typeof whyChooseUsSectionSchema>
+>;
+
+type Props = {
+  content?: whyChooseUsSectionSchema;
+};
+
+// Fetching the default content for the this section
+let defaultContent = (
+  await getEntryCTM("sections", "why-choose-us-section", Astro.currentLocale)
+)?.data as whyChooseUsSectionSchema;
+
+// Enables content customization (e.g., title, description) with a fallback to 'defaultContent' if not provided.
+// The 'content' prop should match the structure of 'defaultContent'.
+// Allows using this section with different content across multiple pages.
+// If 'content' is missing, 'defaultContent' will be used.
+let actualContent = overrideObjects(
+  { ...defaultContent },
+  Astro.props.content,
+) as whyChooseUsSectionSchema;
+// Extracting required values from 'content' object
+let { enable = true, title, list } = actualContent || {};
+
+if (!enable) {
+  return null;
+}
+---
+
+<section id="why-choose-us">
+  <div class="container space-y-14">
+    {
+      title && (
+        <div class="text-center">
+          <h3 class="text-h1-sm md:text-h1" set:html={markdownify(title)} />
+        </div>
+      )
+    }
+
+    <div class="relative space-y-24 overflow-hidden pt-16 pb-32">
+      {
+        list.map((item, index) => (
+          <WhyChooseUsCard content={item} index={index} />
+        ))
+      }
+    </div>
+  </div>
+</section>

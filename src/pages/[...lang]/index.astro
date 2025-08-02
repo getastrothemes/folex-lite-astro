@@ -1,12 +1,14 @@
 ---
-import Base from "@/layouts/Base.astro";
-import { generatePaths } from "@/lib/utils/i18nUtils";
-import Clients from "@/components/sections/Clients.astro";
-import { getEntryCTM } from "@/lib/customContentLoader.astro";
 import BannerAgencyStartup from "@/components/sections/Banner.astro";
+import Clients from "@/components/sections/Clients.astro";
+import OurProcessSection from "@/components/sections/OurProcessSection.astro";
+import PortfolioSection from "@/components/sections/PortfolioSection.astro";
 import PricingSection from "@/components/sections/PricingSection.astro";
 import ServicesSection from "@/components/sections/ServicesSection.astro";
-import PortfolioSection from "@/components/sections/PortfolioSection.astro";
+import WhyChooseUsSection from "@/components/sections/WhyChooseUsSection.astro";
+import Base from "@/layouts/Base.astro";
+import { getEntryCTM } from "@/lib/customContentLoader.astro";
+import { generatePaths } from "@/lib/utils/i18nUtils";
 
 export function getStaticPaths() {
   return generatePaths();
@@ -20,5 +22,7 @@ const page = await getEntryCTM("homepage", "-index", Astro.currentLocale);
   <Clients />
   <ServicesSection />
   <PortfolioSection />
+  <WhyChooseUsSection />
+  <OurProcessSection />
   <PricingSection />
 </Base>

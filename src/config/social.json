@@ -4,25 +4,25 @@
       "enable": true,
       "label": "facebook",
       "icon": "FaFacebook",
-      "url": "https://www.facebook.com/folex"
+      "url": "https://www.facebook.com/barracuda.do"
     },
     {
       "enable": true,
       "label": "twitter",
       "icon": "FaXTwitter",
-      "url": "https://twitter.com/folex"
+      "url": "https://twitter.com/barracuda.do"
     },
     {
       "enable": true,
       "label": "instagram",
       "icon": "FaInstagram",
-      "url": "https://www.instagram.com/folex"
+      "url": "https://www.instagram.com/barracuda.do"
     },
     {
       "enable": true,
       "label": "linkedin",
       "icon": "FaLinkedin",
-      "url": "https://www.linkedin.com/folex"
+      "url": "https://www.linkedin.com/barracuda.do"
     }
   ]
 }

@@ -1,4 +1,4 @@
 ---
 title: "Home"
-metaDescription: "This is a example description"
+metaDescription: "Welcome to Barracuda AI - Software and AI Agency"
 ---

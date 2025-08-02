@@ -1,12 +1,12 @@
 # Site Configuration
 [site]
-  title            = "Folex" # Shared title for SEO and OpenGraph
-  description      = "A highly customizable creative agency business theme built with Tailwind CSS and Astro Js" # Shared description for SEO and OpenGraph
-  tagline          = "Creative Agency & Personal Portfolio Business Theme"
-  taglineSeparator = "" # default is " - " 
-  baseUrl          = "https://folex-lite-astro.vercel.app/" # Base URL for the site and used in OpenGraph meta tags.
-  logo             = "/images/logo.svg" # Path to the site's logo
-  logoAlternate    = "/images/logo-light.svg" # Path to the site's alternate logo
+  title            = "Barracuda" # Shared title for SEO and OpenGraph
+  description      = "We are a consulting firm that helps companies automate and streamline their processes using Artificial Intelligence" # Shared description for SEO and OpenGraph
+  tagline          = "AI Solutions"
+  taglineSeparator = "" # default is " - "
+  baseUrl          = "https://barracuda.do/" # Base URL for the site and used in OpenGraph meta tags.
+  logo             = "/images/barracuda-logo-fit.png" # Path to the site's logo
+  logoAlternate    = "/images/barracuda-logo-fit.png" # Path to the site's alternate logo
   logoText         = "" # Text displayed next to the logo
   logoWidth        = "86px" # Width of the logo
   logoHeight       = "24px" # Height of the logo
@@ -18,20 +18,20 @@
   # Add your site logo in image path below and open your terminal and run "npm run generate-favicons" to generate favicons for different devices and platform (https://realfavicongenerator.net/checker)
   [site.favicon]
     path  = "/images/favicons" # favicon images path (No need to change it)
-    image = "/images/favicon.png" # Add your site logo path here and follow upper instruction
+    image = "/images/favicon-ai.png" # Add your site logo path here and follow upper instruction
 
 
 # SEO Metadata
 # Specific SEO configurations that complement the general site settings.
 # -----------------------------------------------------------------------------------------------------------------------------------
 [seo]
-  author = "Getastrothemes"
+  author = "Barracuda.do"
   keywords = [
-    "free digital agency",
-    "free astro template",
-    "free astro theme",
-    "free astro agency template",
-    "free astro agency theme",
+    "Artificial Intelligence",
+    "AI Solutions",
+    "Software Development",
+    "Dashboards",
+    "Data Science",
   ]
   robots = "index, follow" # Instructs search engines on how to crawl and index the pages.
 
@@ -81,31 +81,31 @@
     # Run `npm run remove-multilingual` for removing multilingual content files after disabling the feature.
     enable               = true
     defaultLanguage      = "en"
-    disableLanguages     = [] # List of languages to disable (eg: ["fr", "es"])
+    disableLanguages     = ["fr"] # List of languages to disable (eg: ["fr", "es"])
     showDefaultLangInUrl = false # Show default language in URL (eg: https://getastrothemes.com/en/)
 
   # Global Contact Information
   [settings.contactInfo]
-    address = "27 Division St, New York, <br /> NY 10002, USA"
-    email   = "[folex.agency@mail.com](mailto:folex.agency@mail.com)"
-    phone   = "[+1 800 123 654 987](tel:+1800123654987)"
+    address = "Distrito Nacional, <br /> Santo Domingo 10149, Dominican Republic" # Address of the business, supports HTML for line breaks
+    email   = "[info@barracuda.do](mailto:info@barracuda.do)"
+    # phone   = "[+1 800 123 654 987](tel:+1800123654987)"
 
   # Header Offcanvas Configuration
   # Update social links in `src/config/social.json`
   [settings.headerOffcanvas]
     enable      = true
-    logo        = "/images/logo-light.svg"
+    logo        = "/images/barracuda-logo-fit.png"
     description = "" # Check src/i18n/en.json and src/i18n/fr.json for changing the description in different languages or directly add value here if you are not using internationalization feature. This is also used in footer of personal-portfolio homepage
 
     # Call To Action Button
     [settings.headerOffcanvas.button]
-      enable = true
+      enable = false
       label  = "" # Check src/i18n/en.json and src/i18n/fr.json for changing the button label in different languages or directly add value here if you are not using internationalization feature
       url    = "/"
 
 # Navigation Button In Header
 [settings.navigationButton]
-  enable = true
+  enable = false
   label  = "" # Check src/i18n/en.json and src/i18n/fr.json for changing the navigation button label in different languages or directly add value here if you are not using internationalization feature
   url    = "/"
 
@@ -125,4 +125,7 @@
 [head]
   content = """
   <script defer async src="/umami.is.js" data-website-id=""></script>
+  <!-- Calendly link widget begin -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+  <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
   """

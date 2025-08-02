@@ -1,0 +1,21 @@
+{
+  "common": {
+    "viewDetails": "Ver detalles",
+    "learnMoreAbout": "Aprender más sobre",
+    "paginationPrevious": "Anterior",
+    "paginationNext": "Siguiente",
+    "paginationPortfolioPrev": "Portafolio anterior",
+    "paginationPortfolioNext": "Siguiente portafolio"
+  },
+  "headerOffcanvas": {
+    "description": "Somos una firma de consultoría para proyectos de IA y software.",
+    "buttonLabel": "Hablemos"
+  },
+  "navigation": {
+    "buttonLabel": "Agendar una llamada"
+  },
+  "footer": {
+    "copyright": "Copyright © {{ year }} por Barracuda AI / Hecho con [Getastrothemes](https://getastrothemes.com/)",
+    "_comment": "Agradecemos amablemente si mantiene el copyright del tema. ¡Gracias por apoyar a Getastrothemes!"
+  }
+}

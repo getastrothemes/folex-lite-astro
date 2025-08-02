@@ -167,6 +167,38 @@ export const clientsSectionSchema = z
   })
   .optional();
 
+export const whyChooseUsSectionSchema = z
+  .object({
+    enable: z.boolean().default(false).optional(),
+    title: z.string().optional(),
+    description: z.string().optional(),
+    list: z.array(
+      z.object({
+        enable: z.boolean().default(false),
+        title: z.string(),
+        description: z.string(),
+        icon: z.string().optional(),
+        image: z.string().optional(),
+      }),
+    ),
+  })
+  .optional();
+
+export const ourProcessSectionSchema = z
+  .object({
+    enable: z.boolean().default(false).optional(),
+    title: z.string().optional(),
+    description: z.string().optional(),
+    list: z.array(
+      z.object({
+        title: z.string(),
+        description: z.string(),
+        icon: z.string(),
+      }),
+    ),
+  })
+  .optional();
+
 export const bannerAgencySectionSchema = z
   .object({
     enable: z.boolean().default(false).optional(),
@@ -188,4 +220,6 @@ export const sectionsSchema = {
   clientsSection: clientsSectionSchema,
   bannerAgencySection: bannerAgencySectionSchema,
   pricingSection: pricingSectionSchema,
+  whyChooseUsSection: whyChooseUsSectionSchema,
+  ourProcessSectionSchema: ourProcessSectionSchema,
 };

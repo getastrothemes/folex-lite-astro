@@ -1,0 +1,88 @@
+---
+import ReactIcons from "@/helpers/ReactIcons.astro";
+import { getEntryCTM } from "@/lib/customContentLoader.astro";
+import overrideObjects from "@/lib/utils/overrideObjects.ts";
+import { markdownify } from "@/lib/utils/textConverter";
+import type { ourProcessSectionSchema } from "@/sections.schema";
+import type { z } from "astro/zod";
+
+// SEE: https://tailwindflex.com/@santos78/stepper-example
+// Type for this section data
+type ourProcessSectionSchema = NonNullable<
+  z.infer<typeof ourProcessSectionSchema>
+>;
+
+type Props = {
+  content?: ourProcessSectionSchema;
+};
+
+// Fetching the default content for the this section
+let defaultContent = (
+  await getEntryCTM("sections", "our-process", Astro.currentLocale)
+)?.data as ourProcessSectionSchema;
+
+// Enables content customization (e.g., title, description) with a fallback to 'defaultContent' if not provided.
+// The 'content' prop should match the structure of 'defaultContent'.
+// Allows using this section with different content across multiple pages.
+// If 'content' is missing, 'defaultContent' will be used.
+let actualContent = overrideObjects(
+  { ...defaultContent },
+  Astro.props.content,
+) as ourProcessSectionSchema;
+// Extracting required values from 'content' object
+let { enable = true, title, description, list } = actualContent || {};
+
+if (!enable) {
+  return null;
+}
+const itemsLength = list.length;
+---
+
+<section id="our-process">
+  <div class="container space-y-14">
+    {
+      title && (
+        <div class="text-center">
+          <h3 class="text-h1-sm md:text-h1" set:html={markdownify(title)} />
+        </div>
+      )
+    }
+    {
+      description && (
+        <div class="text-center">
+          <p
+            class="mx-auto mt-4 max-w-2xl text-lg font-normal text-gray-700 lg:text-xl lg:leading-8"
+            set:html={markdownify(description)}
+          />
+        </div>
+      )
+    }
+    <ul
+      class="mx-auto mt-12 grid max-w-md grid-cols-1 gap-10 sm:mt-16 lg:mt-20 lg:max-w-5xl lg:grid-cols-4">
+      {
+        list.map((item, index) => (
+          <li class="flex-start group relative flex lg:flex-col">
+            {index < itemsLength - 1 && (
+              <span
+                class="absolute top-14 left-[18px] h-[calc(100%_-_32px)] w-px bg-gray-300 lg:top-[18px] lg:right-0 lg:left-auto lg:h-px lg:w-[calc(100%_-_72px)]"
+                aria-hidden="true"
+              />
+            )}
+
+            <div class="group-hover:bg-accent inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gray-300 bg-gray-50 transition-all duration-200 group-hover:border-gray-900">
+              {item.icon && <ReactIcons icon={item.icon} />}
+            </div>
+
+            <div class="ml-6 lg:mt-10 lg:ml-0">
+              <h3
+                class="text-xl font-bold before:mb-2 before:block before:font-mono before:text-sm before:text-gray-500"
+                set:html={markdownify(item.title)}
+              />
+              <p class="mt-4" set:html={markdownify(item.description)} />
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

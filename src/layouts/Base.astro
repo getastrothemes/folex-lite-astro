@@ -7,7 +7,7 @@ import Header from "@/components/global/header/Header.astro";
 import type { JSONLDProps } from "@/lib/utils/JsonLdGenerator";
 import HelperButtons from "@/components/utilities/HelperButtons.astro";
 import BreakpointIndicator from "@/components/widgets/BreakpointIndicator.astro";
-import FooterThree from "@/components/global/FooterThree.astro";
+import FooterThreePro from "@/components/global/FooterThreePro.astro";
 
 interface Props extends JSONLDProps {
   className?: string;
@@ -78,11 +78,11 @@ className = fitToScreen
           Folex premium version to unlock this layout.
         </div>
       ) : footerLayout === "footer-3" ? (
-        <FooterThree footerSpaceTop={footerSpaceTop} />
+        <FooterThreePro footerSpaceTop={footerSpaceTop} />
       ) : null
     }
 
-    <HelperButtons />
+    <!-- <HelperButtons /> -->
     <script>
       // @ts-nocheck
       import AOS from "aos";

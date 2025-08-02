@@ -34,15 +34,11 @@
   "[toml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": [
-    "megamenu",
-    "popperjs",
-    "wireframes"
-  ],
+  "cSpell.words": ["megamenu", "popperjs", "wireframes"],
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "css.lint.unknownAtRules": "ignore",
   "tailwindCSS.experimental.configFile": "src/styles/globals.css",
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

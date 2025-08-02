@@ -1,6 +1,6 @@
 ---
 title: ""
-enable: true
+enable: false
 
 options:
   layout: "grid" # masonry | grid | full-width | slider

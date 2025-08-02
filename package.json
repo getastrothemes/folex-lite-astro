@@ -7,11 +7,7 @@
   "license": "SEE LICENSE IN LICENSE.md",
   "packageManager": "pnpm@8.15.5",
   "private": true,
-  "keywords": [
-    "astro",
-    "template",
-    "tailwindcss"
-  ],
+  "keywords": ["astro", "template", "tailwindcss"],
   "repository": {
     "type": "git",
     "url": "https://github.com/getastrothemes/folex-lite-astro.git"
@@ -27,7 +23,8 @@
     "preview": "astro build && npm run remove-draft-from-sitemap && astro preview",
     "build": "npm run check && astro build && npm run remove-draft-from-sitemap",
     "check": "astro check",
-    "format": "prettier --write ./src",
+    "format": "biome format --write",
+    "pretty": "prettier --write src",
     "generate-favicons": "node ./scripts/generate-favicons.mjs",
     "remove-multilingual": "node ./scripts/remove-multilingual.mjs",
     "remove-draft-from-sitemap": "node ./scripts/remove-draft-from-sitemap.mjs"
@@ -65,6 +62,7 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.1.3",
     "@realfavicongenerator/generate-favicon": "^0.4.6",
     "@realfavicongenerator/image-adapter-node": "^0.4.6",
     "@tailwindcss/forms": "^0.5.10",

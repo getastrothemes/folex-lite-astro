@@ -29,7 +29,7 @@ map:
 #   - title: "Adresse e-mail"
 #     icon: "/images/icons/svg/message-filled.svg"
 #     description: |
-#       folex.agency@mail.com
+#       info@barracuda.do
 #       folex.agency@support.com
 #     button:
 #       # Refer to the `sharedButton` schema in `src/sections.schema.ts` for all available configuration options (e.g., enable, label, url, hoverEffect, variant, icon, tag, rel, class, target, etc.)
@@ -178,5 +178,5 @@ form:
       content: "Nous avons bien reçu votre message ! Nous vous répondrons dès que possible."
     - note: deprecated
       parentClass: "hidden text-sm message error"
-      content: "Une erreur est survenue ! Veuillez utiliser cet e-mail - [folex-astro-theme@gmail.com](mailto:folex-astro-theme@gmail.com) pour soumettre un ticket !"
+      content: "Une erreur est survenue ! Veuillez utiliser cet e-mail - [info@barracuda.do](mailto:info@barracuda.do) pour soumettre un ticket !"
 ---

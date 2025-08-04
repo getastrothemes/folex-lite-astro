@@ -15,7 +15,7 @@ type Props = {
 
 const { title, description, button, ...rest } = Astro.props as Props;
 const onBookCall = `Calendly.initPopupWidget({url: '${button?.url}'});return false;`;
-const onMailTo = `mailto:${button?.mailTo || "emancebo@barracuda.do;cherrera@barracuda.do"}`;
+const onMailTo = `mailto:${button?.mailTo || "info@barracuda.do"}`;
 ---
 
 {

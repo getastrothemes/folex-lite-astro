@@ -13,7 +13,7 @@ button:
   rel: ""
   target: ""
   mailLabel: "Write to Us"
-  mailTo: "emancebo@barracuda.do;cherrera@barracuda.do"
+  mailTo: "info@barracuda.do"
 
 options:
   appearance: "light" # Options: "light" | "accent"

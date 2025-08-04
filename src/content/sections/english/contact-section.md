@@ -29,13 +29,13 @@ map:
 #   - title: "Email Address"
 #     icon: "/images/icons/svg/message-filled.svg"
 #     description: |
-#       folex.agency@mail.com
+#       info@barracuda.do
 #       folex.agency@support.com
 #     button:
 #       # Refer to the `sharedButton` schema in `src/sections.schema.ts` for all available configuration options (e.g., enable, label, url, hoverEffect, variant, icon, tag, rel, class, target, etc.)
 #       enable: true
 #       label: "Send Message"
-#       url: "mailto:folex.agency@mail.com"
+#       url: "mailto:info@barracuda.do"
 #       # hoverEffect: "" # Optional: text-flip | creative-fill | magnetic | magnetic-text-flip
 #       # variant: "" # Optional: fill | outline | text | circle
 #       # rel: "" # Optional
@@ -185,5 +185,5 @@ form:
       content: We have received your message! We'll get back to you as soon as possible.
     - note: deprecated # info | warning | success | deprecated | hint
       parentClass: "hidden text-sm message error"
-      content: Something went wrong! please use this mail - [folex-astro-theme@gmail.com](mailto:folex-astro-theme@gmail.com) to submit a ticket!
+      content: Something went wrong! please use this mail - [info@barracuda.do](mailto:info@barracuda.do) to submit a ticket!
 ---

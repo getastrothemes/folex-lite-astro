@@ -124,12 +124,9 @@ Full usage, customization, and deployment guide:
 
 ## 📄 License
 
-Folex Lite is free for personal and commercial use with the following conditions:
+Folex Lite is free for personal and commercial use under the [Getastrothemes Free Theme License](LICENSE.md).:
 
-- ❌ No redistribution or resale allowed
-- ✅ Attribution required: Include a visible link to getastrothemes.com in your site footer or credits.
-
-For white-label or distribution rights, contact us → [Contact Us](https://getastrothemes.com/contact/).
+✅ Attribution appreciated but not required. You may optionally include a visible link to [getastrothemes.com](https://getastrothemes.com) in your site footer or credits section.
 
 ## 💬 Feedback & Suggestions
 

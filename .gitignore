@@ -30,3 +30,11 @@ package-lock.json
 # Local Netlify folder
 .netlify
 .vercel
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/*.tfvars
+terraform/terraform.tfvars.json
+terraform/.terraform.lock.hcl

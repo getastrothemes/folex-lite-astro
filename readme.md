@@ -8,7 +8,7 @@
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/getastrothemes/folex-lite-astro) [![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/getastrothemes/folex-lite-astro) [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/getastrothemes/folex-lite-astro?devcontainer_path=.devcontainer/devcontainer.json)
 
-![Folex Lite Preview](https://folex-lite-astro.vercel.app/images/og-image.jpg)
+![Folex Lite Banner](https://folex-lite-astro.vercel.app/images/og-image.jpg)
 
 ## ✨ Features at a Glance
 

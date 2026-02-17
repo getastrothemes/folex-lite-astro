@@ -1,24 +1,52 @@
-import path from "path";
-import fs from "fs/promises";
-import languages from "../src/config/language.json" with { type: "json" };
-import config from "../.astro/config.generated.json" with { type: "json" };
+// scripts/cleanup-i18n.mjs
+import path from "node:path";
+import { promises as fs } from "node:fs";
+import { fileURLToPath } from "node:url";
 
-// Constants
-const CONTENT_DIR = "src/content";
-const CONFIG_DIR = "src/config";
-const I18N_DIR = "src/i18n";
+// --------- Cross-platform root ----------
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const PROJECT_ROOT = path.resolve(__dirname, "..");
+
+// --------- Absolute paths ----------
+const CONTENT_DIR = path.resolve(PROJECT_ROOT, "src", "content");
+const CONFIG_DIR = path.resolve(PROJECT_ROOT, "src", "config");
+const I18N_DIR = path.resolve(PROJECT_ROOT, "src", "i18n");
 const LANGUAGE_FILE = path.join(CONFIG_DIR, "language.json");
-const DEFAULT_LANG = config.settings.multilingual.defaultLanguage;
-
-// Filter languages
-const ENGLISH_LANG = languages.filter(
-  (item) => item.languageCode === DEFAULT_LANG,
-);
-const NON_ENGLISH_LANGS = languages.filter(
-  (item) => item.languageCode !== DEFAULT_LANG,
+const LANG_FILE = path.join(CONFIG_DIR, "language.json");
+const ASTRO_CONFIG_FILE = path.resolve(
+  PROJECT_ROOT,
+  ".astro",
+  "config.generated.json",
 );
 
-// Utility: Colorize console logs
+// --------- JSON load (Node-safe) ----------
+async function readJsonFile(filePath) {
+  try {
+    const mod = await import(filePath, { with: { type: "json" } });
+    return mod.default ?? mod;
+  } catch {
+    try {
+      const mod = await import(filePath, { assert: { type: "json" } });
+      return mod.default ?? mod;
+    } catch {
+      const raw = await fs.readFile(filePath, "utf8");
+      return JSON.parse(raw);
+    }
+  }
+}
+
+async function pathExists(p) {
+  try {
+    await fs.access(p);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// ---------------- Colors ----------------
 const colors = {
   reset: "\x1b[0m",
   red: "\x1b[31m",
@@ -31,107 +59,163 @@ const colors = {
 };
 
 const log = (message, color = "reset") => {
-  console.log(`${colors[color]}${message}${colors.reset}`);
+  console.log(`${colors[color] ?? colors.reset}${message}${colors.reset}`);
 };
 
-// Updated tasks with colored logs
+// ---------------- Core helpers ----------------
 const deleteMatchingFolders = async (baseDir, targetFolderName) => {
+  // If baseDir doesn't exist, just skip
+  if (!(await pathExists(baseDir))) return;
+
   try {
     const entries = await fs.readdir(baseDir, { withFileTypes: true });
 
-    await Promise.all(
-      entries.map(async (entry) => {
-        const fullPath = path.join(baseDir, entry.name);
+    for (const entry of entries) {
+      if (!entry.isDirectory()) continue;
 
-        if (entry.isDirectory()) {
-          if (entry.name === targetFolderName) {
-            await fs.rm(fullPath, { recursive: true, force: true });
-            log(`Deleted folder: ${fullPath}`, "green");
-          } else {
-            // Recurse into subdirectories
-            await deleteMatchingFolders(fullPath, targetFolderName);
-          }
-        }
+      const fullPath = path.join(baseDir, entry.name);
+
+      if (entry.name === targetFolderName) {
+        await fs.rm(fullPath, { recursive: true, force: true });
+        log(`Deleted folder: ${fullPath}`, "green");
+      } else {
+        await deleteMatchingFolders(fullPath, targetFolderName);
+      }
+    }
+  } catch (err) {
+    log(
+      `Error processing directory ${baseDir}: ${err?.message ?? String(err)}`,
+      "red",
+    );
+  }
+};
+
+// ---------------- Tasks ----------------
+async function cleanupContentDirectories(NON_DEFAULT_LANGS) {
+  log("Cleaning up content directories...", "cyan");
+
+  if (!(await pathExists(CONTENT_DIR))) {
+    log(`⚠️ Content dir not found: ${CONTENT_DIR} (skipping)`, "yellow");
+    return;
+  }
+
+  // Delete each non-default language folder under src/content/**/
+  for (const lang of NON_DEFAULT_LANGS) {
+    if (!lang?.contentDir) continue;
+    await deleteMatchingFolders(CONTENT_DIR, lang.contentDir);
+  }
+
+  log("Content directories cleanup completed.", "green");
+}
+
+async function updateLanguageConfig(DEFAULT_LANG, languages) {
+  log("Updating language.json...", "cyan");
+
+  const defaultLangEntries = languages.filter(
+    (l) => l?.languageCode === DEFAULT_LANG,
+  );
+
+  if (defaultLangEntries.length === 0) {
+    log(
+      `⚠️ No language entry found for defaultLanguage="${DEFAULT_LANG}". Writing unchanged file.`,
+      "yellow",
+    );
+    return;
+  }
+
+  await fs.writeFile(
+    LANGUAGE_FILE,
+    JSON.stringify(defaultLangEntries, null, 2),
+    "utf8",
+  );
+  log(`Updated language.json to only include: ${DEFAULT_LANG}`, "green");
+}
+
+async function cleanupMenuFiles() {
+  log("Cleaning up menu files...", "cyan");
+
+  if (!(await pathExists(CONFIG_DIR))) {
+    log(`⚠️ Config dir not found: ${CONFIG_DIR} (skipping)`, "yellow");
+    return;
+  }
+
+  const files = await fs.readdir(CONFIG_DIR);
+
+  await Promise.all(
+    files
+      .filter((file) => file.startsWith("menu.") && file !== "menu.en.json")
+      .map(async (file) => {
+        const filePath = path.join(CONFIG_DIR, file);
+        await fs.unlink(filePath);
+        log(`Deleted file: ${filePath}`, "green");
       }),
-    );
-  } catch (err) {
-    log(`Error processing directory ${baseDir}: ${err.message}`, "red");
-  }
-};
+  );
 
-const cleanupContentDirectories = async () => {
-  try {
-    log("Cleaning up content directories...", "cyan");
-    await Promise.all(
-      NON_ENGLISH_LANGS.map((lang) =>
-        deleteMatchingFolders(CONTENT_DIR, lang.contentDir),
-      ),
-    );
-    log("Content directories cleanup completed.", "green");
-  } catch (err) {
-    log("Error cleaning up content directories: " + err.message, "red");
-  }
-};
+  log("Menu files cleanup completed.", "green");
+}
 
-const updateLanguageConfig = async () => {
-  try {
-    log("Updating language.json...", "cyan");
-    await fs.writeFile(LANGUAGE_FILE, JSON.stringify(ENGLISH_LANG, null, 2));
-    log("Updated language.json to only include English.", "green");
-  } catch (err) {
-    log("Error updating language.json: " + err.message, "red");
-  }
-};
+async function cleanupI18nFiles() {
+  log("Cleaning up i18n files...", "cyan");
 
-const cleanupMenuFiles = async () => {
-  try {
-    log("Cleaning up menu files...", "cyan");
-    const files = await fs.readdir(CONFIG_DIR);
-    await Promise.all(
-      files
-        .filter((file) => file.startsWith("menu.") && file !== "menu.en.json")
-        .map(async (file) => {
-          const filePath = path.join(CONFIG_DIR, file);
-          await fs.unlink(filePath);
-          log(`Deleted file: ${filePath}`, "green");
-        }),
-    );
-    log("Menu files cleanup completed.", "green");
-  } catch (err) {
-    log("Error cleaning up menu files: " + err.message, "red");
+  if (!(await pathExists(I18N_DIR))) {
+    log(`⚠️ i18n dir not found: ${I18N_DIR} (skipping)`, "yellow");
+    return;
   }
-};
 
-const cleanupI18nFiles = async () => {
-  try {
-    log("Cleaning up i18n files...", "cyan");
-    const files = await fs.readdir(I18N_DIR);
-    await Promise.all(
-      files
-        .filter((file) => file !== "en.json")
-        .map(async (file) => {
-          const filePath = path.join(I18N_DIR, file);
-          await fs.unlink(filePath);
-          log(`Deleted file: ${filePath}`, "green");
-        }),
-    );
-    log("i18n files cleanup completed.", "green");
-  } catch (err) {
-    log("Error cleaning up i18n files: " + err.message, "red");
-  }
-};
+  const files = await fs.readdir(I18N_DIR);
 
-const runCleanup = async () => {
+  await Promise.all(
+    files
+      .filter((file) => file !== "en.json")
+      .map(async (file) => {
+        const filePath = path.join(I18N_DIR, file);
+        await fs.unlink(filePath);
+        log(`Deleted file: ${filePath}`, "green");
+      }),
+  );
+
+  log("i18n files cleanup completed.", "green");
+}
+
+// ---------------- Runner ----------------
+async function runCleanup() {
   log("Starting cleanup process...", "blue");
+
   try {
-    await cleanupContentDirectories();
-    await updateLanguageConfig();
+    const [languages, config] = await Promise.all([
+      readJsonFile(LANG_FILE),
+      readJsonFile(ASTRO_CONFIG_FILE),
+    ]);
+
+    const DEFAULT_LANG = config?.settings?.multilingual?.defaultLanguage;
+    if (!DEFAULT_LANG) {
+      log(
+        `❌ Could not read settings.multilingual.defaultLanguage from ${ASTRO_CONFIG_FILE}`,
+        "red",
+      );
+      process.exitCode = 1;
+      return;
+    }
+
+    const NON_DEFAULT_LANGS = (
+      Array.isArray(languages) ? languages : []
+    ).filter(
+      (item) => item?.languageCode && item.languageCode !== DEFAULT_LANG,
+    );
+
+    await cleanupContentDirectories(NON_DEFAULT_LANGS);
+    await updateLanguageConfig(
+      DEFAULT_LANG,
+      Array.isArray(languages) ? languages : [],
+    );
     await cleanupMenuFiles();
     await cleanupI18nFiles();
+
     log("Cleanup process completed successfully.", "green");
   } catch (err) {
-    log("Error during cleanup process: " + err.message, "red");
+    log(`Error during cleanup process: ${err?.message ?? String(err)}`, "red");
+    process.exitCode = 1;
   }
-};
+}
 
 runCleanup();

@@ -1,209 +1,259 @@
-import path from "path";
-import fs from "fs/promises";
+// scripts/process-sitemaps.mjs
+import path from "node:path";
+import { promises as fs } from "node:fs";
+import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import { parseStringPromise, Builder } from "xml2js";
-import languagesJSON from "../src/config/language.json" with { type: "json" };
-import config from "../.astro/config.generated.json" with { type: "json" };
 
-// Constants
-const DIST_FOLDER = "./dist";
-const CONTENT_FOLDER = "./src/content";
+// --------- Cross-platform root ----------
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const PROJECT_ROOT = path.resolve(__dirname, "..");
+
+// --------- Paths (absolute) ----------
+const DIST_FOLDER = path.resolve(PROJECT_ROOT, "dist");
+const CONTENT_FOLDER = path.resolve(PROJECT_ROOT, "src", "content");
+const LANG_FILE = path.resolve(PROJECT_ROOT, "src", "config", "language.json");
+const ASTRO_CONFIG_FILE = path.resolve(PROJECT_ROOT, ".astro", "config.generated.json");
+
 const SITEMAP_FILE_PATTERN = /^sitemap-\d+\.xml$/;
 
-const settings = {
-  ...config.settings.multilingual,
-  languages: [...languagesJSON],
-};
-
-const EXCLUDE_FOLDERS = [
-  "widgets",
-  "sections",
-  "author",
-  ...config.seo.sitemap.exclude,
-];
-
-// Helper: Get All Sitemap Files
-async function getSitemapFiles() {
+// --------- JSON load (Node-safe) ----------
+async function readJsonFile(filePath) {
   try {
-    const files = await fs.readdir(DIST_FOLDER);
-    return files
-      .filter((file) => SITEMAP_FILE_PATTERN.test(file))
-      .map((file) => path.join(DIST_FOLDER, file));
-  } catch (error) {
-    console.error("Error reading sitemap files:", error);
-    throw error;
+    const mod = await import(filePath, { with: { type: "json" } });
+    return mod.default ?? mod;
+  } catch {
+    try {
+      const mod = await import(filePath, { assert: { type: "json" } });
+      return mod.default ?? mod;
+    } catch {
+      const raw = await fs.readFile(filePath, "utf8");
+      return JSON.parse(raw);
+    }
+  }
+}
+
+// --------- Helpers ----------
+async function pathExists(p) {
+  try {
+    await fs.access(p);
+    return true;
+  } catch {
+    return false;
   }
 }
 
-// Helper: Normalize Path
-function normalizedPath(filePath) {
-  return path.posix.join(...filePath.split(path.sep));
+// Always return POSIX-style paths for keys/URLs
+function toPosix(p) {
+  return p.split(path.sep).join(path.posix.sep);
 }
 
-// Helper: Generate Slug
-function getSlug(filePath, metadata) {
-  const fileName = path.basename(filePath, path.extname(filePath));
-  const parentFolder = filePath.split("/")[2];
-  const slugPath = path.join(parentFolder, metadata.originalSlug || fileName);
-  return normalizedPath(fileName !== "-index" ? slugPath : parentFolder);
-}
-
-// Helper: Generate URL
-function generateUrl(filePath, metadata) {
-  const langCode = getLanguageCode(filePath);
-  if (!langCode) return null;
-  const slug = getSlug(filePath, metadata);
-  const isDefaultLang = langCode === settings.defaultLanguage;
-
-  // Construct URL
-  return isDefaultLang && !settings.showDefaultLangInUrl
-    ? `/${slug}`
-    : `/${langCode}/${slug}`.replace(/\/+/g, "/");
-}
-
-// Helper: Get Language Code
-function getLanguageCode(filePath) {
-  const language = settings.languages.find((lang) =>
-    filePath.includes(`/${lang.contentDir}/`),
-  );
-  return language ? language.languageCode : null;
-}
-
-// Helper: Process File Paths
-function processFilePaths(filePaths) {
-  const urlMappings = [];
-  for (const [filePath, metadata] of Object.entries(filePaths)) {
-    let url = generateUrl(filePath, metadata);
-
-    // Exclude URLs based on folders
-    if (EXCLUDE_FOLDERS.some((folder) => url?.includes(folder))) {
-      continue;
-    }
-
-    // Align URLs with sitemap structure
-    if (url) {
-      if (url.includes("/pages/")) url = url.replace("/pages/", "/");
-      if (url.includes("/homepage")) url = url.replace("/homepage", "/");
-
-      const obj = { id: url, data: metadata };
-      if (
-        metadata.draft ||
-        metadata.excludeFromSitemap ||
-        EXCLUDE_FOLDERS.some((folder) => url.includes(folder))
-      ) {
-        if (
-          !urlMappings.some((item) => item.id === metadata.customSlug || obj.id)
-        ) {
-          urlMappings.push(obj);
-        }
-      }
+// Safe URL pathname extraction (handles absolute + relative)
+function safePathname(loc) {
+  if (!loc || typeof loc !== "string") return null;
+  try {
+    // If it's absolute
+    return new URL(loc).pathname;
+  } catch {
+    // If it's relative, parse with dummy base
+    try {
+      return new URL(loc, "https://example.com").pathname;
+    } catch {
+      return null;
     }
   }
-
-  return urlMappings;
 }
 
-// Helper: Read Content Frontmatter
+// Recursively walk content and read frontmatter
 async function getContentFrontmatter(folder = CONTENT_FOLDER) {
   const frontmatterMap = {};
 
-  async function readDirectory(directory) {
-    const entries = await fs.readdir(directory, { withFileTypes: true });
+  async function walk(dir) {
+    const entries = await fs.readdir(dir, { withFileTypes: true });
     for (const entry of entries) {
-      const entryPath = path.join(directory, entry.name);
+      const full = path.join(dir, entry.name);
       if (entry.isDirectory()) {
-        await readDirectory(entryPath);
-      } else if (entry.isFile() && /\.(md|mdx)$/.test(entry.name)) {
-        try {
-          const content = await fs.readFile(entryPath, "utf-8");
-          const { data } = matter(content);
-          if (data) {
-            frontmatterMap[normalizedPath(entryPath)] = {
-              excludeFromSitemap: data.excludeFromSitemap || false,
-              draft: data.draft || false,
-              originalSlug: data.id || null,
-            };
-          }
-        } catch (error) {
-          console.error(`Error reading file ${entryPath}:`, error);
-        }
+        await walk(full);
+        continue;
+      }
+      if (!entry.isFile() || !/\.(md|mdx)$/i.test(entry.name)) continue;
+
+      try {
+        const content = await fs.readFile(full, "utf8");
+        const { data } = matter(content);
+
+        const key = toPosix(full); // consistent key regardless of OS
+
+        frontmatterMap[key] = {
+          excludeFromSitemap: Boolean(data?.excludeFromSitemap),
+          draft: Boolean(data?.draft),
+          originalSlug: typeof data?.id === "string" ? data.id : null,
+          customSlug: typeof data?.customSlug === "string" ? data.customSlug : null,
+        };
+      } catch (err) {
+        console.error(`Error reading file ${full}:`, err);
       }
     }
   }
 
-  await readDirectory(folder);
+  await walk(folder);
   return frontmatterMap;
 }
 
-// Helper: Check if the dist folder exists
-async function checkDistFolder() {
-  try {
-    await fs.access(DIST_FOLDER);
-  } catch (error) {
-    console.error(
-      `❌ The 'dist' folder was not found at '${path.resolve(DIST_FOLDER)}'.\n` +
-        `   Please ensure that the folder exists and contains the necessary files.\n` +
-        `   If you are running a build process, make sure to execute it first.\n` +
-        `   Example: Run 'npm run build' or 'yarn build' to generate the 'dist' folder.`,
-    );
-    process.exit(1); // Exit the script
-  }
+// Determine language by contentDir in the file path
+function getLanguageCode(filePathPosix, languages) {
+  const match = languages.find((lang) => filePathPosix.includes(`/${lang.contentDir}/`));
+  return match?.languageCode ?? null;
 }
 
-// Main: Process Sitemaps
+// Determine "section" (blog, pages, docs...) from src/content/<section>/<lang>/*
+function getTopSection(filePathPosix) {
+  // filePathPosix contains .../src/content/<section>/...
+  const parts = filePathPosix.split("/");
+
+  const idx = parts.lastIndexOf("content");
+  if (idx === -1) return null;
+
+  return parts[idx + 1] ?? null;
+}
+
+// Build slug: <section>/<originalSlug or filename> (handles -index)
+function getSlug(filePathPosix, metadata) {
+  const fileName = path.posix.basename(filePathPosix, path.posix.extname(filePathPosix));
+  const section = getTopSection(filePathPosix);
+
+  // fallback if structure isn't src/content/<section>/...
+  const base = section ? section : "";
+
+  const rawSlug = metadata?.originalSlug || fileName;
+  if (fileName === "-index") return base || "";
+
+  // join with posix so URLs are correct on Windows too
+  return path.posix.join(base, rawSlug).replace(/\/+/g, "/");
+}
+
+// Generate URL per multilingual settings
+function generateUrl(filePathPosix, metadata, settings) {
+  const langCode = getLanguageCode(filePathPosix, settings.languages);
+  if (!langCode) return null;
+
+  const slug = getSlug(filePathPosix, metadata);
+  const isDefault = langCode === settings.defaultLanguage;
+
+  const urlPath =
+    isDefault && !settings.showDefaultLangInUrl
+      ? `/${slug}`
+      : `/${langCode}/${slug}`;
+
+  return urlPath.replace(/\/+/g, "/");
+}
+
+function buildExcludedFolders(config) {
+  const fromConfig = Array.isArray(config?.seo?.sitemap?.exclude) ? config.seo.sitemap.exclude : [];
+  return ["widgets", "sections", "author", ...fromConfig];
+}
+
+async function getSitemapFiles() {
+  const files = await fs.readdir(DIST_FOLDER);
+  return files
+    .filter((f) => SITEMAP_FILE_PATTERN.test(f))
+    .map((f) => path.join(DIST_FOLDER, f));
+}
+
+// ---------------- Main ----------------
 async function processSitemaps() {
   try {
-    await checkDistFolder(); // Ensure dist folder exists
+    if (!(await pathExists(DIST_FOLDER))) {
+      console.error(
+        `❌ The 'dist' folder was not found at '${DIST_FOLDER}'.\n` +
+          `   Run your build first (e.g., npm run build).`,
+      );
+      process.exitCode = 1;
+      return;
+    }
+
+    const languagesJSON = await readJsonFile(LANG_FILE);
+    const config = await readJsonFile(ASTRO_CONFIG_FILE);
+
+    const settings = {
+      ...(config?.settings?.multilingual ?? {}),
+      languages: Array.isArray(languagesJSON) ? [...languagesJSON] : [],
+    };
+
+    const EXCLUDE_FOLDERS = buildExcludedFolders(config);
+
     const sitemapFiles = await getSitemapFiles();
     const contentFrontmatter = await getContentFrontmatter();
-    const draftPages = processFilePaths(contentFrontmatter);
+
+    // Precompute excluded/draft URLs from content
+    const excludedUrlSet = new Set();
+
+    for (const [filePath, meta] of Object.entries(contentFrontmatter)) {
+      const filePathPosix = toPosix(filePath);
+      const url = generateUrl(filePathPosix, meta, settings);
+
+      if (!url) continue;
+
+      // Normalize to match sitemap paths
+      let norm = url;
+      if (norm.includes("/pages/")) norm = norm.replace("/pages/", "/");
+      if (norm.includes("/homepage")) norm = norm.replace("/homepage", "/");
+
+      // If draft/excluded, we mark it for removal
+      if (meta?.draft || meta?.excludeFromSitemap) {
+        excludedUrlSet.add(meta.customSlug || norm);
+      }
+    }
 
     for (const sitemapFile of sitemapFiles) {
-      const sitemapContent = await fs.readFile(sitemapFile, "utf-8");
+      const sitemapContent = await fs.readFile(sitemapFile, "utf8");
+
       const sitemapObj = await parseStringPromise(sitemapContent, {
-        explicitArray: false, // Simplifies the structure
-        tagNameProcessors: [(name) => name.replace("xhtml:", "")], // Handle xhtml namespace
+        explicitArray: false,
+        tagNameProcessors: [(name) => name.replace("xhtml:", "")],
       });
 
-      if (
-        sitemapObj &&
-        sitemapObj.urlset.url &&
-        Array.isArray(sitemapObj.urlset.url)
-      ) {
-        const urls = Array.isArray(sitemapObj.urlset.url)
-          ? sitemapObj.urlset.url
-          : [sitemapObj.urlset.url];
+      const urlset = sitemapObj?.urlset;
+      if (!urlset?.url) continue;
 
-        sitemapObj.urlset.url = urls.filter((url) => {
-          const pathname = new URL(url.loc).pathname;
-          const isDraft = !draftPages.some((draft) =>
-            pathname.includes(draft.data.customSlug || draft.id),
-          );
+      const urls = Array.isArray(urlset.url) ? urlset.url : [urlset.url];
 
-          const isExcludedFolder = EXCLUDE_FOLDERS.some((folder) =>
-            pathname.includes(folder),
-          );
-          if (isExcludedFolder) return false;
+      const filtered = urls.filter((u) => {
+        const pathname = safePathname(u?.loc);
+        if (!pathname) return true; // if we can't parse it, don't delete it
 
-          const isIndexPage = pathname.includes("-index");
+        // Remove "-index" pages
+        if (pathname.includes("-index")) return false;
 
-          return isDraft && !isIndexPage;
-        });
+        // Exclude folders
+        if (EXCLUDE_FOLDERS.some((folder) => pathname.includes(folder))) return false;
 
-        const updatedSitemap = new Builder().buildObject(sitemapObj);
-        const minifiedSitemap = updatedSitemap
-          .replace(/(>)(\s+)(<)/g, "$1$3") // Remove spaces between tags
-          .replace(/\s+(?=<)/g, ""); // Remove spaces before tags
+        // Remove draft/excluded URLs
+        // Match on either customSlug or generated url path
+        for (const bad of excludedUrlSet) {
+          if (bad && pathname.includes(bad)) return false;
+        }
 
-        await fs.writeFile(sitemapFile, minifiedSitemap, "utf-8");
-      }
+        return true;
+      });
+
+      sitemapObj.urlset.url = filtered;
+
+      const updated = new Builder().buildObject(sitemapObj);
+      const minified = updated
+        .replace(/(>)(\s+)(<)/g, "$1$3")
+        .replace(/\s+(?=<)/g, "");
+
+      await fs.writeFile(sitemapFile, minified, "utf8");
     }
 
     console.log("✅ Sitemaps processed successfully.");
   } catch (error) {
     console.error("Error processing sitemaps:", error);
+    process.exitCode = 1;
   }
 }
 
-// Run
 processSitemaps();

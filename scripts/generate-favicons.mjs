@@ -1,40 +1,83 @@
-import fs from "fs";
-import path from "path";
+// scripts/generateFavicons.ts
+import path from "node:path";
+import { promises as fs } from "node:fs";
+import { fileURLToPath } from "node:url";
+
 import {
   getNodeImageAdapter,
   loadAndConvertToSvg,
 } from "@realfavicongenerator/image-adapter-node";
 import faviconGenerator from "@realfavicongenerator/generate-favicon";
-import config from "../.astro/config.generated.json" assert { type: "json" };
+
+// --- Cross-platform __dirname / project root ---
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const PROJECT_ROOT = path.resolve(__dirname, "..");
 
 // Constants
-const FAVICON_DIR = "./public/images/favicons/";
+const FAVICON_DIR = path.resolve(PROJECT_ROOT, "public", "images", "favicons");
 const DEFAULT_TITLE = "Website";
-const DEFAULT_FAVICON_IMAGE = "/images/default-favicon.png"; // Fallback image
+const DEFAULT_FAVICON_IMAGE = "/images/default-favicon.png";
+const CONFIG_PATH = path.resolve(
+  PROJECT_ROOT,
+  ".astro",
+  "config.generated.json",
+);
 
-// Helper: Create Directory if Not Exists
-function ensureDirectoryExists(directoryPath) {
-  if (!fs.existsSync(directoryPath)) {
-    fs.mkdirSync(directoryPath, { recursive: true });
-    console.log(`Created directory: ${directoryPath}`);
+// Helper: Read config in a Node-version-friendly way
+async function loadConfig() {
+  // 1) Try native JSON import (Node 20+ typically)
+  try {
+    const mod = await import(CONFIG_PATH, { with: { type: "json" } });
+    return mod.default ?? mod;
+  } catch {
+    // 2) Fallback to reading JSON from disk (works everywhere)
+    const raw = await fs.readFile(CONFIG_PATH, "utf8");
+    return JSON.parse(raw);
+  }
+}
+
+async function ensureDirectoryExists(directoryPath) {
+  await fs.mkdir(directoryPath, { recursive: true });
+}
+
+function resolveAssetPath(assetLike) {
+  // You currently treat favicon paths as relative to ./src/assets
+  // Keep same behavior, but do it safely.
+  const cleaned = assetLike.startsWith("/") ? assetLike.slice(1) : assetLike;
+  return path.resolve(PROJECT_ROOT, "src", "assets", cleaned);
+}
+
+async function fileExists(p) {
+  try {
+    await fs.access(p);
+    return true;
+  } catch {
+    return false;
   }
 }
 
 // Main: Generate Favicons
 async function generateFavicons() {
   try {
-  // Parse configuration
+    const config = await loadConfig();
+
     const title = config?.site?.title || DEFAULT_TITLE;
     const faviconImage = config?.site?.favicon?.image || DEFAULT_FAVICON_IMAGE;
 
-    const faviconImagePath = faviconImage.startsWith("/")
-      ? path.join("./src/assets", faviconImage)
-      : path.join("./src/assets/", faviconImage);
+    const faviconImagePath = resolveAssetPath(faviconImage);
 
-    // Ensure favicon directory exists
-    ensureDirectoryExists(FAVICON_DIR);
+    if (!(await fileExists(faviconImagePath))) {
+      throw new Error(
+        `Favicon source image not found.\n` +
+          `Expected at: ${faviconImagePath}\n` +
+          `Config value: ${faviconImage}`,
+      );
+    }
 
-    // Load and convert the master icon
+    await ensureDirectoryExists(FAVICON_DIR);
+
     const imageAdapter = await getNodeImageAdapter();
     const masterIcon = {
       icon: await loadAndConvertToSvg(faviconImagePath),
@@ -76,25 +119,25 @@ async function generateFavicons() {
       path: "/images/favicons/",
     };
 
-    // Generate favicon files
     const files = await faviconGenerator.generateFaviconFiles(
       masterIcon,
       faviconSettings,
       imageAdapter,
     );
 
-    // Save files to the favicon directory
-    Object.entries(files).forEach(([fileName, fileContents]) => {
-      const filePath = path.join(FAVICON_DIR, fileName);
-      fs.writeFileSync(filePath, fileContents);
-      console.log(`Saved: ${filePath}`);
-    });
+    await Promise.all(
+      Object.entries(files).map(async ([fileName, fileContents]) => {
+        const outPath = path.join(FAVICON_DIR, fileName);
+        await fs.writeFile(outPath, fileContents);
+        console.log(`Saved: ${outPath}`);
+      }),
+    );
 
     console.log("Favicons generated successfully.");
   } catch (error) {
     console.error("Error generating favicons:", error);
+    process.exitCode = 1;
   }
 }
 
-// Run
 generateFavicons();

@@ -37,14 +37,14 @@
     "@preline/overlay": "^3.2.3",
     "@preline/select": "^3.2.3",
     "aos": "^2.3.4",
+    "astro-swiper": "^2.2.1",
     "date-fns": "^4.1.0",
     "marked": "^17.0.1",
     "preline": "^3.2.3",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-icons": "^5.5.0",
-    "smoothscroll-for-websites": "^1.5.1",
-    "swiper": "^12.0.3"
+    "smoothscroll-for-websites": "^1.5.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",

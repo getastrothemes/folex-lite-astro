@@ -1,4 +1,5 @@
 ---
+import { Swiper, SwiperWrapper, SwiperSlide } from "astro-swiper";
 import ReactIcons from "@/helpers/ReactIcons.astro";
 import { markdownify } from "@/lib/utils/textConverter";
 import { useTranslations } from "@/lib/utils/i18nUtils";
@@ -56,21 +57,37 @@ if (Array.isArray(information)) {
     <div class="mx-auto w-full max-w-6xl space-y-10 md:space-y-20">
       {
         Array.isArray(images) && images.length > 1 && (
-          <div
+          <Swiper
             id="portfolio-slider"
-            class="swiper"
-            aria-label="Portfolio image slider">
-            <div class="swiper-wrapper">
+            aria-label="Portfolio image slider"
+            options={{
+              navigation: {
+                nextEl: ".portfolio-slider-btn-next",
+                prevEl: ".portfolio-slider-btn-prev",
+              },
+              speed: 800,
+              spaceBetween: 40,
+              slidesPerView: 1,
+              centeredSlides: true,
+              loopAdditionalSlides: 2,
+              autoplay: {
+                delay: 4000,
+                disableOnInteraction: true,
+              },
+              loop: true,
+            }}
+          >
+            <SwiperWrapper>
               {images.map((item: string, index: number) => (
-                <div class="swiper-slide h-auto!">
+                <SwiperSlide class="h-auto!">
                   <OptimizedImage
                     src={item}
                     alt={`${title} image ${index + 1}`}
                     class="h-112.5 w-full object-cover md:h-137.5"
                   />
-                </div>
+                </SwiperSlide>
               ))}
-            </div>
+            </SwiperWrapper>
             {/* <!-- Left Arrow --> */}
             <button
               class="portfolio-slider-btn-prev hover:bg-accent hover:text-dark absolute start-4 top-1/2 z-10 flex min-h-14 min-w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white transition duration-300 [--swiper-navigation-size:1.25rem]"
@@ -84,7 +101,7 @@ if (Array.isArray(information)) {
               aria-label="Next slide">
               <ReactIcons icon="FaArrowRightLong" />
             </button>
-          </div>
+          </Swiper>
         )
       }
 
@@ -132,41 +149,4 @@ if (Array.isArray(information)) {
       </div>
     </div>
   </div>
-
-  <script>
-    if (typeof window !== "undefined") {
-      window.addEventListener("load", async function () {
-        await import("swiper/swiper-bundle.css");
-        const { Swiper } = await import("swiper");
-        const { Autoplay, Pagination, Navigation } =
-          await import("swiper/modules");
-
-        // Initialize banner Swiper
-        const portfolioSlider = document.querySelector(
-          "#portfolio-slider",
-        ) as HTMLElement;
-
-        if (portfolioSlider) {
-          // Initialize content Swiper with navigation
-          new Swiper(portfolioSlider, {
-            modules: [Autoplay, Pagination, Navigation],
-            navigation: {
-              nextEl: ".portfolio-slider-btn-next",
-              prevEl: ".portfolio-slider-btn-prev",
-            },
-            speed: 800,
-            spaceBetween: 40,
-            slidesPerView: 1,
-            centeredSlides: true,
-            loopAdditionalSlides: 2,
-            autoplay: {
-              delay: 4000,
-              disableOnInteraction: true,
-            },
-            loop: true,
-          });
-        }
-      });
-    }
-  </script>
 </section>

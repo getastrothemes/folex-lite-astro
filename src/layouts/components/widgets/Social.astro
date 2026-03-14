@@ -4,6 +4,7 @@ import extractSlug from "@/lib/utils/extractSlug";
 import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
 import { slugifyyy } from "@/lib/utils/textConverter";
 import type { SocialLink } from "@/types";
+import OptimizedImage from "../utilities/OptimizedImage.astro";
 
 interface BaseProps {
   size?: "sm" | "md" | "lg";
@@ -123,13 +124,14 @@ if (linkType === "share" && currentPage) {
             ]}>
             <span class="sr-only">{social.label}</span>
             {social.icon && (
-              <Icons
-                icon={social.icon as any}
+              <OptimizedImage
+                inlineSvg={true}
+                src={social.icon as any}
                 class:list={[
                   "has-inherited-colors relative z-10 transition duration-300",
-                  size === "sm" && "text-base",
-                  size === "md" && "text-xl",
-                  size === "lg" && "text-[1.375rem]",
+                  size === "sm" && "",
+                  size === "md" && "w-[1rem] h-[1rem]",
+                  size === "lg" && "w-[1.375rem] h-[1.375rem]",
                   layout === "dark" && "hover:scale-110",
                   layout === "light" && "hover:text-accent",
                 ]}

@@ -1,4 +1,4 @@
-import { z } from "astro:content";
+import { z } from "astro/zod";
 
 export const sharedButton = z
   .object({
@@ -15,7 +15,7 @@ export const sharedButton = z
       .optional(),
     variant: z.enum(["fill", "outline", "text", "circle"]).optional(),
   })
-  .passthrough();
+  .loose();
 
 export const sharedButtonTag = sharedButton.refine(
   (data) => data.tag !== "a" || !!data.url,

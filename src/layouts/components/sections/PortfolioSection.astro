@@ -5,7 +5,7 @@ import { markdownify } from "@/lib/utils/textConverter";
 import overrideObjects from "@/lib/utils/overrideObjects.ts";
 import { useTranslations } from "@/lib/utils/i18nUtils";
 import { getCollectionCTM, getEntryCTM } from "@/lib/contentParser.astro";
-import config from ".astro/config.generated.json" with { type: "json" };
+import config from "@generated/config.generated.json" assert { type: "json" };
 import type { CollectionEntry } from "astro:content";
 
 // Type for this section data

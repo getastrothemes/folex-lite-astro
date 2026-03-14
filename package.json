@@ -31,7 +31,6 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.7.4",
-    "@lucide/astro": "^0.577.0",
     "@popperjs/core": "^2.11.8",
     "@preline/accordion": "^3.2.3",
     "@preline/collapse": "^3.2.3",

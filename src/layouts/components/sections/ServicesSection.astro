@@ -2,7 +2,7 @@
 import { getCollectionCTM, getEntryCTM } from "@/lib/contentParser.astro";
 import overrideObjects from "@/lib/utils/overrideObjects.ts";
 import { markdownify } from "@/lib/utils/textConverter";
-import ReactIcons from "@/helpers/ReactIcons.astro";
+import Icons from "@/helpers/Icons.astro";
 import uniqueIdGenerator from "@/lib/utils/uniqueIdGenerator";
 import type { z } from "astro/zod";
 import type { Section } from "@/types";
@@ -127,8 +127,8 @@ if (!enable) {
                 </div>
 
                 <div class="hs-accordion-active:rotate-180 pointer-events-none absolute end-0 top-8 flex transition duration-300">
-                  <ReactIcons
-                    icon="RxArrowTopRight"
+                  <Icons
+                    icon="ChevronDown"
                     class="text-dark text-xl"
                   />
                 </div>

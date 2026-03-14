@@ -1,5 +1,5 @@
 ---
-import ReactIcons from "@/helpers/ReactIcons.astro";
+import Icons from "@/helpers/Icons.astro";
 import { markdownify } from "@/lib/utils/textConverter";
 import { useTranslations } from "@/lib/utils/i18nUtils";
 import OptimizedImage from "./utilities/OptimizedImage.astro";
@@ -75,14 +75,14 @@ if (Array.isArray(information)) {
             <button
               class="portfolio-slider-btn-prev hover:bg-accent hover:text-dark absolute start-4 top-1/2 z-10 flex min-h-14 min-w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white transition duration-300 [--swiper-navigation-size:1.25rem]"
               aria-label="Previous slide">
-              <ReactIcons icon="FaArrowLeftLong" />
+              <Icons icon="ArrowLeft" />
             </button>
 
             {/* <!-- Right Arrow --> */}
             <button
               class="portfolio-slider-btn-next hover:bg-accent hover:text-dark absolute end-4 top-1/2 z-10 flex min-h-14 min-w-14 -translate-y-1/2 items-center justify-center rounded-full bg-white transition duration-300 [--swiper-navigation-size:1.25rem]"
               aria-label="Next slide">
-              <ReactIcons icon="FaArrowRightLong" />
+              <Icons icon="ArrowRight" />
             </button>
           </div>
         )

@@ -1,0 +1,103 @@
+---
+import type { NavigationLink } from "@/types";
+import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils.ts";
+import Icons from "@/helpers/Icons.astro";
+
+const { recursive } = Astro.props;
+const menu = Astro.props.menu as NavigationLink;
+const { pathname } = Astro.url;
+---
+
+<li
+  class:list={[
+    "hs-dropdown nav-dropdown group [--auto-close:inside]",
+    recursive ? "nav-dropdown-item [--placement:right-start]" : "nav-item",
+    menu.hasMegaMenu || menu.hasChildren ? "relative" : "",
+    menu.hasMegaMenu
+      ? "lg:[--strategy:fixed]"
+      : menu.hasChildren
+        ? "lg:[--strategy:absolute]"
+        : "",
+  ]}
+  role="menuitem">
+  <span
+    class:list={[
+      "hs-dropdown-toggle nav-toggle",
+      {
+        active:
+          menu.children?.map(({ url }) => url).includes(pathname) ||
+          menu.children?.map(({ url }) => `${url}/`).includes(pathname),
+      },
+      recursive ? "nav-dropdown-link" : "nav-link",
+    ]}>
+    {menu.name}
+
+    <Icons class="nav-toggle-icon" icon="ChevronDown" />
+  </span>
+  {
+    !menu.hasMegaMenu && menu.hasChildren && (
+      <ul
+        class="nav-dropdown-list hs-dropdown-menu"
+        {...(recursive ? { "aria-orientation": "vertical" } : {})}>
+        {menu.children?.map((child) =>
+          child.hasChildren ? (
+            child.hasChildren && <Astro.self recursive menu={child} />
+          ) : (
+            <li class="nav-dropdown-item" role="menuitem">
+              <a
+                href={getLocaleUrlCTM(
+                  child.url || Astro.url.origin,
+                  Astro.currentLocale,
+                )}
+                {...{
+                  // Set `rel` attribute for external links or use provided value
+                  rel: child.url?.startsWith("http")
+                    ? child.rel || "noopener noreferrer"
+                    : child.rel || undefined,
+
+                  // Set `target` to "_blank" for external links unless otherwise specified
+                  target: child.url?.startsWith("http")
+                    ? child.target || "_blank"
+                    : child.target || undefined,
+                }}
+                class:list={[
+                  "nav-dropdown-link block",
+                  {
+                    active:
+                      pathname === `${child.url}/` || pathname === child.url,
+                  },
+                ]}>
+                {child.badge ? (
+                  child.badge.type === "dot" ? (
+                    <span class="relative inline-block">
+                      {child.name}
+                      <sup
+                        class:list={[
+                          "badge badge-dot",
+                          child.badge.color && `badge-${child.badge.color}`,
+                        ]}
+                      />
+                    </span>
+                  ) : (
+                    <>
+                      {child.name}
+                      <span
+                        class:list={[
+                          "badge",
+                          child?.badge.color && `badge-${child?.badge.color}`,
+                        ]}>
+                        {child?.badge.label}
+                      </span>
+                    </>
+                  )
+                ) : (
+                  child.name
+                )}
+              </a>
+            </li>
+          ),
+        )}
+      </ul>
+    )
+  }
+</li>

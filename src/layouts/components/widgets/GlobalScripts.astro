@@ -1,0 +1,192 @@
+---
+
+---
+
+<script>
+  // @ts-nocheck
+  import SmoothScroll from "smoothscroll-for-websites";
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    await initLucide();
+
+    // Dynamic Preline imports
+    await loadPrelineComponents();
+
+    // AOS - https://github.com/michalsnik/aos
+    const AOS = await import("aos");
+    AOS.init({
+      duration: 700,
+      easing: "ease-out",
+      disable: "mobile",
+      once: true,
+    });
+
+    // Smooth Scroll - https://github.com/gblazex/smoothscroll-for-websites/wiki
+    SmoothScroll({
+      animationTime: 600, // [ms]
+      stepSize: 60, // [px]
+      touchpadSupport: true,
+    });
+
+    // Fix: Support horizontal scrolling by using the mouse wheel + shift
+    initHorizontalScroll();
+
+    // Button Hover Animation
+    initCreativeHoverAnimation();
+
+    // Magnetic Hover Animation
+    initMagneticHoverAnimation();
+  });
+
+  // Lucide Icons
+  async function initLucide() {
+    const iconElems = document.querySelectorAll("[data-lucide]");
+    const lucideModule = await import("lucide");
+
+    iconElems.forEach((iconElem) => {
+      const iconName = iconElem.getAttribute("data-lucide");
+      if (!iconName) return;
+
+      // @ts-expect-error
+      const IconDef = lucideModule[iconName];
+      if (!IconDef) {
+        console.warn(`Lucide icon "${iconName}" not found`);
+        return;
+      }
+
+      const svg = lucideModule.createElement(IconDef, {
+        ...Object.fromEntries(
+          [...iconElem.attributes].map((attr) => [attr.name, attr.value]),
+        ),
+      });
+
+      iconElem.replaceWith(svg);
+    });
+  }
+
+  // Load Preline components dynamically based on DOM content
+  async function loadPrelineComponents() {
+    const imports = [];
+
+    if (
+      document.querySelector(".hs-select") ||
+      document.querySelector("[data-hs-select]")
+    ) {
+      imports.push(
+        import("@preline/select").then((module) => {
+          if (window.HSSelect) {
+            window.HSSelect.autoInit();
+          }
+        }),
+      );
+    }
+
+    if (document.querySelector(".hs-accordion")) {
+      imports.push(
+        import("@preline/accordion").then((module) => {
+          if (window.HSAccordion) {
+            window.HSAccordion.autoInit();
+          }
+        }),
+      );
+    }
+
+    await Promise.all(imports);
+  }
+
+  // Horizontal scroll with shift + wheel
+  function initHorizontalScroll() {
+    document.querySelectorAll("*").forEach((el) => {
+      if (el.scrollWidth > el.clientWidth) {
+        el.addEventListener(
+          "wheel",
+          function (event) {
+            if (event.shiftKey) {
+              event.preventDefault();
+              this.scrollBy({
+                left: event.deltaY * 3,
+                behavior: "smooth",
+              });
+            }
+          },
+          { passive: false },
+        );
+      }
+    });
+  }
+
+  // Creative hover animation for buttons
+  function initCreativeHoverAnimation() {
+    document.addEventListener("mouseover", function (e) {
+      const target = e.target.closest(".creative-hover-anim");
+      if (target) {
+        const hoverBg = target.querySelector(".hover-bg");
+        if (hoverBg) {
+          const parentOffset = target.getBoundingClientRect();
+          const relX = e.clientX - parentOffset.left;
+          const relY = e.clientY - parentOffset.top;
+          hoverBg.style.setProperty("--creative-hover-top", `${relY}px`);
+          hoverBg.style.setProperty("--creative-hover-left", `${relX}px`);
+        }
+      }
+    });
+  }
+
+  // Magnetic hover animation
+  function initMagneticHoverAnimation() {
+    const speed = 0.3;
+    const maxDistance = 30;
+    let rafId: number;
+
+    function clamp(val: number, max: number): number {
+      return Math.max(-max, Math.min(val, max));
+    }
+
+    function handleMagneticHover(magneticElem: HTMLElement) {
+      let isInside = false;
+
+      function updateTransform(e: MouseEvent) {
+        if (!isInside) return;
+
+        const rect = magneticElem.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) * speed;
+        const y = (e.clientY - rect.top - rect.height / 2) * speed;
+
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          magneticElem.style.transform = `translate(${clamp(x, maxDistance)}px, ${clamp(y, maxDistance)}px)`;
+        });
+      }
+
+      function resetTransform() {
+        isInside = false;
+        cancelAnimationFrame(rafId);
+        magneticElem.style.transition = "transform 0.2s ease-out";
+        magneticElem.style.transform = "translate(0, 0)";
+      }
+
+      magneticElem.style.willChange = "transform";
+      magneticElem.addEventListener("mouseenter", () => {
+        isInside = true;
+        magneticElem.style.transition = "transform 0.2s ease-out";
+      });
+      magneticElem.addEventListener("mousemove", updateTransform);
+      magneticElem.addEventListener("mouseleave", resetTransform);
+    }
+
+    document
+      .querySelectorAll<HTMLElement>(".magnetic-hover-anim")
+      .forEach(handleMagneticHover);
+
+    window.addEventListener("mouseout", (e) => {
+      if (!e.relatedTarget && !e.toElement) {
+        document
+          .querySelectorAll<HTMLElement>(".magnetic-hover-anim")
+          .forEach((elem) => {
+            elem.style.transition = "transform 0.2s ease-out";
+            elem.style.transform = "translate(0, 0)";
+          });
+      }
+    });
+  }
+</script>

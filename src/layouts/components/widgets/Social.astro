@@ -1,5 +1,5 @@
 ---
-import ReactIcons from "@/helpers/ReactIcons.astro";
+import Icons from "@/helpers/Icons.astro";
 import extractSlug from "@/lib/utils/extractSlug";
 import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
 import { slugifyyy } from "@/lib/utils/textConverter";
@@ -123,8 +123,8 @@ if (linkType === "share" && currentPage) {
             ]}>
             <span class="sr-only">{social.label}</span>
             {social.icon && (
-              <ReactIcons
-                icon={social.icon}
+              <Icons
+                icon={social.icon as any}
                 class:list={[
                   "has-inherited-colors relative z-10 transition duration-300",
                   size === "sm" && "text-base",

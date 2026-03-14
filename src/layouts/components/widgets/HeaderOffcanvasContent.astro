@@ -1,7 +1,7 @@
 ---
 import social from "@/config/social.json";
-import ReactIcons from "@/helpers/ReactIcons.astro";
-import config from ".astro/config.generated.json" with { type: "json" };
+import Icons from "@/helpers/Icons.astro";
+import config from "@generated/config.generated.json" assert { type: "json" };
 import Logo from "../global/Logo.astro";
 import { markdownify } from "@/lib/utils/textConverter";
 import Social from "./Social.astro";
@@ -33,7 +33,7 @@ if (!enable) {
     title="Close offcanvas"
     class="border-border-light text-light hover:border-border-dark absolute end-7 top-5 z-20 inline-flex h-14 w-14 items-center justify-center gap-x-2 rounded-full border-2 bg-black text-sm font-medium transition-all duration-500 ease-out hover:rotate-90 hover:bg-white/25"
     aria-expanded="true">
-    <ReactIcons icon="IoMdClose" class="text-2xl" />
+    <Icons icon="X" class="text-2xl" />
   </button>
 
   <Logo class="justify-start" width="11.25rem" height="3.125rem" src={logo} />
@@ -68,6 +68,7 @@ if (!enable) {
 
   <CustomButton
     variant="circle"
+    hoverEffect="creative-fill"
     class="btn-accent m-0 ms-auto hidden justify-center lg:flex"
     {...button}
     label={button?.label || t("headerOffcanvas.buttonLabel")}

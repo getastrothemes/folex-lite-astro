@@ -2,7 +2,7 @@
 import { absoluteUrl } from "@/lib/utils/absoluteUrl";
 import JsonLdGenerator from "@/lib/utils/JsonLdGenerator";
 import { supportedLanguages } from "@/lib/utils/i18nUtils";
-import config from ".astro/config.generated.json" with { type: "json" };
+import config from "@generated/config.generated.json" assert { type: "json" };
 
 const { content } = Astro.props;
 

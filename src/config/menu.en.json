@@ -6,19 +6,239 @@
       "url": "/"
     },
     {
+      "name": "Pages",
+      "enable": true,
+      "hasChildren": true,
+      "children": [
+        {
+          "name": "Home",
+          "enable": true,
+          "hasChildren": true,
+          "children": [
+            {
+              "enable": true,
+              "name": "Digital Agency",
+              "url": "/"
+            },
+            {
+              "enable": true,
+              "name": "Creative Agency",
+              "url": "/creative-agency/"
+            },
+            {
+              "enable": true,
+              "name": "Personal Portfolio",
+              "url": "/personal-portfolio/"
+            },
+            {
+              "enable": true,
+              "name": "Startup Agency",
+              "url": "/startup-agency/",
+              "badge": {
+                "enable": true,
+                "label": "FREE",
+                "color": "success",
+                "colorComment": "color expected value - primary, accent, info, success, danger",
+                "type": "text"
+              }
+            }
+          ]
+        },
+        {
+          "enable": true,
+          "name": "About Us",
+          "url": "/about/"
+        },
+        {
+          "enable": true,
+          "name": "Services",
+          "hasChildren": true,
+          "children": [
+            {
+              "enable": true,
+              "name": "Grid",
+              "url": "/services/"
+            },
+            {
+              "enable": true,
+              "name": "Two Column",
+              "url": "/services/two-column/"
+            },
+            {
+              "enable": true,
+              "name": "Accordion",
+              "url": "/services/accordion/"
+            },
+            {
+              "enable": true,
+              "name": "Single",
+              "url": "/services/branding-design/"
+            }
+          ]
+        },
+        {
+          "enable": true,
+          "name": "Portfolio",
+          "hasChildren": true,
+          "children": [
+            {
+              "enable": true,
+              "name": "masonry",
+              "url": "/portfolio/"
+            },
+            {
+              "enable": true,
+              "name": "Gallery",
+              "url": "/portfolio/gallery/"
+            },
+            {
+              "enable": true,
+              "name": "Slider",
+              "url": "/portfolio/slider/"
+            },
+            {
+              "enable": true,
+              "name": "Full Width",
+              "url": "/portfolio/full-width/"
+            },
+            {
+              "enable": true,
+              "name": "Single",
+              "url": "/portfolio/custom-portfolio-slug/"
+            }
+          ]
+        },
+        {
+          "enable": true,
+          "name": "Blog",
+          "hasChildren": true,
+          "children": [
+            {
+              "enable": true,
+              "name": "Grid",
+              "url": "/blog/"
+            },
+            {
+              "enable": true,
+              "name": "Creative",
+              "url": "/blog/creative/"
+            },
+            {
+              "enable": true,
+              "name": "Single",
+              "url": "/blog/custom-blog-slug/"
+            }
+          ]
+        },
+        {
+          "enable": true,
+          "name": "Pricing",
+          "url": "/pricing/"
+        },
+        {
+          "enable": true,
+          "name": "Team",
+          "url": "/team/"
+        },
+        {
+          "enable": true,
+          "name": "Team Single",
+          "url": "/team/daniyel-karlos/"
+        },
+        {
+          "enable": true,
+          "name": "Faqs",
+          "url": "/faq/"
+        },
+        {
+          "enable": true,
+          "name": "Contact",
+          "url": "/contact/"
+        },
+        {
+          "enable": true,
+          "name": "Terms & Conditions",
+          "url": "/terms-conditions/"
+        },
+        {
+          "enable": true,
+          "name": "404",
+          "url": "/404/"
+        }
+      ]
+    },
+    {
+      "enable": true,
+      "name": "Elements",
+      "url": "/elements/",
+      "badge": {
+        "enable": true,
+        "label": "NEW",
+        "color": "accent",
+        "colorComment": "color expected value - primary, accent, info, success, danger",
+        "type": "text"
+      }
+    }
+  ],
+  "footerPrimary": [
+    {
+      "enable": true,
+      "name": "About Company",
+      "url": "/about/"
+    },
+    {
+      "enable": true,
+      "name": "Our Careers",
+      "url": "/"
+    },
+    {
       "enable": true,
       "name": "Services",
-      "url": "/#services"
+      "url": "/services/"
     },
     {
       "enable": true,
-      "name": "Projects",
-      "url": "/#projects"
+      "name": "Contact",
+      "url": "/contact/"
+    }
+  ],
+  "footerSecondary": [
+    {
+      "enable": true,
+      "name": "Privacy policy",
+      "url": "/privacy-policy/"
     },
     {
       "enable": true,
-      "name": "Pricing",
-      "url": "/#pricing"
+      "name": "Terms & conditions",
+      "url": "/terms-conditions/"
+    }
+  ],
+  "footerTertiary": [
+    {
+      "enable": true,
+      "name": "About",
+      "url": "/"
+    },
+    {
+      "enable": true,
+      "name": "Portfolios",
+      "url": "/"
+    },
+    {
+      "enable": true,
+      "name": "Services",
+      "url": "/"
+    },
+    {
+      "enable": true,
+      "name": "Testimonials",
+      "url": "/"
+    },
+    {
+      "enable": true,
+      "name": "Careers",
+      "url": "/"
     }
   ]
 }

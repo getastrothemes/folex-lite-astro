@@ -1,7 +1,7 @@
 ---
 import Logo from "@/components/global/Logo.astro";
 import Offcanvas from "../../widgets/Offcanvas.astro";
-import config from ".astro/config.generated.json" with { type: "json" };
+import config from "@generated/config.generated.json" assert { type: "json" };
 import { useTranslations } from "@/lib/utils/i18nUtils";
 import NavbarToggler from "@/layouts/components/global/header/NavbarToggler.astro";
 import HeaderOffcanvasContent from "@/components/widgets/HeaderOffcanvasContent.astro";

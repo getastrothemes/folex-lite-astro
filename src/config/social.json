@@ -3,26 +3,26 @@
     {
       "enable": true,
       "label": "facebook",
-      "icon": "FaFacebook",
-      "url": "https://www.facebook.com/folex"
+      "icon": "/images/icons/svg/facebook.svg",
+      "url": "https://www.facebook.com"
     },
     {
       "enable": true,
       "label": "twitter",
-      "icon": "FaXTwitter",
-      "url": "https://twitter.com/folex"
+      "icon": "/images/icons/svg/twitter.svg",
+      "url": "https://twitter.com"
     },
     {
       "enable": true,
       "label": "instagram",
-      "icon": "FaInstagram",
-      "url": "https://www.instagram.com/folex"
+      "icon": "/images/icons/svg/instagram.svg",
+      "url": "https://www.instagram.com"
     },
     {
       "enable": true,
       "label": "linkedin",
-      "icon": "FaLinkedin",
-      "url": "https://www.linkedin.com/folex"
+      "icon": "/images/icons/svg/linkedin.svg",
+      "url": "https://www.linkedin.com"
     }
   ]
 }

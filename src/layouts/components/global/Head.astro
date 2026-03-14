@@ -3,7 +3,7 @@ import SEO from "@/components/seo/Seo.astro";
 import JsonLD from "../widgets/JsonLD.astro";
 import Favicons from "../seo/Favicons.astro";
 import OpenGraph from "../seo/OpenGraph.astro";
-import config from ".astro/config.generated.json" with { type: "json" };
+import config from "@generated/config.generated.json" assert { type: "json" };
 import { Font } from "astro:assets";
 import fontsJson from "@/config/fonts.json";
 

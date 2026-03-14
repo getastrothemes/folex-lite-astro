@@ -1,8 +1,8 @@
 ---
-import ReactIcon from "@/helpers/ReactIcons.astro";
 import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
 import { getLocaleUrlCTM, supportedLanguages } from "@/lib/utils/i18nUtils";
 import trailingSlashChecker from "@/lib/utils/trailingSlashChecker";
+import Icons from "@/helpers/Icons.astro";
 
 const currentLocale = Astro.currentLocale;
 const languages = supportedLanguages.map((lang) => {
@@ -38,8 +38,8 @@ const languages = supportedLanguages.map((lang) => {
       class="w-4"
     />
     <span class="text uppercase">{currentLocale}</span>
-    <ReactIcon
-      icon="IoIosArrowDown"
+    <Icons
+      icon="ChevronDown"
       class="hs-dropdown-open:rotate-180 w-3.5 transition-transform duration-300"
     />
   </button>

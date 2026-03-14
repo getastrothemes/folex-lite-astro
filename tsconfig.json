@@ -15,7 +15,8 @@
       "@/components/*": ["./src/layouts/components/*"],
       "@/shortcodes/*": ["./src/layouts/shortcodes/*"],
       "@/helpers/*": ["./src/layouts/helpers/*"],
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@generated/*": ["./.generated/*"]
     }
   },
   "include": [".astro/types.d.ts", "**/*"],

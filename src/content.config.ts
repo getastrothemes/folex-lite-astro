@@ -1,7 +1,8 @@
-import { defineCollection, z } from "astro:content";
-import config from ".astro/config.generated.json" with { type: "json" };
+import { defineCollection } from "astro:content";
+import config from "@generated/config.generated.json" assert { type: "json" };
 import { button, sectionsSchema } from "./sections.schema";
 import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 const portfolioFolder = config.settings.portfolioFolder || "portfolio";
 const servicesFolder = config.settings.servicesFolder || "services";
@@ -31,42 +32,46 @@ export const page = z.object({
 
 // Pages collection schema
 const pagesCollection = defineCollection({
+  loader: glob({ base: "./src/content/pages", pattern: "**/*.{md,mdx}" }),
   schema: page,
 });
 
 // Service collection schema
 const serviceCollection = defineCollection({
-  schema: page.merge(
-    z.object({
-      icon: z.string().optional(),
-    }),
-  ),
+  loader: glob({
+    base: `./src/content/${servicesFolder}`,
+    pattern: "**/*.{md,mdx}",
+  }),
+  schema: page.extend({
+    icon: z.string().optional(),
+  }),
 });
 
 // Portfolio Collection
 const portfolioCollection = defineCollection({
   // Load Markdown and MDX files in the `src/content/portfolio/` directory.
-  loader: glob({ base: "./src/content/portfolio", pattern: "**/*.{md,mdx}" }),
-  schema: page.merge(
-    z.object({
-      images: z.array(z.string()).min(1).optional(),
-      options: z
-        .object({
-          layout: z.enum(["masonry", "grid", "full-width", "slider"]),
-          appearance: z.enum(["dark", "light"]).optional(),
-          limit: z.union([z.number().int(), z.literal(false)]).optional(),
-        })
-        .optional(),
-      information: z
-        .array(
-          z.object({
-            label: z.string(),
-            value: z.string(),
-          }),
-        )
-        .optional(),
-    }),
-  ),
+  loader: glob({
+    base: `./src/content/${portfolioFolder}`,
+    pattern: "**/*.{md,mdx}",
+  }),
+  schema: page.extend({
+    images: z.array(z.string()).min(1).optional(),
+    options: z
+      .object({
+        layout: z.enum(["masonry", "grid", "full-width", "slider"]),
+        appearance: z.enum(["dark", "light"]).optional(),
+        limit: z.union([z.number().int(), z.literal(false)]).optional(),
+      })
+      .optional(),
+    information: z
+      .array(
+        z.object({
+          label: z.string(),
+          value: z.string(),
+        }),
+      )
+      .optional(),
+  }),
 });
 
 // Export collections
@@ -78,6 +83,10 @@ export const collections = {
   portfolio: portfolioCollection,
 
   pages: pagesCollection,
-  sections: defineCollection({}),
-  homepage: defineCollection({}),
+  sections: defineCollection({
+    loader: glob({ base: "./src/content/sections", pattern: "**/*.{md,mdx}" }),
+  }),
+  homepage: defineCollection({
+    loader: glob({ base: "./src/content/homepage", pattern: "**/*.{md,mdx}" }),
+  }),
 };

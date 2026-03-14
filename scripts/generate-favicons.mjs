@@ -21,7 +21,7 @@ const DEFAULT_TITLE = "Website";
 const DEFAULT_FAVICON_IMAGE = "/images/default-favicon.png";
 const CONFIG_PATH = path.resolve(
   PROJECT_ROOT,
-  ".astro",
+  ".generated",
   "config.generated.json",
 );
 

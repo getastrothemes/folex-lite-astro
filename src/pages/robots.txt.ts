@@ -1,4 +1,4 @@
-import config from ".astro/config.generated.json" with { type: "json" };
+import config from "@generated/config.generated.json" assert { type: "json" };
 import type { APIRoute } from "astro";
 
 const { enable, disallow } = config.seo.robotsTxt;

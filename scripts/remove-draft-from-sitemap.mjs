@@ -15,7 +15,11 @@ const PROJECT_ROOT = path.resolve(__dirname, "..");
 const DIST_FOLDER = path.resolve(PROJECT_ROOT, "dist");
 const CONTENT_FOLDER = path.resolve(PROJECT_ROOT, "src", "content");
 const LANG_FILE = path.resolve(PROJECT_ROOT, "src", "config", "language.json");
-const ASTRO_CONFIG_FILE = path.resolve(PROJECT_ROOT, ".astro", "config.generated.json");
+const ASTRO_CONFIG_FILE = path.resolve(
+  PROJECT_ROOT,
+  ".generated",
+  "config.generated.json",
+);
 
 const SITEMAP_FILE_PATTERN = /^sitemap-\d+\.xml$/;
 

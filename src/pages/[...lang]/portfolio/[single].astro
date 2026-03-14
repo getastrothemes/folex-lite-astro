@@ -2,30 +2,28 @@
 import Base from "@/layouts/Base.astro";
 import extractSlug from "@/lib/utils/extractSlug";
 import { getEntryCTM } from "@/lib/contentParser.astro";
-import config from ".astro/config.generated.json" with { type: "json" };
+import config from "@generated/config.generated.json" assert { type: "json" };
 import { getCollectionCTM } from "@/lib/contentParser.astro";
 import PortfolioSingle from "@/components/PortfolioSingle.astro";
 import Breadcrumbs from "@/components/widgets/Breadcrumbs.astro";
 import { supportedLanguages } from "@/lib/utils/i18nUtils";
+import type { CollectionKey } from "astro:content";
 
 export async function getStaticPaths() {
   const paths = await Promise.all(
     supportedLanguages.map(async (lang) => {
-      const { portfolioFolder }: { portfolioFolder: "portfolio" } =
-        config.settings;
+      const { portfolioFolder }: { portfolioFolder: string } = config.settings;
+      const portfolioKey = portfolioFolder as CollectionKey;
       const { defaultLanguage, showDefaultLangInUrl } =
         config.settings.multilingual;
 
       const portfolioIndex = await getEntryCTM(
-        portfolioFolder,
+        portfolioKey,
         "-index",
         lang.languageCode,
       );
 
-      let portfolios = await getCollectionCTM(
-        portfolioFolder,
-        lang.languageCode,
-      );
+      let portfolios = await getCollectionCTM(portfolioKey, lang.languageCode);
 
       // If draft true in index.md file frontmatter don't include any page related to this page collection in production
       if (portfolioIndex?.data.draft && import.meta.env.PROD) {

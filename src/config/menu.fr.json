@@ -18,17 +18,17 @@
             {
               "enable": true,
               "name": "Agence digitale",
-              "url": "https://folex-astro.netlify.app/"
+              "url": "https://folex-astro.pages.dev/"
             },
             {
               "enable": true,
               "name": "Agence cr atrice",
-              "url": "https://folex-astro.netlify.app/creative-agency/"
+              "url": "https://folex-astro.pages.dev/creative-agency/"
             },
             {
               "enable": true,
               "name": "Portfolio personnel",
-              "url": "https://folex-astro.netlify.app/personal-portfolio/"
+              "url": "https://folex-astro.pages.dev/personal-portfolio/"
             },
             {
               "enable": true,
@@ -47,7 +47,7 @@
         {
           "enable": true,
           "name": " propos",
-          "url": "https://folex-astro.netlify.app/about/"
+          "url": "https://folex-astro.pages.dev/about/"
         },
         {
           "enable": true,
@@ -57,22 +57,22 @@
             {
               "enable": true,
               "name": "Grille",
-              "url": "https://folex-astro.netlify.app/services/"
+              "url": "https://folex-astro.pages.dev/services/"
             },
             {
               "enable": true,
               "name": "Deux colonnes",
-              "url": "https://folex-astro.netlify.app/services/two-column/"
+              "url": "https://folex-astro.pages.dev/services/two-column/"
             },
             {
               "enable": true,
               "name": "Accordion",
-              "url": "https://folex-astro.netlify.app/services/accordion/"
+              "url": "https://folex-astro.pages.dev/services/accordion/"
             },
             {
               "enable": true,
               "name": "Simple",
-              "url": "https://folex-astro.netlify.app/services/branding-design/"
+              "url": "https://folex-astro.pages.dev/services/branding-design/"
             }
           ]
         },
@@ -84,27 +84,27 @@
             {
               "enable": true,
               "name": "Mosa que",
-              "url": "https://folex-astro.netlify.app/portfolio/"
+              "url": "https://folex-astro.pages.dev/portfolio/"
             },
             {
               "enable": true,
               "name": "Galerie",
-              "url": "https://folex-astro.netlify.app/portfolio/gallery/"
+              "url": "https://folex-astro.pages.dev/portfolio/gallery/"
             },
             {
               "enable": true,
               "name": "Diapositive",
-              "url": "https://folex-astro.netlify.app/portfolio/slider/"
+              "url": "https://folex-astro.pages.dev/portfolio/slider/"
             },
             {
               "enable": true,
               "name": "Largeur",
-              "url": "https://folex-astro.netlify.app/portfolio/full-width/"
+              "url": "https://folex-astro.pages.dev/portfolio/full-width/"
             },
             {
               "enable": true,
               "name": "Simple",
-              "url": "https://folex-astro.netlify.app/portfolio/custom-portfolio-slug/"
+              "url": "https://folex-astro.pages.dev/portfolio/custom-portfolio-slug/"
             }
           ]
         },
@@ -116,61 +116,61 @@
             {
               "enable": true,
               "name": "Grille",
-              "url": "https://folex-astro.netlify.app/blog/"
+              "url": "https://folex-astro.pages.dev/blog/"
             },
             {
               "enable": true,
               "name": "Cr atif",
-              "url": "https://folex-astro.netlify.app/blog/creative/"
+              "url": "https://folex-astro.pages.dev/blog/creative/"
             },
             {
               "enable": true,
               "name": "Simple",
-              "url": "https://folex-astro.netlify.app/blog/custom-blog-slug/"
+              "url": "https://folex-astro.pages.dev/blog/custom-blog-slug/"
             }
           ]
         },
         {
           "enable": true,
           "name": "Tarification",
-          "url": "https://folex-astro.netlify.app/pricing/"
+          "url": "https://folex-astro.pages.dev/pricing/"
         },
         {
           "enable": true,
           "name": " quipe",
-          "url": "https://folex-astro.netlify.app/team/"
+          "url": "https://folex-astro.pages.dev/team/"
         },
         {
           "enable": true,
           "name": " quipe simple",
-          "url": "https://folex-astro.netlify.app/team/daniyel-karlos/"
+          "url": "https://folex-astro.pages.dev/team/daniyel-karlos/"
         },
         {
           "enable": true,
           "name": "FAQ",
-          "url": "https://folex-astro.netlify.app/faq/"
+          "url": "https://folex-astro.pages.dev/faq/"
         },
         {
           "enable": true,
           "name": "Contact",
-          "url": "https://folex-astro.netlify.app/contact/"
+          "url": "https://folex-astro.pages.dev/contact/"
         },
         {
           "enable": true,
           "name": "Conditions de vente",
-          "url": "https://folex-astro.netlify.app/terms-conditions/"
+          "url": "https://folex-astro.pages.dev/terms-conditions/"
         },
         {
           "enable": true,
           "name": "404",
-          "url": "https://folex-astro.netlify.app/404/"
+          "url": "https://folex-astro.pages.dev/404/"
         }
       ]
     },
     {
       "enable": true,
       "name": " l ments",
-      "url": "https://folex-astro.netlify.app/elements/",
+      "url": "https://folex-astro.pages.dev/elements/",
       "badge": {
         "enable": true,
         "label": "NOUVEAU",

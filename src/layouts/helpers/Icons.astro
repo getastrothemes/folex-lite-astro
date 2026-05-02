@@ -1,8 +1,7 @@
 ---
-import type { LucideProps } from "lucide";
-
-interface Props extends LucideProps {
+interface Props {
   icon: keyof typeof import("lucide");
+  [key: string]: any;
 }
 
 const { icon, ...restProps } = Astro.props;

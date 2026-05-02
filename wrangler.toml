@@ -1,4 +1,4 @@
-name                   = "folex-lite-theme"
+name                   = "folex-lite-astro"
 compatibility_date     = "2025-01-01"
 pages_build_output_dir = "./dist"
 compatibility_flags    = ["nodejs_compat"]

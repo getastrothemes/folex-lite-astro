@@ -4,7 +4,7 @@
 
 **Folex Lite** is a lightweight, free version of the premium [Folex Astro Theme](https://getastrothemes.com/astro-themes/folex/), designed for fast, SEO-friendly startup and digital agency websites.
 
-> ⚡ Built with Astro 5, Tailwind CSS 4, and Markdown — optimized for performance, SEO, and simplicity.
+> ⚡ Built with Astro 6, Tailwind CSS 4, and Markdown — optimized for performance, SEO, and simplicity.
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/getastrothemes/folex-lite-astro) [![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/getastrothemes/folex-lite-astro) [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/getastrothemes/folex-lite-astro?devcontainer_path=.devcontainer/devcontainer.json)
 
@@ -13,7 +13,7 @@
 ## ✨ Features at a Glance
 
 - ✅ Homepage layout: Startup / Agency
-- ✅ Built with Astro 5 + Tailwind CSS 4
+- ✅ Built with Astro 6 + Tailwind CSS 4
 - ✅ Fully responsive and accessible
 - ✅ 100/100 Lighthouse performance score
 - ✅ SEO-ready: meta tags, Open Graph, JSON-LD schema

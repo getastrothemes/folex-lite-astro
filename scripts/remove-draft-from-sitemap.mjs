@@ -17,7 +17,7 @@ const CONTENT_FOLDER = path.resolve(PROJECT_ROOT, "src", "content");
 const LANG_FILE = path.resolve(PROJECT_ROOT, "src", "config", "language.json");
 const ASTRO_CONFIG_FILE = path.resolve(
   PROJECT_ROOT,
-  ".generated",
+  ".astro",
   "config.generated.json",
 );
 

@@ -4,14 +4,12 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import rehypeExternalLinks from "rehype-external-links";
 import remarkParseContent from "./src/lib/utils/remarkParseContent.ts";
-import config from "./.generated/config.generated.json" assert { type: "json" };
+import config from ".astro/config.generated.json";
 import fontsJson from "./src/config/fonts.json";
 import { generateAstroFontsConfig } from "./src/lib/utils/AstroFont.ts";
 import { enabledLanguages } from "./src/lib/utils/i18nUtils.ts";
-import { fileURLToPath } from "node:url";
 
 const fonts = generateAstroFontsConfig(fontsJson);
-const generatedDir = fileURLToPath(new URL("./.generated", import.meta.url));
 let {
   seo: { sitemap: sitemapConfig },
   settings: {
@@ -55,11 +53,6 @@ export default defineConfig({
     extendDefaultPlugins: true,
   },
   vite: {
-    plugins: [tailwindcss()],
-    resolve: {
-      alias: {
-        "@generated": generatedDir,
-      },
-    },
+    plugins: [tailwindcss()]
   },
 });

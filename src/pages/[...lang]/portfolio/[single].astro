@@ -2,7 +2,7 @@
 import Base from "@/layouts/Base.astro";
 import extractSlug from "@/lib/utils/extractSlug";
 import { getEntryCTM } from "@/lib/contentParser.astro";
-import config from "@generated/config.generated.json" assert { type: "json" };
+import config from ".astro/config.generated.json";
 import { getCollectionCTM } from "@/lib/contentParser.astro";
 import PortfolioSingle from "@/components/PortfolioSingle.astro";
 import Breadcrumbs from "@/components/widgets/Breadcrumbs.astro";

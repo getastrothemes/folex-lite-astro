@@ -3,12 +3,9 @@ import SEO from "@/components/seo/Seo.astro";
 import JsonLD from "../widgets/JsonLD.astro";
 import Favicons from "../seo/Favicons.astro";
 import OpenGraph from "../seo/OpenGraph.astro";
-import config from "@generated/config.generated.json" assert { type: "json" };
+import config from ".astro/config.generated.json";
 import { Font } from "astro:assets";
 import fontsJson from "@/config/fonts.json";
-import path from "path";
-
-const themeName = path.basename(process.cwd());
 
 const fontVariables = fontsJson.map((font) => font.cssVariable) as any[];
 ---
@@ -16,7 +13,7 @@ const fontVariables = fontsJson.map((font) => font.cssVariable) as any[];
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="Content-Language" content={Astro.currentLocale} />
-  <meta name="theme" content={themeName} />
+  <meta name="theme" content="folex-lite" />
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1, maximum-scale=5"

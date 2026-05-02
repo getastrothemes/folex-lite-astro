@@ -3,7 +3,7 @@ import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
 import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
 import { markdownify, toSentenceCase } from "@/lib/utils/textConverter";
 
-import config from "@generated/config.generated.json" assert { type: "json" };
+import config from ".astro/config.generated.json";
 
 type Props = {
   src?: string;

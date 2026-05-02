@@ -27,9 +27,6 @@ pnpm-lock.yaml
 # ignore .astro directory
 .astro
 
-# generated config (from config.toml)
-.generated/
-
 # Local Netlify folder
 .netlify
 .vercel

@@ -1,5 +1,5 @@
 import { defineCollection } from "astro:content";
-import config from "@generated/config.generated.json" assert { type: "json" };
+import config from ".astro/config.generated.json";
 import { button, sectionsSchema } from "./sections.schema";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";

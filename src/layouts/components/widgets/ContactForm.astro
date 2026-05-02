@@ -5,7 +5,7 @@ import type { z } from "astro/zod";
 import type { contactFormSchema } from "@/sections.schema";
 import type { inputFieldSchema } from "@/sections.schema";
 import { getPrelineSelectConfig } from "@/lib/utils/preline";
-import config from "@generated/config.generated.json" assert { type: "json" };
+import config from ".astro/config.generated.json";
 
 interface Props {
   form: z.infer<typeof contactFormSchema>;

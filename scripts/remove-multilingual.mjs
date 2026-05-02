@@ -17,7 +17,7 @@ const LANGUAGE_FILE = path.join(CONFIG_DIR, "language.json");
 const LANG_FILE = path.join(CONFIG_DIR, "language.json");
 const ASTRO_CONFIG_FILE = path.resolve(
   PROJECT_ROOT,
-  ".generated",
+  ".astro",
   "config.generated.json",
 );
 

@@ -1,4 +1,5 @@
 import mdx from "@astrojs/mdx";
+import { unified } from "@astrojs/markdown-remark";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
@@ -34,23 +35,26 @@ export default defineConfig({
   },
   integrations: [sitemapConfig.enable ? sitemap() : null, mdx()],
   markdown: {
-    rehypePlugins: [
-      [
-        rehypeExternalLinks,
-        {
-          rel: "noopener noreferrer nofollow",
-          target: "_blank",
-        },
+    // Since @astrojs/mdx v6, remark/rehype plugins are configured on the
+    // `unified()` processor instead of top-level `markdown.*` options.
+    processor: unified({
+      remarkPlugins: [remarkParseContent],
+      rehypePlugins: [
+        [
+          rehypeExternalLinks,
+          {
+            rel: "noopener noreferrer nofollow",
+            target: "_blank",
+          },
+        ],
       ],
-    ],
-    remarkPlugins: [remarkParseContent],
+    }),
 
     // Code Highlighter https://github.com/shikijs/shiki
     shikiConfig: {
       theme: "light-plus", // https://shiki.style/themes
       wrap: false,
     },
-    extendDefaultPlugins: true,
   },
   vite: {
     plugins: [tailwindcss()]

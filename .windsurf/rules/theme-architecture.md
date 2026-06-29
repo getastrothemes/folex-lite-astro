@@ -1,0 +1,32 @@
+---
+trigger: always_on
+---
+
+# Theme Architecture Rules
+
+Read `AGENTS.md` before generating or editing code in this theme.
+
+Core rules:
+
+- This is an Astro and Tailwind CSS theme.
+- Reuse existing components, widgets, cards, schemas, styles, and content patterns.
+- Section components live in `src/layouts/components/sections/`.
+- Section content lives in `src/content/sections/{language}/`.
+- For every new section, create one `.astro` component and one `.md` or `.mdx` content file.
+- For page-specific sections, use `Section` in the component name and `-section` in the content filename.
+- Put editable copy, links, images, buttons, and options in content files.
+- Update `src/sections.schema.ts` when adding content fields.
+- Use page frontmatter named blocks for page-specific section overrides.
+- Use `CustomButton.astro`, `Icons.astro`, and `OptimizedImage.astro` instead of rebuilding shared primitives.
+- Use nearest Tailwind theme values from `src/styles/theme.css`.
+- Avoid Tailwind arbitrary values.
+- Check `base.css`, `components.css`, and `safe.css` before adding new CSS or duplicated utility classes.
+- Do not add heading classes already covered by `base.css`, including default font weight, tracking, leading, or wrapping classes.
+- Keep imports clean. Do not add unused wrappers, unused JS, or duplicate abstractions.
+- Prefer static rendering. Add client JavaScript only for required interaction.
+- Keep copy generic for a shippable theme; avoid hardcoded brand names in reusable section content.
+
+Before finishing:
+
+- Run `npm run astro-check` after code or schema changes.
+- Run `npm run build` for broad changes that affect routing, content collections, or assets.

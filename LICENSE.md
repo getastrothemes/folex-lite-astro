@@ -1,15 +1,21 @@
-Getastrothemes Free Theme License
+MIT License
+
 Copyright (c) 2025 Getastrothemes
 
-Permission is hereby granted to use this theme (the “Theme”) in personal or commercial projects, under the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-1. Attribution (Optional)
-   Attribution is appreciated but not required. You may include a visible link to getastrothemes.com in your site footer or credits section.
-2. No Redistribution or Resale
-   You may not sublicense, redistribute, resell, or repackage this Theme — modified or unmodified — on any marketplace, theme directory, or personal website.
-3. Modification Permitted
-   You may modify this Theme for your own use. However, the modified version remains subject to this license and may not be redistributed or sold.
-4. Disclaimer
-   This Theme is provided “as is”, without any warranty. The author is not liable for any damages or issues arising from its use.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-By using this Theme, you agree to the terms of this license.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

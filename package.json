@@ -4,7 +4,7 @@
   "version": "3.1.0",
   "description": "A highly customizable creative agency & personal portfolio business theme built with Tailwind CSS and Astro Js",
   "author": "getastrothemes",
-  "license": "SEE LICENSE IN LICENSE.md",
+  "license": "MIT",
   "private": true,
   "keywords": [
     "astro",

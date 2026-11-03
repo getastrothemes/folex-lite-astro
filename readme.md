@@ -57,6 +57,22 @@ npm install
 npm run dev
 ```
 
+## 📬 Contact Form Setup
+
+Before you deploy, point the contact form at your own inbox. Open `src/config/config.toml` and set these two values under `[settings]`:
+
+| Provider      | `contactFormProvider` | `contactFormAction`                             |
+| ------------- | --------------------- | ----------------------------------------------- |
+| FormSubmit    | `"formsubmit.co"`     | `"https://formsubmit.co/your_email@example.com"` |
+| Formspree     | `"formspree"`         | `"https://formspree.io/f/your_form_id"`         |
+| Netlify Forms | `"netlify"`           | `"/"`                                           |
+
+- **FormSubmit**: the first submission sends a confirmation email to that address. Click the link in it to activate the form.
+- **Formspree**: create a form at [formspree.io](https://formspree.io/) and paste its endpoint.
+- **Netlify Forms**: deploy on Netlify with form detection turned on. See the [Netlify Forms docs](https://docs.netlify.com/forms/setup/).
+
+The theme ships with the placeholder `your_email@example.com`, so the form will not deliver messages until you change it.
+
 ## 🚀 Project Structure
 
 Inside of your Astro project, you'll see the following folders and files:

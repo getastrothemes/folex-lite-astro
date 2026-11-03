@@ -62,7 +62,8 @@
 
   # Contact form settings
   # Available providers: "formspree", "formsubmit.co", "netlify"
-  # Available actions: "https://formspree.io/f/form_id", "https://formsubmit.co/your_email@example.com", "/"
+  # Available actions: "https://formspree.io/f/your_form_id", "https://formsubmit.co/your_email@example.com", "/"
+  # Set contactFormAction to your own endpoint before you deploy (see "Contact Form Setup" in the README).
   contactFormAction   = "https://formsubmit.co/your_email@example.com"
   contactFormProvider = "formsubmit.co"
 

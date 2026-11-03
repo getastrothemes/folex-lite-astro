@@ -355,6 +355,7 @@ const noteStyles = {
               break;
             case "formspree":
               await formspreeSubmit(
+                action,
                 Object.fromEntries(new FormData(form).entries()),
                 5000,
                 form,

@@ -223,19 +223,21 @@ export const fetchWithTimeout = async (
 };
 
 /**
- * Submits form data to the Formspree endpoint as an alternative submission method.
+ * Submits form data to the configured Formspree endpoint.
  *
+ * @param action - The Formspree form endpoint from `contactFormAction`, e.g. https://formspree.io/f/your_form_id.
  * @param data - The form data to submit.
  * @param timeout - The timeout duration in milliseconds for the request.
  */
 export const formspreeSubmit = async (
+  action: string,
   data: Record<string, FormDataEntryValue>,
   timeout: number,
   form: HTMLFormElement,
 ) => {
   try {
     await fetchWithTimeout(
-      "https://formspree.io/f/xwpkvjaa",
+      action,
       data,
       new AbortController(),
       timeout,
@@ -246,7 +248,7 @@ export const formspreeSubmit = async (
     setMessage(
       error +
         "! Please use this mail - [folex-astro-theme@gmail.com](mailto:folex-astro-theme@gmail.com) to submit a ticket!",
-      true,
+      false,
       false,
       form,
     );

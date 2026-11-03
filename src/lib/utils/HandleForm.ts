@@ -236,18 +236,12 @@ export const formspreeSubmit = async (
   form: HTMLFormElement,
 ) => {
   try {
-    await fetchWithTimeout(
-      action,
-      data,
-      new AbortController(),
-      timeout,
-    );
+    await fetchWithTimeout(action, data, new AbortController(), timeout);
     setMessage("default", true, false, form);
     formReset(form);
   } catch (error) {
     setMessage(
-      error +
-        "! Please use this mail - [folex-astro-theme@gmail.com](mailto:folex-astro-theme@gmail.com) to submit a ticket!",
+      error + "! Please try again later or contact us by email.",
       false,
       false,
       form,

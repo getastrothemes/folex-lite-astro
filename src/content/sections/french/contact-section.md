@@ -178,5 +178,5 @@ form:
       content: "Nous avons bien reçu votre message ! Nous vous répondrons dès que possible."
     - note: deprecated
       parentClass: "hidden text-sm message error"
-      content: "Une erreur est survenue ! Veuillez utiliser cet e-mail - [folex-astro-theme@gmail.com](mailto:folex-astro-theme@gmail.com) pour soumettre un ticket !"
+      content: "Une erreur est survenue ! Veuillez réessayer plus tard ou nous contacter par e-mail."
 ---

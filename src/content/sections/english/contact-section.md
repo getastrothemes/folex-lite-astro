@@ -185,5 +185,5 @@ form:
       content: We have received your message! We'll get back to you as soon as possible.
     - note: deprecated # info | warning | success | deprecated | hint
       parentClass: "hidden text-sm message error"
-      content: Something went wrong! please use this mail - [folex-astro-theme@gmail.com](mailto:folex-astro-theme@gmail.com) to submit a ticket!
+      content: Something went wrong! Please try again later or contact us by email.
 ---

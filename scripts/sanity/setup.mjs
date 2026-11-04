@@ -464,28 +464,21 @@ async function createProject(options) {
     project = result.code === 0 ? parseJsonOutput(result.stdout) : null;
   }
 
-  // Brand-new accounts have no organization yet: let the Sanity CLI ask the
-  // user to create one, then ask for the project ID it printed.
-  if (
-    !project &&
-    /No organizations/i.test(result.stderr + result.stdout) &&
-    interactive
-  ) {
-    warn(
-      "Your account has no organization yet. The Sanity CLI will help you create one.",
-    );
-    pauseQuestions();
-    await runSanity([
-      "projects",
-      "create",
-      name,
-      "--dataset",
-      options.dataset,
-      "--dataset-visibility",
-      "public",
-    ]);
-    const id = await ask("Paste the project ID shown above (ID: ...)");
-    if (id) return id;
+  // Brand-new accounts have no organization yet, and the CLI can't create
+  // one. Creating the first project in the dashboard creates both.
+  if (!project && /No organizations/i.test(result.stderr + result.stdout)) {
+    warn("Your Sanity account has no organization yet. Create your first");
+    warn("project in the dashboard (this also creates the organization):");
+    log("  1. Open https://www.sanity.io/manage");
+    log('  2. Click "Create new" → "Project"');
+    log(`  3. Project name: "${name}", organization name: your company name`);
+    log("  4. Copy the Project ID shown on the project page (e.g. abc123de)");
+    if (interactive) {
+      const id = await ask("Paste the Project ID here");
+      if (id) return id.trim();
+    }
+    fail("Then run: npm run setup -- --project <your-project-id>");
+    process.exit(1);
   }
 
   if (!project?.projectId) {

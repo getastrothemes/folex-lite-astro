@@ -40,14 +40,13 @@ This branch (`sanity-cms`) is the **Sanity CMS edition**. It looks exactly like 
 
 ## 🔀 Which edition should I use?
 
-The theme comes in two editions. They live on two branches of the same GitHub repository and look the same.
+Folex Lite comes in three editions with the same design and pages. Each one lives on its own branch of the same GitHub repository and has its own setup guide:
 
-| Edition                       | Branch       | You edit content in…                          | Best for                                                  | Docs                                                                                    |
-| ----------------------------- | ------------ | --------------------------------------------- | --------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| **Markdown edition**          | `main`       | Markdown/JSON/TOML files in your code editor  | Developers and people who like editing files              | [README (main)](https://github.com/getastrothemes/folex-lite-astro/blob/main/readme.md) |
-| **Sanity CMS edition** (this) | `sanity-cms` | Sanity Studio, a visual editor in the browser | Clients, marketing teams and anyone who doesn't edit code | This file                                                                               |
-
-Code for both editions: [main branch](https://github.com/getastrothemes/folex-lite-astro/tree/main) · [sanity-cms branch](https://github.com/getastrothemes/folex-lite-astro/tree/sanity-cms)
+| Edition                       | Branch                                                                             | You edit content in…                                        | Best for                                                        | Setup guide                                                                                   |
+| ----------------------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| **Original**                  | [`main`](https://github.com/getastrothemes/folex-lite-astro/tree/main)             | Markdown, JSON and TOML files in your code editor           | Developers and people who like editing files                    | [Original README](https://github.com/getastrothemes/folex-lite-astro/blob/main/readme.md)     |
+| **Tina CMS edition**          | [`tina-cms`](https://github.com/getastrothemes/folex-lite-astro/tree/tina-cms)     | A visual editor on top of the same Git-based Markdown files | People who want visual editing but keep content as files in Git | [Tina CMS README](https://github.com/getastrothemes/folex-lite-astro/blob/tina-cms/readme.md) |
+| **Sanity CMS edition** (this) | [`sanity-cms`](https://github.com/getastrothemes/folex-lite-astro/tree/sanity-cms) | Sanity Studio, a visual editor in the browser               | Clients, marketing teams and anyone who doesn't edit code       | This file                                                                                     |
 
 ### Get or switch an edition
 
@@ -58,14 +57,15 @@ cd folex-lite-astro
 
 # Already cloned the repository? Switch between editions:
 git switch sanity-cms   # Sanity CMS edition
-git switch main         # Markdown edition
+git switch tina-cms     # Tina CMS edition
+git switch main         # Original edition
 npm install             # after every switch, the editions use different packages
 ```
 
 Good to know before you switch:
 
-- **Content does not move automatically between editions.** Edits you made to Markdown files on `main` are not imported into Sanity, and content you write in Sanity does not appear in the Markdown files.
-- The **demo content** of this edition (`sanity/seed/demo-content.json`) was generated from the Markdown content of the `main` branch by `scripts/sanity/build-seed.mjs`. That's why both editions show the same demo website.
+- **Content does not move automatically into or out of Sanity.** The original and Tina CMS editions store content in the same Markdown files, but this edition stores it in Sanity. Edits you made to Markdown files are not imported into Sanity, and content you write in Sanity does not appear in the Markdown files.
+- The **demo content** of this edition (`sanity/seed/demo-content.json`) was generated from the Markdown content of the `main` branch by `scripts/sanity/build-seed.mjs`. That's why every edition shows the same demo website.
 - Commit or stash your own changes before `git switch`; Git may refuse to switch otherwise.
 
 ## 🧠 What is Sanity? (short glossary)

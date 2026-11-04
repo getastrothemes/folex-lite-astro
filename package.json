@@ -20,7 +20,7 @@
     "build": "node scripts/tina/run.mjs build",
     "preview": "npm run build && astro preview",
     "astro-check": "node scripts/tina/run.mjs check",
-    "tina:audit": "tinacms audit",
+    "tina:audit": "tinacms audit --datalayer-port 9137",
     "toml:watch": "node scripts/toml-watcher.mjs",
     "generate-favicons": "node ./scripts/generate-favicons.mjs",
     "remove-multilingual": "node ./scripts/remove-multilingual.mjs",

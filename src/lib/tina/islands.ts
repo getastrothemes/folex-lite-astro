@@ -15,6 +15,7 @@ import {
   contentDirFor,
   loadFooterFromTina,
   loadSectionsFromTina,
+  safeFileName,
   tinaDocument,
 } from "./tinaData";
 
@@ -24,6 +25,14 @@ import {
 
 const languageOf = (params: URLSearchParams) =>
   params.get("lang") || config.settings.multilingual.defaultLanguage;
+
+// Drafts are never rendered by the public route of a deployed site.
+const assertPublished = (node: Record<string, any> | undefined) => {
+  if (import.meta.env.PROD && node?.draft) {
+    throw new Error("Drafts are not previewed on the deployed site.");
+  }
+  return node;
+};
 
 // The island route answers every failure with a bare 500, so log the cause.
 const logged =
@@ -69,10 +78,12 @@ export const islands: IslandRegistry = {
     fetch: async (_request, params) => {
       const lang = languageOf(params);
       const contentDir = contentDirFor(lang);
-      const node = await tinaDocument(
-        pagesCollectionName(lang),
-        params.get("file") ?? "",
-        true,
+      const node = assertPublished(
+        await tinaDocument(
+          pagesCollectionName(lang),
+          safeFileName(params.get("file")),
+          true,
+        ),
       );
       const page = toEntry(node, "pages", contentDir);
       const sections = resolveSections(
@@ -93,10 +104,12 @@ export const islands: IslandRegistry = {
     component: PortfolioSingle,
     fetch: async (_request, params) => {
       const lang = languageOf(params);
-      const node = await tinaDocument(
-        portfolioCollectionName(lang),
-        params.get("file") ?? "",
-        true,
+      const node = assertPublished(
+        await tinaDocument(
+          portfolioCollectionName(lang),
+          safeFileName(params.get("file")),
+          true,
+        ),
       );
       return {
         lang,

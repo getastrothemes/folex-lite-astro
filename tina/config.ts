@@ -19,6 +19,8 @@ import { LANGUAGES } from "./site";
 const branch =
   process.env.TINA_BRANCH ||
   process.env.GITHUB_BRANCH ||
+  process.env.GITHUB_HEAD_REF || // GitHub Actions (pull requests)
+  process.env.GITHUB_REF_NAME || // GitHub Actions
   process.env.VERCEL_GIT_COMMIT_REF ||
   process.env.CF_PAGES_BRANCH ||
   process.env.HEAD ||

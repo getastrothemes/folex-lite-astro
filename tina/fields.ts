@@ -13,6 +13,10 @@ export const validateUrl = (value?: string) => {
   return "Start with / for a page on this site (e.g. /contact/), or a full address like https://example.com, mailto: or tel:.";
 };
 
+/** Keeps a field's value in the file without showing it in the editor. */
+export const hidden = (field: Field): Field =>
+  ({ ...field, ui: { ...(field as { ui?: object }).ui, component: "hidden" } }) as Field;
+
 export const requiredText = (label: string) => (value?: string) =>
   value && value.trim() ? undefined : `${label} is required.`;
 
@@ -27,11 +31,19 @@ export const buttonField = ({
   name = "button",
   label = "Button",
   description = "",
-}: { name?: string; label?: string; description?: string } = {}): Field => ({
+  hidden = false,
+}: {
+  name?: string;
+  label?: string;
+  description?: string;
+  // Kept in the file but not shown (the Lite theme does not render it)
+  hidden?: boolean;
+} = {}): Field => ({
   type: "object",
   name,
   label,
   description,
+  ...(hidden ? { ui: { component: "hidden" } } : {}),
   fields: [
     {
       type: "boolean",
@@ -42,7 +54,8 @@ export const buttonField = ({
       type: "string",
       name: "label",
       label: "Button text",
-      description: 'Short action text, e.g. "Get Started".',
+      description:
+        'Short action text, e.g. "Get Started". The button is hidden while this is empty.',
     },
     {
       type: "string",
@@ -120,6 +133,7 @@ export const buttonField = ({
 export const seoFields = ({
   withDraft = true,
   withImage = true,
+  imageDescription = "Shown at the top of the page and when it is shared on social media. Use a wide image, ideally 1200 x 630 pixels.",
 } = {}): Field[] => [
   {
     type: "string",
@@ -142,8 +156,7 @@ export const seoFields = ({
           type: "image",
           name: "image",
           label: "Featured / social sharing image",
-          description:
-            "Shown at the top of the page and when it is shared on social media. Use a wide image, ideally 1200 x 630 pixels.",
+          description: imageDescription,
         },
       ] as Field[])
     : []),
@@ -191,19 +204,18 @@ export const seoFields = ({
     : []),
 ];
 
-export const slugField: Field = {
+export const slugField = (urlPrefix: string): Field => ({
   type: "string",
   name: "customSlug",
   label: "Custom URL slug",
-  description:
-    'Optional. Changes the web address, e.g. "my-project" gives /portfolio/my-project/. Use lowercase letters, numbers and dashes. Keep the same slug in every language.',
+  description: `Optional. Changes the web address, e.g. "my-page" gives /${urlPrefix}my-page/. Use lowercase letters, numbers and dashes. Keep the same slug in every language.`,
   ui: {
     validate: (value?: string) =>
       !value || /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)
         ? undefined
         : "Use lowercase letters, numbers and dashes only, e.g. my-page.",
   },
-};
+});
 
 export const weightField: Field = {
   type: "number",
@@ -212,12 +224,25 @@ export const weightField: Field = {
   description: "Lower numbers are shown first. Leave empty to sort by file name.",
 };
 
-export const dateField: Field = {
+export const dateField = {
   type: "datetime",
   name: "date",
   label: "Date",
-  ui: { dateFormat: "YYYY-MM-DD" },
-};
+  required: false,
+  ui: {
+    dateFormat: "YYYY-MM-DD",
+    // Store the chosen day at UTC midnight, so it does not shift by a day
+    // for editors in other time zones.
+    parse: (value: unknown) => {
+      if (!value) return value;
+      const date = new Date(value as string);
+      if (Number.isNaN(date.getTime())) return value;
+      return new Date(
+        Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+      ).toISOString();
+    },
+  },
+} as Field;
 
 export const bodyField = (description: string): Field => ({
   type: "rich-text",

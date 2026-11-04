@@ -1,6 +1,12 @@
 import type { Collection, TinaField } from "tinacms";
 import { requiredText, validateUrl } from "../fields";
-import { LANGUAGES, VISUAL_EDITING, languageFromDir, localeUrl } from "../site";
+import {
+  LANGUAGES,
+  VISUAL_EDITING,
+  anyOf,
+  languageFromDir,
+  localeUrl,
+} from "../site";
 
 // Site-wide settings: `src/config/config.toml`, the navigation menus, social
 // links and interface text (`src/i18n`). These files have no Markdown body.
@@ -254,11 +260,12 @@ export const siteSettingsCollection: Collection = {
             simpleButton("button", "Button", ""),
           ],
         },
+        // Not displayed by the Lite footer; kept in the file.
         {
           type: "string",
           name: "footerDescription",
           label: "Footer description",
-          description: "Optional. Leave empty if unsure.",
+          ui: { component: "hidden" },
         },
         {
           type: "object",
@@ -454,9 +461,13 @@ export const menuCollection: Collection = {
   label: "Settings · Navigation menu",
   path: "src/config",
   format: "json",
-  match: { include: `menu.{${LANGUAGES.map((lang) => lang.languageCode).join(",")}}` },
+  match: { include: `menu.${anyOf(LANGUAGES.map((lang) => lang.languageCode))}` },
   ui: {
     allowedActions: { create: false, delete: false, createFolder: false },
+    // The header updates after saving (it is not part of the live preview).
+    router: VISUAL_EDITING
+      ? ({ document }) => localeUrl(document._sys.filename.replace(/^menu\./, ""))
+      : undefined,
   },
   fields: [
     {
@@ -491,7 +502,7 @@ export const socialCollection: Collection = {
       description: "Shown in the footer and the side menu.",
       ui: {
         itemProps: (item: { label?: string }) => ({ label: item?.label || "Social link" }),
-        defaultItem: () => ({ enable: true, label: "", icon: "", url: "https://" }),
+        defaultItem: () => ({ enable: true, label: "", url: "" }),
       },
       fields: [
         { type: "boolean", name: "enable", label: "Show this link" },
@@ -524,7 +535,7 @@ export const translationsCollection: Collection = {
   label: "Settings · Interface text",
   path: "src/i18n",
   format: "json",
-  match: { include: `{${LANGUAGES.map((lang) => lang.languageCode).join(",")}}` },
+  match: { include: anyOf(LANGUAGES.map((lang) => lang.languageCode)) },
   ui: {
     allowedActions: { create: false, delete: false, createFolder: false },
     router: VISUAL_EDITING

@@ -1,6 +1,8 @@
 import { requestWithMetadata } from "@tinacms/astro/data";
 import client from "../../../tina/__generated__/client";
+import config from ".astro/config.generated.json";
 import languages from "@/config/language.json";
+import { getCollectionCTM } from "@/lib/contentParser.astro";
 import {
   PAGE_SECTIONS,
   type PageSectionKey,
@@ -20,6 +22,9 @@ import type { FooterData, SectionsBundle } from "./types";
 //
 // The generated client carries the read-only TINA_TOKEN, so it must never be
 // imported from code that runs in the browser.
+//
+// The island route is public on a deployed site, so in production it only
+// returns published (non-draft) documents that are part of the current build.
 
 type Query = (variables: Record<string, unknown>) => Promise<any>;
 const queries = client.queries as unknown as Record<string, Query>;
@@ -27,6 +32,14 @@ const queries = client.queries as unknown as Record<string, Query>;
 export const contentDirFor = (languageCode: string) =>
   languages.find((lang) => lang.languageCode === languageCode)?.contentDir ??
   languages[0].contentDir;
+
+/** A plain file name inside a collection folder, e.g. "about-us.md". */
+export const safeFileName = (file: string | null) => {
+  if (!file || !/^[\w-][\w.-]*\.(md|mdx)$/.test(file)) {
+    throw new Error(`Invalid document file name: ${file}`);
+  }
+  return file;
+};
 
 export async function tinaDocument(
   collection: string,
@@ -40,13 +53,35 @@ export async function tinaDocument(
   return result.data?.[collection] as Record<string, any> | undefined;
 }
 
-async function tinaList(collection: string) {
-  const name = `${collection}Connection`;
-  const result = await requestWithMetadata<Record<string, any>>(
-    queries[name]({ first: 500 }),
+/**
+ * Documents of a list (services, portfolio). In development every document is
+ * listed, so new entries show up right away. In production only entries of the
+ * current build are loaded, which keeps drafts private.
+ */
+async function tinaList(
+  collection: string,
+  folder: "services" | "portfolio",
+  languageCode: string,
+) {
+  if (!import.meta.env.PROD) {
+    const name = `${collection}Connection`;
+    const result = await requestWithMetadata<Record<string, any>>(
+      queries[name]({ first: 500 }),
+    );
+    const edges: { node: Record<string, any> }[] =
+      result.data?.[name]?.edges ?? [];
+    return edges.map((edge) => edge.node);
+  }
+
+  const published = await getCollectionCTM(folder, languageCode);
+  const nodes = await Promise.all(
+    published.map((entry) =>
+      tinaDocument(collection, entry.filePath?.split("/").pop() ?? ""),
+    ),
   );
-  const edges: { node: Record<string, any> }[] = result.data?.[name]?.edges ?? [];
-  return edges.map((edge) => edge.node);
+  return nodes.filter(
+    (node): node is Record<string, any> => !!node && !node.draft,
+  );
 }
 
 export async function loadSectionsFromTina(
@@ -69,13 +104,21 @@ export async function loadSectionsFromTina(
   }
 
   if (keys.includes("services")) {
-    const nodes = await tinaList(servicesCollectionName(languageCode));
+    const nodes = await tinaList(
+      servicesCollectionName(languageCode),
+      "services",
+      languageCode,
+    );
     bundle.services = sortEntries(
       nodes.flatMap((node) => toEntry(node, "services", contentDir) ?? []),
     );
   }
   if (keys.includes("portfolio")) {
-    const nodes = await tinaList(portfolioCollectionName(languageCode));
+    const nodes = await tinaList(
+      portfolioCollectionName(languageCode),
+      config.settings.portfolioFolder as "portfolio",
+      languageCode,
+    );
     bundle.projects = sortEntries(
       nodes.flatMap((node) => toEntry(node, "portfolio", contentDir) ?? []),
     );

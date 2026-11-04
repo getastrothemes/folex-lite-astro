@@ -21,6 +21,7 @@ Both editions use the same content files, design and features.
 
 - [What you can edit](#-what-you-can-edit)
 - [How it works (in plain words)](#-how-it-works-in-plain-words)
+- [0. Get your own copy](#0-get-your-own-copy)
 - [1. Start the website on your computer](#1-start-the-website-on-your-computer)
 - [2. Edit your website](#2-edit-your-website)
 - [3. Save and publish your changes](#3-save-and-publish-your-changes)
@@ -54,7 +55,7 @@ Everything below is editable in the CMS, in every language of the site (English 
 | **Settings · Social links**        | Social profiles shown in the footer and side menu                                |
 | **Settings · Interface text**      | Small texts like "Previous", "Next" and the copyright line, per language        |
 
-Every field has a plain-language label, a short explanation and, where it matters, a check that tells you what to fix (for example, a link that does not start with `/` or `https://`).
+Every field has a plain-language label, most have a short explanation, and where it matters a check tells you what to fix (for example, a link that does not start with `/` or `https://`). Fields that the Lite theme does not display are hidden from the editor but kept in your files.
 
 ### Page builder
 
@@ -77,13 +78,22 @@ What the page builder does **not** do: it does not let you design new layouts, m
 - **Publishing** means sending the changed files to your Git repository (for example on GitHub). Your hosting provider (Netlify, Vercel or Cloudflare) notices the change and rebuilds the live website, which takes a minute or two.
 - **Editing the live website online** uses **Tina Cloud**, a hosted service by the makers of Tina. When you save, Tina Cloud saves the change to your GitHub repository for you, and the website rebuilds automatically.
 
+## 0. Get your own copy
+
+Your website needs its own repository on GitHub, so you can publish changes and connect a host and Tina Cloud.
+
+1. Create a free account on [GitHub](https://github.com/) and install [GitHub Desktop](https://desktop.github.com/) (an app for publishing changes without the command line).
+2. Open [the theme repository](https://github.com/getastrothemes/folex-lite-astro) and click **Fork**. **Untick** "Copy the `main` branch only", then click **Create fork**.
+3. In your fork, open **Settings → General → Default branch**, switch it to **`tina-cms`** and confirm. Your hosting provider and Tina Cloud will now use the Tina edition.
+4. In GitHub Desktop choose **File → Clone repository**, pick your fork and click **Clone**.
+
 ## 1. Start the website on your computer
 
 You need [Node.js](https://nodejs.org/) version 22 or newer. To check, open a terminal and run `node -v`.
 
+Open a terminal in the folder of your copy (GitHub Desktop: **Repository → Open in Terminal**) and run:
+
 ```bash
-git clone https://github.com/getastrothemes/folex-lite-astro.git
-cd folex-lite-astro
 git checkout tina-cms
 npm install
 npm run dev
@@ -122,7 +132,7 @@ Saving in the editor on your computer changes files on your computer. To put the
 
 **With GitHub Desktop (no command line):**
 
-1. Open the project in [GitHub Desktop](https://desktop.github.com/).
+1. Open the project in [GitHub Desktop](https://desktop.github.com/) (if you cloned it with the terminal, use **File → Add local repository** first).
 2. You will see the changed files. Write a short summary (e.g. "Update homepage text").
 3. Click **Commit**, then **Push origin**.
 
@@ -138,7 +148,7 @@ Your hosting provider then rebuilds the website. Changes are usually live within
 
 ### Deploy the website
 
-Connect your repository to a host. The build settings are already included:
+Connect your repository to a host and make sure it builds the **`tina-cms`** branch (the default branch of your copy, see [step 0](#0-get-your-own-copy)). The build settings are already included:
 
 | Host                 | Settings                                                     | Online visual editing |
 | -------------------- | ------------------------------------------------------------ | --------------------- |
@@ -175,7 +185,9 @@ Do this once if you (or your client) want to edit the website from any browser, 
 
 **Logging in and inviting people:** editors log in with their Tina Cloud account. Invite people in your Tina Cloud project under **Collaborators** (roles: Admin or Editor). Editors do not need a GitHub account.
 
-**Which branch is edited?** The branch your host builds from is detected automatically on Netlify, Vercel, Cloudflare Pages and GitHub Actions. Otherwise `main` is used. Set `TINA_BRANCH` to choose another branch.
+**Which branch is edited?** The branch your host builds from (`tina-cms` if you followed step 0) is detected automatically on Netlify, Vercel, Cloudflare Pages and GitHub Actions. Otherwise `main` is used. Set `TINA_BRANCH` to choose another branch. If you limit the token to certain branches in Tina Cloud, include this branch.
+
+**New pages online:** a page or project you create online, or a changed web address, appears in the live preview after you save and the website has rebuilt (a few minutes). Until then, edit it with the form on the left. Drafts are never shown on the live website, including its preview.
 
 **Security:** the Client ID is public by design. `TINA_TOKEN` is private: it is only used while building the site and inside the small server function used for live editing, never in the browser. Never commit your `.env` file.
 
@@ -189,7 +201,9 @@ Do this once if you (or your client) want to edit the website from any browser, 
 
 Why the difference: the live preview re-renders a piece of the page on the server while you type. Netlify and Vercel run this as one small serverless function, set up automatically; all normal pages stay static. Cloudflare Pages cannot run it with the current Astro Cloudflare adapter, so on Cloudflare Pages you edit with forms and see changes after saving and redeploying.
 
-For a self-hosted Node.js server, run `npm install @astrojs/node` and set `TINA_HOSTING=node`.
+For a self-hosted Node.js server: run `npm install @astrojs/node`, set `TINA_HOSTING=node`, `PUBLIC_TINA_CLIENT_ID` and `TINA_TOKEN`, run `npm run build`, then start the site with `node ./dist/server/entry.mjs` (the `HOST` and `PORT` environment variables set the address).
+
+**Is the live editing route safe to deploy?** Yes. It only answers requests from the Tina editor, never exposes `TINA_TOKEN`, and on the live website it only shows published content that is part of the current build. Drafts are not shown.
 
 ## 🔐 Environment variables
 
@@ -203,7 +217,7 @@ All variables are optional. Without any of them the website builds and local edi
 | `TINA_HOSTING`             | Public            | Forcing `netlify`, `vercel`, `node` or `static` (default: detected) |
 | `PUBLIC_TINA_ADMIN_ORIGIN` | Public            | Admin on another domain (e.g. GitHub Codespaces) |
 
-To test Tina Cloud on your computer, copy `.env.example` to `.env` and fill in the values. `.env` is ignored by Git.
+`npm run dev` always edits the files on your computer and ignores these values. To try the Tina Cloud login on your computer, copy `.env.example` to `.env`, fill in the values, add `http://localhost:4321` to **Site URLs** in Tina Cloud, then run `npm run build` and `npm run preview` and open <http://localhost:4321/admin/>. `.env` is ignored by Git.
 
 ## 💳 Tina Cloud plans and limits
 
@@ -263,7 +277,7 @@ The theme ships with the placeholder `your_email@example.com`, so the form will 
 | `npm run build`           | Builds the Tina admin and the website into `./dist/`                |
 | `npm run preview`         | Builds, then previews the build locally                             |
 | `npm run astro-check`     | Type checks the project (generates the Tina client first if needed) |
-| `npm run tina:audit`      | Checks every content file against the Tina schema                   |
+| `npm run tina:audit`      | Checks every content file against the Tina schema (read-only)       |
 
 ### How the Tina integration is built
 

@@ -66,7 +66,9 @@ if (!enable) {
           : "mx-auto max-w-4xl lg:grid-cols-4",
       ]}>
       {
-        list?.map((item, index) => (
+        list?.map((item, index) =>
+          // Logos without an image (e.g. just added in the CMS) are skipped
+          !item?.src ? null : (
           <li
             data-tina-field={tinaAttr(actualContent, "list", index)}
             class:list={[

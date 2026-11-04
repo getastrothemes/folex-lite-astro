@@ -7,12 +7,20 @@ import siteConfig from "../.astro/config.generated.json";
 
 export type Language = (typeof languages)[number];
 
+const { defaultLanguage, showDefaultLangInUrl } =
+  siteConfig.settings.multilingual;
+
+// All languages in src/config/language.json. The schema must not depend on
+// settings editors can change (e.g. turning a language off), because Tina
+// Cloud checks that the deployed schema matches tina/tina-lock.json.
 export const LANGUAGES: Language[] = [...languages].sort(
   (a, b) => a.weight - b.weight,
 );
 
-const { defaultLanguage, showDefaultLangInUrl } =
-  siteConfig.settings.multilingual;
+/** Glob alternative ("{a,b}"); a single value needs no braces to match. */
+export const anyOf = (values: string[]) =>
+  values.length === 1 ? values[0] : `{${values.join(",")}}`;
+
 const trailingSlash = siteConfig.site.trailingSlash;
 
 /** Live preview is only offered when the editing route can run (see scripts/tina/hosting.mjs). */

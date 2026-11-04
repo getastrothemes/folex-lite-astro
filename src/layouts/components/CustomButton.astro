@@ -54,7 +54,8 @@ const {
   ...rest
 } = Astro.props;
 
-if (!enable) return;
+// Buttons without text (e.g. just added in the CMS) are not rendered
+if (!enable || !label) return;
 
 const isCreativeHoverEffect = hoverEffect === "creative-fill";
 

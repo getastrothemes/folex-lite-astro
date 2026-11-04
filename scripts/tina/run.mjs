@@ -40,6 +40,12 @@ function run(cmd, env = {}) {
 // config.toml -> .astro/config.generated.json (read by Astro and Tina)
 const generateConfig = () => run("node scripts/toml-watcher.mjs");
 
+// Generates the Tina client and types without contacting Tina Cloud (used by
+// `check` when they are missing). Uses its own ports so it also works while
+// `npm run dev` is running.
+const LOCAL_TINA_BUILD =
+  "npx tinacms build --local --skip-cloud-checks --skip-search-index --port 4137 --datalayer-port 9137";
+
 function notice(lines) {
   const width = Math.max(...lines.map((line) => line.length));
   const border = "─".repeat(width + 2);
@@ -69,7 +75,7 @@ const NOT_CONNECTED_PAGE = `<!doctype html>
       <li><code>PUBLIC_TINA_CLIENT_ID</code>: the Client ID of your Tina Cloud project</li>
       <li><code>TINA_TOKEN</code>: a read-only token from the same project</li>
     </ul>
-    <p>The README of this theme ("Publish your changes online") explains every step.</p>
+    <p>The README of this theme (section "4. Edit the live website online (Tina Cloud)") explains every step.</p>
   </body>
 </html>
 `;
@@ -137,19 +143,30 @@ if (command === "dev") {
       "The website builds normally, but online editing at /admin/ is off.",
       "Local editing with `npm run dev` still works.",
     ]);
-    // Generates the Tina client and types without contacting Tina Cloud.
-    run("npx tinacms build --local --skip-cloud-checks --skip-search-index", tinaEnv);
-    mkdirSync(path.join(ROOT, "public/admin"), { recursive: true });
-    writeFileSync(path.join(ROOT, "public/admin/index.html"), NOT_CONNECTED_PAGE);
+    // A static build without Tina Cloud needs no Tina client: the live editing
+    // route is not included.
   }
 
   run(`npx astro build ${astroArgs}`.trim());
-  run("node scripts/remove-draft-from-sitemap.mjs");
+
+  // Static files are deployed from a different folder with some adapters.
+  const staticOutput = {
+    vercel: ".vercel/output/static",
+    node: "dist/client",
+  }[visualEditing ? detectHost() : "static"] ?? "dist";
+  run(`node scripts/remove-draft-from-sitemap.mjs ${staticOutput}`);
+
+  if (!hasTinaCloud()) {
+    // /admin/ on the deployed site explains how to connect Tina Cloud.
+    // Written to the build output, so a running `npm run dev` is not affected.
+    mkdirSync(path.join(ROOT, staticOutput, "admin"), { recursive: true });
+    writeFileSync(path.join(ROOT, staticOutput, "admin/index.html"), NOT_CONNECTED_PAGE);
+  }
 } else if (command === "check") {
   generateConfig();
   // The Tina client and types are generated, not committed.
   if (!existsSync(path.join(ROOT, "tina/__generated__/client.ts"))) {
-    run("npx tinacms build --local --skip-cloud-checks --skip-search-index");
+    run(LOCAL_TINA_BUILD);
   }
   run(`npx astro check ${astroArgs}`.trim());
 } else {

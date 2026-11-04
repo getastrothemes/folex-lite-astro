@@ -12,7 +12,8 @@ const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, "..");
 
 // --------- Paths (absolute) ----------
-const DIST_FOLDER = path.resolve(PROJECT_ROOT, "dist");
+// Optional argument: the build output folder that holds the sitemaps
+const DIST_FOLDER = path.resolve(PROJECT_ROOT, process.argv[2] || "dist");
 const CONTENT_FOLDER = path.resolve(PROJECT_ROOT, "src", "content");
 const LANG_FILE = path.resolve(PROJECT_ROOT, "src", "config", "language.json");
 const ASTRO_CONFIG_FILE = path.resolve(

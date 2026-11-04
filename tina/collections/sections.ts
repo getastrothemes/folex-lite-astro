@@ -1,6 +1,12 @@
 import type { Collection, TinaField } from "tinacms";
-import { buttonField, enableField, requiredText } from "../fields";
-import { LANGUAGES, VISUAL_EDITING, docLanguage, localeUrl } from "../site";
+import { buttonField, enableField, hidden, requiredText } from "../fields";
+import {
+  LANGUAGES,
+  VISUAL_EDITING,
+  anyOf,
+  docLanguage,
+  localeUrl,
+} from "../site";
 
 // Shared section content (`src/content/sections/{language}/{file}.md`).
 // Each section type is one collection with one document per language. The
@@ -22,7 +28,7 @@ const sectionCollection = ({
   path: "src/content/sections",
   format: "md",
   match: {
-    include: `{${LANGUAGES.map((lang) => lang.contentDir).join(",")}}/${file}`,
+    include: `${anyOf(LANGUAGES.map((lang) => lang.contentDir))}/${file}`,
   },
   ui: {
     allowedActions: { create: false, delete: false, createFolder: false },
@@ -107,8 +113,10 @@ export const clientsCollection = sectionCollection({
       label: "Logos",
       list: true,
       ui: {
-        itemProps: (item: { alt?: string }) => ({ label: item?.alt || "Logo" }),
-        defaultItem: () => ({ alt: "Client logo", src: "" }),
+        itemProps: (item: { alt?: string; src?: string }) => ({
+          label: item?.alt || item?.src?.split("/").pop() || "Logo",
+        }),
+        defaultItem: () => ({ alt: "Client logo" }),
       },
       fields: [
         {
@@ -116,6 +124,10 @@ export const clientsCollection = sectionCollection({
           name: "src",
           label: "Logo image",
           description: "SVG or PNG with a transparent background works best.",
+          ui: {
+            validate: (value?: string) =>
+              value ? undefined : "Choose a logo image.",
+          },
         },
         {
           type: "string",
@@ -236,9 +248,7 @@ export const portfolioSectionCollection = sectionCollection({
         limitField,
       ],
     },
-    buttonField({
-      description: "Optional link below the projects, e.g. to a full portfolio page.",
-    }),
+    buttonField({ hidden: true }),
   ],
 });
 
@@ -321,7 +331,9 @@ export const callToActionCollection = sectionCollection({
   label: "Footer call to action",
   file: "call-to-action",
   fields: [
-    enableField("Controls the call to action block where a page uses it."),
+    // Only the heading and text are shown (in the footer). The other fields
+    // are used by the Pro version and kept in the file.
+    hidden(enableField("")),
     sectionTitle("Large heading in the footer, next to the contact form."),
     {
       type: "string",
@@ -330,11 +342,12 @@ export const callToActionCollection = sectionCollection({
       description: "Shown below the footer heading. Markdown is allowed.",
       ui: { component: "textarea" },
     },
-    buttonField(),
+    buttonField({ hidden: true }),
     {
       type: "object",
       name: "options",
       label: "Layout",
+      ui: { component: "hidden" },
       fields: [
         appearanceField([
           { value: "light", label: "Light" },

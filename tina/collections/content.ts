@@ -8,6 +8,7 @@ import {
 import {
   bodyField,
   dateField,
+  hidden,
   seoFields,
   slugField,
   slugify,
@@ -16,6 +17,7 @@ import {
 import {
   LANGUAGES,
   VISUAL_EDITING,
+  anyOf,
   docLanguage,
   localeUrl,
   type Language,
@@ -79,7 +81,7 @@ export const homepageCollection: Collection = {
   label: "Homepage",
   path: "src/content/homepage",
   format: "md",
-  match: { include: `{${LANGUAGES.map((l) => l.contentDir).join(",")}}/-index` },
+  match: { include: `${anyOf(LANGUAGES.map((l) => l.contentDir))}/-index` },
   ui: {
     allowedActions: { create: false, delete: false, createFolder: false },
     router: VISUAL_EDITING
@@ -89,7 +91,11 @@ export const homepageCollection: Collection = {
   fields: [
     titleField("Used for the browser tab and search results."),
     sectionsField(false),
-    ...seoFields({ withDraft: false }),
+    ...seoFields({
+      withDraft: false,
+      imageDescription:
+        "Used when the homepage is shared on social media. Ideally 1200 x 630 pixels.",
+    }),
   ],
 };
 
@@ -129,7 +135,7 @@ export const pagesCollection = (lang: Language): Collection => ({
       list: true,
       description: "Optional labels shown above the title.",
     },
-    slugField,
+    slugField(""),
     bodyField(
       'The text of the page. Tip: add [.text-h3] at the end of a heading to make it smaller, e.g. "Our story [.text-h3]".',
     ),
@@ -203,7 +209,7 @@ export const portfolioCollection = (lang: Language): Collection => ({
         { type: "string", name: "value", label: "Value", required: true },
       ],
     },
-    slugField,
+    slugField("portfolio/"),
     weightField,
     bodyField(
       'The project story. Tip: add [.text-h3] at the end of a heading to make it smaller, e.g. "Final Result [.text-h3]".',
@@ -239,31 +245,17 @@ export const servicesCollection = (lang: Language): Collection => ({
     },
     weightField,
     {
-      type: "image",
-      name: "icon",
-      label: "Icon",
-      description: "SVG icon. Used by the Pro grid layout.",
-    },
-    {
-      type: "image",
-      name: "image",
-      label: "Image",
-      description: "Used by the Pro service detail page.",
-    },
-    slugField,
-    dateField,
-    {
       type: "boolean",
       name: "draft",
       label: "Draft (hidden from the live website)",
     },
-    { type: "string", name: "metaTitle", label: "SEO title" },
-    {
-      type: "string",
-      name: "metaDescription",
-      label: "SEO description",
-      ui: { component: "textarea" },
-    },
+    // Used by the Pro version's service pages; kept in the files, not shown.
+    { type: "image", name: "icon", label: "Icon", ui: { component: "hidden" } },
+    { type: "image", name: "image", label: "Image", ui: { component: "hidden" } },
+    hidden(slugField("")),
+    hidden(dateField),
+    { type: "string", name: "metaTitle", label: "SEO title", ui: { component: "hidden" } },
+    { type: "string", name: "metaDescription", label: "SEO description", ui: { component: "hidden" } },
     {
       type: "rich-text",
       name: "body",

@@ -10,12 +10,15 @@ This is the **Tina CMS edition**. Your website looks and works exactly like the 
 
 ## 🌿 Editions
 
-| Branch     | Edition                                                       |
-| ---------- | ------------------------------------------------------------- |
-| `main`     | Original theme (edit Markdown files directly)                 |
-| `tina-cms` | Tina CMS edition (this branch): visual editing in the browser |
+Folex Lite comes in three editions with the same design and pages. Each one lives on its own branch of the same GitHub repository and has its own setup guide:
 
-Both editions use the same content files, design and features.
+| Edition                     | Branch                                                                             | You edit content in…                                        | Setup guide                                                                                       |
+| --------------------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **Original**                | [`main`](https://github.com/getastrothemes/folex-lite-astro/tree/main)             | Markdown, JSON and TOML files in your code editor           | [Original README](https://github.com/getastrothemes/folex-lite-astro/blob/main/readme.md)         |
+| **Tina CMS edition** (this) | [`tina-cms`](https://github.com/getastrothemes/folex-lite-astro/tree/tina-cms)     | A visual editor on top of the same Git-based Markdown files | This file                                                                                         |
+| **Sanity CMS edition**      | [`sanity-cms`](https://github.com/getastrothemes/folex-lite-astro/tree/sanity-cms) | Sanity Studio, with content stored in Sanity's cloud        | [Sanity CMS README](https://github.com/getastrothemes/folex-lite-astro/blob/sanity-cms/readme.md) |
+
+The Tina CMS edition uses the same content files as the original edition, so content from the original edition works here as it is. Page builder changes you make in Tina (section order, added sections, new pages built from sections) only show in the Tina CMS edition. The Sanity CMS edition stores content in Sanity instead, and content does not move between it and the file-based editions automatically.
 
 ## 📚 Contents
 

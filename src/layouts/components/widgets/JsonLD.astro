@@ -76,10 +76,6 @@ const jsonLdHtml = JSON.stringify(
 
 <!-- JSON-LD -->{
   content ? (
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={jsonLdHtml}
-    />
+    <script type="application/ld+json" is:inline set:html={jsonLdHtml} />
   ) : null
 }

@@ -236,9 +236,7 @@ function normalizeCssVariable(cssVar: string): string {
  */
 function normalizeStyle(style?: string): "normal" | "italic" | "oblique" {
   const normalized = (style?.toLowerCase() || "normal") as
-    | "normal"
-    | "italic"
-    | "oblique";
+    "normal" | "italic" | "oblique";
   if (!["normal", "italic", "oblique"].includes(normalized)) {
     console.warn(`Invalid font style: ${style}, defaulting to 'normal'`);
     return "normal";

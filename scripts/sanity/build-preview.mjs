@@ -19,7 +19,10 @@ const env = {
   SANITY_PREVIEW_BUILD: "true",
 };
 
-for (const args of [["run", "toml:watch"], ["exec", "astro", "build"]]) {
+for (const args of [
+  ["run", "toml:watch"],
+  ["exec", "astro", "build"],
+]) {
   const result = spawnSync("npm", args, {
     cwd: PROJECT_ROOT,
     env,

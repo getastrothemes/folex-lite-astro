@@ -1147,7 +1147,10 @@ const TEXT_FIXES = [
 ];
 const fixText = (value) => {
   if (typeof value === "string") {
-    return TEXT_FIXES.reduce((text, [from, to]) => text.replace(from, to), value);
+    return TEXT_FIXES.reduce(
+      (text, [from, to]) => text.replace(from, to),
+      value,
+    );
   }
   if (Array.isArray(value)) return value.map(fixText);
   if (value && typeof value === "object") {

@@ -122,7 +122,9 @@ className = fitToScreen
 
     {/* Draft preview only: preview bar + click-to-edit overlays */}
     {preview && <PreviewBar />}
-    {/* Reloads the preview after each edit, then once more so text typed during the reload shows up */}
+    {
+      /* Reloads the preview after each edit, then once more so text typed during the reload shows up */
+    }
     <VisualEditing
       enabled={preview}
       experimental_refreshStrategy={{ type: "reload", followUpDelayMs: 1500 }}

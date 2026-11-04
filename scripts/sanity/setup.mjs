@@ -834,7 +834,11 @@ function printNextSteps(env, options) {
         "click-to-edit inside the Studio. `npm run build` still makes the normal",
       ),
     );
-    log(c.yellow("static site (use `npm run build:preview` for a preview server)."));
+    log(
+      c.yellow(
+        "static site (use `npm run build:preview` for a preview server).",
+      ),
+    );
   }
   log("");
 }

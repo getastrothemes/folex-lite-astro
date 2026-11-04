@@ -225,7 +225,7 @@ export const siteSettingsCollection: Collection = {
               type: "string",
               name: "address",
               label: "Address",
-              description: "Use <br /> for a line break.",
+              description: "Type &lt;br /&gt; where you want a line break.",
               ui: { component: "textarea" },
             },
             { type: "string", name: "email", label: "Email", description: markdownHint },

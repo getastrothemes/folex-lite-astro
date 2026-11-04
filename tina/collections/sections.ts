@@ -44,7 +44,7 @@ const sectionTitle = (description = "Leave empty to hide the heading."): TinaFie
   type: "string",
   name: "title",
   label: "Heading",
-  description: `${description} You can use <br /> for a line break.`,
+  description: `${description} Type &lt;br /&gt; where you want a line break.`,
 });
 
 const appearanceField = (

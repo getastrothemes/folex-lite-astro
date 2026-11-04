@@ -17,6 +17,9 @@ const ADAPTERS = {
   node: "@astrojs/node",
 };
 
+// Latest @astrojs/node needs Astro 7.2+; this version supports the theme's Astro.
+const INSTALL = { node: "@astrojs/node@11.1.2" };
+
 /**
  * @returns {"netlify" | "vercel" | "node" | "static"}
  */
@@ -58,7 +61,7 @@ export async function loadAdapter(env = process.env) {
     mod = await import(/* @vite-ignore */ ADAPTERS[host]);
   } catch {
     throw new Error(
-      `[tina] TINA_HOSTING="${host}" needs the ${ADAPTERS[host]} package. Install it with: npm install ${ADAPTERS[host]}`,
+      `[tina] TINA_HOSTING="${host}" needs the ${ADAPTERS[host]} package. Install it with: npm install ${INSTALL[host] ?? ADAPTERS[host]}`,
     );
   }
 

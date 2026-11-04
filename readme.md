@@ -201,7 +201,7 @@ Do this once if you (or your client) want to edit the website from any browser, 
 
 Why the difference: the live preview re-renders a piece of the page on the server while you type. Netlify and Vercel run this as one small serverless function, set up automatically; all normal pages stay static. Cloudflare Pages cannot run it with the current Astro Cloudflare adapter, so on Cloudflare Pages you edit with forms and see changes after saving and redeploying.
 
-For a self-hosted Node.js server: run `npm install @astrojs/node`, set `TINA_HOSTING=node`, `PUBLIC_TINA_CLIENT_ID` and `TINA_TOKEN`, run `npm run build`, then start the site with `node ./dist/server/entry.mjs` (the `HOST` and `PORT` environment variables set the address).
+For a self-hosted Node.js server: run `npm install @astrojs/node@11.1.2` (newer versions need Astro 7.2 or later), set `TINA_HOSTING=node`, `PUBLIC_TINA_CLIENT_ID` and `TINA_TOKEN`, run `npm run build`, then start the site with `node ./dist/server/entry.mjs` (the `HOST` and `PORT` environment variables set the address).
 
 **Is the live editing route safe to deploy?** Yes. It only answers requests from the Tina editor, never exposes `TINA_TOKEN`, and on the live website it only shows published content that is part of the current build. Drafts are not shown.
 

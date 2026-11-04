@@ -4,7 +4,7 @@
 
 **Folex Lite** is a lightweight, free version of the premium [Folex Astro Theme](https://getastrothemes.com/astro-themes/folex/), designed for fast, SEO-friendly startup and digital agency websites.
 
-> ⚡ Built with Astro 6, Tailwind CSS 4, and Markdown — optimized for performance, SEO, and simplicity.
+> ⚡ Built with Astro 7, Tailwind CSS 4, and Markdown — optimized for performance, SEO, and simplicity.
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/getastrothemes/folex-lite-astro) [![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/getastrothemes/folex-lite-astro) [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/getastrothemes/folex-lite-astro?devcontainer_path=.devcontainer/devcontainer.json)
 
@@ -13,7 +13,7 @@
 ## ✨ Features at a Glance
 
 - ✅ Homepage layout: Startup / Agency
-- ✅ Built with Astro 6 + Tailwind CSS 4
+- ✅ Built with Astro 7 + Tailwind CSS 4
 - ✅ Fully responsive and accessible
 - ✅ 100/100 Lighthouse performance score
 - ✅ SEO-ready: meta tags, Open Graph, JSON-LD schema
@@ -47,6 +47,24 @@
 
 > 🎯 **Need more pages and flexibility?**  
 > Upgrade to [Folex Pro →](https://getastrothemes.com/astro-themes/folex/) for the full business-ready toolkit.
+
+## 🧭 Theme Editions
+
+Folex Lite comes in two editions. Each one lives on its own Git branch:
+
+| Branch                                                                             | Edition                   | Content management                                  |
+| ---------------------------------------------------------------------------------- | ------------------------- | --------------------------------------------------- |
+| [`main`](https://github.com/getastrothemes/folex-lite-astro/tree/main)             | Original Folex Lite Astro | Existing code-first workflow (Markdown, JSON, TOML) |
+| [`sanity-cms`](https://github.com/getastrothemes/folex-lite-astro/tree/sanity-cms) | Sanity CMS edition        | Visual editing and structured content management    |
+
+- **You are on `main`.** This branch is the original theme. You edit content in Markdown files under `src/content/` and settings in `src/config/`. It has no Sanity support.
+- **Want to edit your website in a visual editor instead of in code?** Use the `sanity-cms` branch. It has the same design and pages, managed from Sanity Studio with live preview and click-to-edit, and it works on Sanity's free plan. See the [Sanity CMS edition README](https://github.com/getastrothemes/folex-lite-astro/blob/sanity-cms/readme.md) for setup.
+
+To get the CMS edition:
+
+```bash
+git clone --branch sanity-cms https://github.com/getastrothemes/folex-lite-astro.git folex-lite-sanity
+```
 
 ## ⚡ Quick Start
 

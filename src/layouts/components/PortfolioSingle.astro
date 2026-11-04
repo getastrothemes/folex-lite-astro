@@ -91,10 +91,7 @@ const bodyHtml = body?.length ? await portableTextToHtml(body) : "";
                 {information.map((item) => (
                   <li class="w-fit">
                     {item.label && (
-                      <span
-                        class="text-dark/80 font-medium"
-                        set:html={item.label}
-                      />
+                      <span class="text-dark/80 font-medium">{item.label}</span>
                     )}
                     <div
                       class="prose-a:underline text-dark font-secondary font-medium capitalize"
@@ -106,7 +103,7 @@ const bodyHtml = body?.length ? await portableTextToHtml(body) : "";
             )
         }
         <div class="space-y-10 pe-10 xl:col-span-5">
-          {title && <h1 class="md:text-display-5" set:html={title} />}
+          {title && <h1 class="md:text-display-5">{title}</h1>}
 
           <div
             class="prose-styles has-video-modal [&_.image-list-component]:xl:-ms-31.5 [&_.image-list-component]:xl:w-6xl"

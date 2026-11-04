@@ -21,6 +21,8 @@
     "studio": "sanity dev --port 3333",
     "build": "npm run toml:watch && astro build && npm run remove-draft-from-sitemap",
     "preview": "npm run build && astro preview",
+    "build:preview": "node scripts/sanity/build-preview.mjs",
+    "start:preview": "node scripts/sanity/start-preview.mjs",
     "studio:build": "sanity build studio-dist --yes",
     "studio:deploy": "sanity deploy studio-dist",
     "setup": "node scripts/sanity/setup.mjs",

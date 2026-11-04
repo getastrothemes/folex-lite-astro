@@ -5,8 +5,18 @@ import trailingSlashChecker from "@/lib/utils/trailingSlashChecker";
 import Icons from "@/helpers/Icons.astro";
 
 const currentLocale = Astro.currentLocale;
+// Languages this page exists in (undefined = every language)
+const translations: string[] | undefined = Astro.props.translations;
+
 const languages = supportedLanguages.map((lang) => {
-  const href = getLocaleUrlCTM(Astro.url.pathname, lang.languageCode as string);
+  // Pages and projects are separate documents per language. When this one
+  // has no version in a language, link to that language's home page.
+  const hasTranslation =
+    !translations?.length || translations.includes(lang.languageCode);
+  const href = getLocaleUrlCTM(
+    hasTranslation ? Astro.url.pathname : "/",
+    lang.languageCode as string,
+  );
 
   // Don't include current locale in url
   if (href === trailingSlashChecker(Astro.url.pathname)) {

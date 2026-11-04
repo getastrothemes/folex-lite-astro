@@ -4,17 +4,14 @@
  * - Demo mode (no project ID): runs the GROQ query locally with groq-js
  *   against the bundled demo content.
  * - Preview (valid draft-mode cookie): reads drafts with the preview client.
- * - Otherwise: reads published content from the API CDN. During a static
- *   build each query + params pair is fetched only once.
+ * - Otherwise: reads published content (API CDN in dev and on the preview
+ *   server, live API during a static build). During a static build each
+ *   query + params pair is fetched only once.
  */
 import type { QueryParams } from "@sanity/client";
 import { evaluate, parse, type ExprNode } from "groq-js";
 import { getPreviewClient, publishedClient } from "./client";
-import {
-  isSanityConfigured,
-  isServerOutput,
-  visualEditingEnabled,
-} from "./env";
+import { isSanityConfigured, isStaticBuild, visualEditingEnabled } from "./env";
 import { loadFallbackDataset } from "./fallbackDataset";
 
 export type SanityFetchOptions = {
@@ -30,7 +27,7 @@ export type SanityFetchOptions = {
 const publishedCache = new Map<string, Promise<unknown>>();
 // Static builds read each query once; dev and the preview server always
 // fetch fresh content so edits show up on reload
-const useCache = import.meta.env.PROD && !isServerOutput;
+const useCache = isStaticBuild;
 
 // Parsed GROQ queries for demo mode
 const parsedQueries = new Map<string, ExprNode>();

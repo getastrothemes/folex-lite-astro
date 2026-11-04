@@ -14,7 +14,7 @@ export const bannerSection = defineType({
   type: "object",
   icon: RocketIcon,
   description:
-    "Large heading at the top of a page with text, an image and an optional button.",
+    "Large heading on a black background with text, an optional button and an image. Use it as the first section: the header then sits on top of it.",
   groups: sectionGroups,
   fields: [
     hiddenSectionField(),
@@ -25,7 +25,7 @@ export const bannerSection = defineType({
       rows: 2,
       group: "content",
       description:
-        'Press Enter to start a new line on the website, e.g. "We Help to Grow" ↵ "Your Business".',
+        'Press Enter to start a new line on the website, e.g. "We Help to Grow" ↵ "Your Business". Use **double asterisks** for bold text.',
       validation: (rule) =>
         rule
           .max(120)
@@ -39,20 +39,21 @@ export const bannerSection = defineType({
       type: "text",
       rows: 3,
       group: "content",
-      description: "A sentence or two under the heading.",
+      description: "A sentence or two under the heading (above the button).",
     }),
     imageField({
       name: "image",
       title: "Image",
       group: "content",
       description:
-        "Large picture shown in the banner. Wide images (around 1900 px) work best.",
+        "Wide picture shown under the text in a landscape frame (the center of the image stays visible). Use an image at least 1800 px wide.",
     }),
     defineField({
       name: "button",
       title: "Button",
       type: "link",
       group: "content",
+      description: "Optional button under the text.",
       initialValue: { enabled: false, label: "View our works", url: "/" },
     }),
     defineField({

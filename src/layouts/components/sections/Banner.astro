@@ -11,9 +11,12 @@ type Props = {
   content: BannerSectionData;
   // `data-sanity` attribute for visual editing (preview only)
   dataSanity?: string;
+  // The page's main heading is `h1` only when this banner opens the page
+  // (see `PageSections.astro`), otherwise `h2`
+  headingTag?: "h1" | "h2";
 };
 
-const { content, dataSanity } = Astro.props;
+const { content, dataSanity, headingTag: Heading = "h1" } = Astro.props;
 
 // Extracting required values from 'content' object
 const { title, titleLines, image, description, button } = content;
@@ -40,7 +43,7 @@ const titleHtml = markdownifyLines(titleLines?.length ? titleLines : title);
     <div class="mx-auto max-w-7xl space-y-7 text-center md:space-y-10">
       {
         titleHtml && (
-          <h1
+          <Heading
             data-aos="reveal-anim-top"
             data-aos-duration="1500"
             class:list={[

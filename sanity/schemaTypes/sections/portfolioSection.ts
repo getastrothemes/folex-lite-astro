@@ -1,7 +1,7 @@
 import { ProjectsIcon } from "@sanity/icons/Projects";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { hiddenSectionField, sectionGroups } from "../../lib/fields";
-import { sectionTitle } from "../../lib/preview";
+import { arrayLength, countLabel, sectionTitle } from "../../lib/preview";
 
 /** Grid of portfolio project cards. */
 export const portfolioSection = defineType({
@@ -10,7 +10,7 @@ export const portfolioSection = defineType({
   type: "object",
   icon: ProjectsIcon,
   description:
-    "Cards linking to your portfolio projects, in a grid or masonry layout.",
+    "Cards linking to your portfolio projects, in two columns on large screens.",
   groups: sectionGroups,
   fields: [
     hiddenSectionField(),
@@ -27,7 +27,7 @@ export const portfolioSection = defineType({
       type: "array",
       group: "content",
       description:
-        'Leave empty to show the latest projects of this language (sorted by "Order", then newest date). Or pick projects and drag them into order.',
+        'Leave empty to show the projects of this page\'s language automatically (sorted by "Order", then newest date). Or pick projects and drag them into order. Projects are edited under "Portfolio projects" in the sidebar.',
       of: [
         defineArrayMember({
           type: "reference",
@@ -53,7 +53,10 @@ export const portfolioSection = defineType({
       title: "Button",
       type: "link",
       group: "content",
-      description: "Optional button under the projects.",
+      description: "Not shown on the website by this theme.",
+      // Kept for compatibility with existing content, but the Portfolio section
+      // of this theme never renders a button, so editors don't see it.
+      hidden: true,
       initialValue: { enabled: false, label: "View all works", url: "/" },
     }),
     defineField({
@@ -61,6 +64,8 @@ export const portfolioSection = defineType({
       title: "Layout",
       type: "string",
       group: "settings",
+      description:
+        "Grid: evenly spaced cards with the categories under the project name. Masonry: tighter cards with the categories above the name.",
       options: {
         list: [
           { title: "Grid", value: "grid" },
@@ -76,7 +81,8 @@ export const portfolioSection = defineType({
       title: "Appearance",
       type: "string",
       group: "settings",
-      description: "Light or dark background.",
+      description:
+        "Light: no background (white page). Dark: the section gets a dark background with white text.",
       options: {
         list: [
           { title: "Light", value: "light" },
@@ -92,7 +98,8 @@ export const portfolioSection = defineType({
       title: "Maximum number of projects",
       type: "number",
       group: "settings",
-      description: "How many projects to show. Leave empty to show all.",
+      description:
+        "How many projects to show, e.g. 4. Leave empty to show all of them.",
       initialValue: 4,
       validation: (rule) =>
         rule.integer().min(1).error("Use a whole number of 1 or more."),
@@ -104,11 +111,23 @@ export const portfolioSection = defineType({
       hidden: "hidden",
       layout: "layout",
       limit: "limit",
+      projects: "projects",
     },
-    prepare: ({ title, hidden, layout, limit }) => ({
-      title: sectionTitle("Portfolio", title, hidden),
-      subtitle: `${layout === "masonry" ? "Masonry" : "Grid"}${limit ? ` · up to ${limit} projects` : ""}`,
-      media: ProjectsIcon,
-    }),
+    prepare: ({ title, hidden, layout, limit, projects }) => {
+      const picked = arrayLength(projects);
+      return {
+        title: sectionTitle("Portfolio", title, hidden),
+        subtitle: [
+          layout === "masonry" ? "Masonry" : "Grid",
+          picked
+            ? countLabel(picked, "selected project")
+            : "All projects of this language",
+          limit ? `max ${limit}` : "",
+        ]
+          .filter(Boolean)
+          .join(" · "),
+        media: ProjectsIcon,
+      };
+    },
   },
 });

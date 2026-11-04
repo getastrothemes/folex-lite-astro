@@ -11,15 +11,18 @@ interface ImportMetaEnv {
   readonly PUBLIC_SANITY_API_VERSION?: string;
   /** URL of Sanity Studio (default "http://localhost:3333") */
   readonly PUBLIC_SANITY_STUDIO_URL?: string;
-  /** PRIVATE Viewer token, used only by the preview server to read drafts */
-  readonly SANITY_API_READ_TOKEN?: string;
-  /** "true" builds the preview server (drafts + visual editing) */
-  readonly SANITY_VISUAL_EDITING?: string;
+  // SANITY_API_READ_TOKEN is NOT listed here on purpose: it is a secret read
+  // from `astro:env/server` (see `env.schema` in astro.config.mjs).
+  // SANITY_VISUAL_EDITING is only read by astro.config.mjs, which passes the
+  // result to the site code as `__FOLEX_SERVER_OUTPUT__`.
   /** Studio-only settings (read by the Sanity CLI, listed for completeness) */
   readonly SANITY_STUDIO_PROJECT_ID?: string;
   readonly SANITY_STUDIO_DATASET?: string;
   readonly SANITY_STUDIO_PREVIEW_URL?: string;
 }
+
+/** True on the preview server (set by `vite.define` in astro.config.mjs) */
+declare const __FOLEX_SERVER_OUTPUT__: boolean;
 
 interface ImportMeta {
   readonly env: ImportMetaEnv;

@@ -14,8 +14,8 @@ import { validatePreviewUrl } from "@sanity/preview-url-secret";
 import {
   DRAFT_MODE_COOKIE,
   apiVersion,
+  createDraftModeCookieValue,
   dataset,
-  getDraftModeSecret,
   projectId,
   readToken,
 } from "@/lib/sanity/env";
@@ -64,11 +64,11 @@ export const GET: APIRoute = async ({ request, url, cookies }) => {
     return textResponse(401, "Invalid or expired preview link.");
   }
 
-  // Store a hash of the token (never the token itself). The middleware
-  // compares the cookie against this same value.
+  // Store a signed, time-limited value (never the token itself). The
+  // middleware checks the signature and the age on every request.
   cookies.set(
     DRAFT_MODE_COOKIE,
-    await getDraftModeSecret(),
+    await createDraftModeCookieValue(),
     draftCookieOptions(request, url),
   );
 

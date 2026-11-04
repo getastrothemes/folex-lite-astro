@@ -9,7 +9,7 @@
 import { defineMiddleware } from "astro:middleware";
 import {
   DRAFT_MODE_COOKIE,
-  getDraftModeSecret,
+  isValidDraftModeCookie,
   visualEditingEnabled,
 } from "@/lib/sanity/env";
 
@@ -21,19 +21,23 @@ export const onRequest = defineMiddleware(async (context, next) => {
 
   const cookie = context.cookies.get(DRAFT_MODE_COOKIE)?.value;
   if (cookie) {
-    const secret = await getDraftModeSecret();
-    context.locals.preview = secret.length > 0 && cookie === secret;
+    context.locals.preview = await isValidDraftModeCookie(cookie);
   }
 
   const response = await next();
 
-  // Draft content must never be cached by a browser or CDN
-  if (context.locals.preview) {
-    try {
+  try {
+    // The preview server is for editors only, keep it out of search engines
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+    // The same URL shows drafts or published content depending on the
+    // draft-mode cookie, so caches must keep the two apart
+    response.headers.append("Vary", "Cookie");
+    // Draft content must never be cached by a browser or CDN
+    if (context.locals.preview) {
       response.headers.set("Cache-Control", "private, no-store");
-    } catch {
-      // Some responses (e.g. redirects) have read-only headers
     }
+  } catch {
+    // Some responses (e.g. redirects) have read-only headers
   }
   return response;
 });

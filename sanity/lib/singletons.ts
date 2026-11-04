@@ -40,7 +40,7 @@ export function languageTemplateId(type: string, languageCode: string): string {
   return `${type}-${languageCode}`;
 }
 
-/** Human titles used for template names ("Page (Fr)"). */
+/** Human titles used for template names ("Page (French)"). */
 const TYPE_TITLES: Record<string, string> = {
   homePage: "Home page",
   navigation: "Navigation menu",
@@ -70,7 +70,7 @@ export const languageTemplates = [
 /**
  * Template ids hidden from every "Create new document" menu: singletons
  * (they are opened directly from the desk) and the plain language-less
- * templates of regular documents (editors use "Page (En)" etc. instead).
+ * templates of regular documents (editors use "Page (English)" etc. instead).
  */
 export const hiddenTemplateIds = new Set<string>([
   ...SINGLETON_TYPES,

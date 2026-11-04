@@ -6,6 +6,7 @@
  * the normal static build never contains them.
  */
 import type { AstroCookieSetOptions } from "astro";
+import { DRAFT_MODE_MAX_AGE } from "@/lib/sanity/env";
 
 /**
  * Cookie options for the draft-mode cookie. When the site is served over
@@ -25,6 +26,9 @@ export const draftCookieOptions = (
 
   return {
     path: "/",
+    // Same lifetime as the signature check in the middleware
+    // (`cookies.delete` ignores it)
+    maxAge: DRAFT_MODE_MAX_AGE,
     httpOnly: true,
     sameSite: isHttps ? "none" : "lax",
     secure: isHttps,

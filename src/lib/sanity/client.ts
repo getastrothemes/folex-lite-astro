@@ -1,8 +1,9 @@
 /**
  * Sanity API clients.
  *
- * - `publishedClient`: public, cached CDN reads of PUBLISHED content (no token).
- *   Used by the static production build.
+ * - `publishedClient`: public reads of PUBLISHED content (no token). The static
+ *   build reads the live API (always up to date right after a publish); dev
+ *   and anonymous visitors of the preview server use the cached API CDN.
  * - `getPreviewClient()`: reads DRAFTS with the private token and encodes
  *   invisible "stega" markers into text so visual editing can link each text
  *   on the page back to its field in Studio. Only used by the preview server.
@@ -15,6 +16,7 @@ import {
   apiVersion,
   dataset,
   isSanityConfigured,
+  isStaticBuild,
   projectId,
   readToken,
   studioUrl,
@@ -27,7 +29,10 @@ export const publishedClient: SanityClient = createClient({
   projectId: clientProjectId,
   dataset,
   apiVersion,
-  useCdn: true,
+  // The API CDN can be ~1 minute behind after a publish. A build started by
+  // the publish webhook must see the change, and it only sends a few dozen
+  // requests, so it reads the live API.
+  useCdn: !isStaticBuild,
   perspective: "published",
 });
 

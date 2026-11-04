@@ -1,9 +1,6 @@
 import { LinkIcon } from "@sanity/icons/Link";
 import { defineField, defineType } from "sanity";
-import {
-  validateLinkUrl,
-  warnMissingTrailingSlash,
-} from "../../lib/validation";
+import { validateLinkUrl } from "../../lib/validation";
 
 /** A button or text link: label + URL, with an on/off switch. */
 export const link = defineType({
@@ -45,7 +42,7 @@ export const link = defineType({
       title: "Link",
       type: "string",
       description:
-        'Where the button goes. Use a page path like "/contact/" or "/fr/contact/", a full URL like "https://example.com", "mailto:hello@example.com" or "tel:+123456789".',
+        'Where the button goes: a page path like "/contact/", a full URL like "https://example.com", "mailto:hello@example.com" or "tel:+123456789". Page paths get the language added automatically, so "/contact/" opens "/fr/contact/" on French pages.',
       validation: (rule) => [
         rule.custom(validateLinkUrl),
         rule.custom((value, context) => {
@@ -54,14 +51,14 @@ export const link = defineType({
             ? "Add a link, or turn off the button."
             : true;
         }),
-        rule.custom(warnMissingTrailingSlash).warning(),
       ],
     }),
     defineField({
       name: "openInNewTab",
       title: "Open in a new tab",
       type: "boolean",
-      description: "Useful for links to other websites.",
+      description:
+        "Full URLs to other websites (https://…) always open in a new tab. Turn this on to also open a page of your own site in a new tab.",
       initialValue: false,
     }),
   ],

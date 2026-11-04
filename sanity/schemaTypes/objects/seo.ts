@@ -15,7 +15,7 @@ export const seo = defineType({
       title: "Meta title",
       type: "string",
       description:
-        'Title shown in Google results and browser tabs. Leave empty to use the page title, e.g. "About us".',
+        'Title shown in Google results and browser tabs, e.g. "About us". The tagline from Site settings is added after it. Leave empty to use the page title.',
       validation: (rule) =>
         rule
           .max(60)
@@ -29,7 +29,7 @@ export const seo = defineType({
       type: "text",
       rows: 3,
       description:
-        "One or two sentences shown under the title in search results. Leave empty to use the site description from Site settings.",
+        "One or two sentences shown under the title in search results. Leave empty to use the project summary (for projects) or the site description from Site settings.",
       validation: (rule) =>
         rule
           .max(160)
@@ -41,7 +41,7 @@ export const seo = defineType({
       name: "ogImage",
       title: "Social sharing image",
       description:
-        "Shown when this page is shared on social media. Best size: 1200 × 630 px. Leave empty to use the default image from Site settings.",
+        "Shown when this page is shared on social media, cropped to 1200 × 630 px. Leave empty to use the cover image, or else the default sharing image from Site settings.",
     }),
     defineField({
       name: "noIndex",

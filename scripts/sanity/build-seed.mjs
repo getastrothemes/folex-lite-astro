@@ -1130,7 +1130,35 @@ for (const lang of languages) {
   );
 }
 
-const cleaned = documents.map(clean);
+// Some original French texts lost their accented letters (they became spaces
+// or disappeared). Repair those strings so the demo content reads correctly.
+const TEXT_FIXES = [
+  [/^Politique de confidentialit\s*$/, "Politique de confidentialité"],
+  [/description m ta$/, "description méta"],
+  [/^Agence cr atrice$/, "Agence créative"],
+  [/^Agence de d$/, "Agence de démarrage"],
+  [/^propos$/, "À propos"],
+  [/^Mosa que$/, "Mosaïque"],
+  [/^Largeur$/, "Pleine largeur"],
+  [/^Cr atif$/, "Créatif"],
+  [/^quipe$/, "Équipe"],
+  [/^quipe simple$/, "Équipe simple"],
+  [/^l ments$/, "Éléments"],
+];
+const fixText = (value) => {
+  if (typeof value === "string") {
+    return TEXT_FIXES.reduce((text, [from, to]) => text.replace(from, to), value);
+  }
+  if (Array.isArray(value)) return value.map(fixText);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [key, fixText(item)]),
+    );
+  }
+  return value;
+};
+
+const cleaned = documents.map(clean).map(fixText);
 const errors = validateDocuments(cleaned);
 if (errors.length) {
   console.error(

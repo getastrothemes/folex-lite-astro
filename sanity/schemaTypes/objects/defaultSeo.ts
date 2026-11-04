@@ -30,20 +30,21 @@ export const defaultSeo = defineType({
       title: "Robots",
       type: "string",
       description:
-        'Tells search engines what to do with your pages. Keep "index, follow" unless you know you need something else.',
+        'Tells search engines what to do with your pages. Keep "index, follow" unless you know you need something else. Pages with "Hide from search engines" turned on always use "noindex, nofollow".',
       initialValue: "index, follow",
     }),
     imageField({
       name: "ogImage",
       title: "Default social sharing image",
       description:
-        "Shown when a page without its own image is shared on social media. Best size: 1200 × 630 px.",
+        "Shown when a page without its own sharing or cover image is shared on social media, cropped to 1200 × 630 px.",
     }),
     defineField({
       name: "twitterHandle",
       title: "X (Twitter) handle",
       type: "string",
-      description: 'Your account name including the @, e.g. "@yourcompany".',
+      description:
+        'Your X account including the @, e.g. "@yourcompany". Added to the page info X uses when a link is shared.',
       validation: (rule) =>
         rule
           .custom((value) =>

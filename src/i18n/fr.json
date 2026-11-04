@@ -5,6 +5,8 @@
     "paginationPrevious": "Précédent",
     "paginationNext": "Suivant",
     "paginationPortfolioPrev": "Portfolio précédent",
-    "paginationPortfolioNext": "Portfolio suivant"
+    "paginationPortfolioNext": "Portfolio suivant",
+    "formSuccess": "Merci ! Votre message a bien été envoyé.",
+    "formError": "Une erreur est survenue ! Veuillez réessayer plus tard ou nous contacter par e-mail."
   }
 }

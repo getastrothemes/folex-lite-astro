@@ -33,11 +33,11 @@ if (!home && !page) {
   return new Response(null, { status: 404 });
 }
 
-// The title/body block is shown when the page has a body or cover image,
-// or when it has nothing else to show
+// The title/body block (with the page's h1) is shown unless the page opens
+// with a banner section, which has its own big heading
 const hasBody = !!page?.body?.length;
 const showPageContent =
-  hasBody || !!page?.image?.asset || !page?.sections.length;
+  hasBody || !!page?.image?.asset || !startsWithBanner(page?.sections);
 
 // A page that starts with a banner gets the fixed, transparent header
 const hasBanner = !showPageContent && startsWithBanner(page?.sections);
@@ -53,9 +53,14 @@ const hasBanner = !showPageContent && startsWithBanner(page?.sections);
         seo={page.seo}
         image={page.image}
         headerPosition={hasBanner ? "fixed" : "sticky"}
-        hasHeaderDarkBackground={hasBanner}>
+        hasHeaderDarkBackground={hasBanner}
+        translations={page.translations}>
         {showPageContent && <SinglePageLayout content={page} />}
-        <PageSections document={page} sections={page.sections} />
+        <PageSections
+          document={page}
+          sections={page.sections}
+          hasPageHeading={showPageContent && !!page.title}
+        />
       </Base>
     )
   )

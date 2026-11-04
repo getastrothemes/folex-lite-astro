@@ -24,7 +24,8 @@ export const page = defineType({
       title: "Title",
       type: "string",
       group: "content",
-      description: 'Shown as the page heading, e.g. "Privacy policy".',
+      description:
+        'The page heading and browser tab title, e.g. "Privacy policy". The heading is not shown when the page starts with a Banner section and has no page text or cover image (the banner has its own heading).',
       validation: (rule) => [
         rule.required().error("Add a page title."),
         rule
@@ -54,7 +55,8 @@ export const page = defineType({
       name: "image",
       title: "Cover image",
       group: "content",
-      description: "Optional image shown at the top of the page.",
+      description:
+        "Optional wide image shown above the page heading. Also used when the page is shared on social media (unless the SEO tab has its own image).",
     }),
     defineField({
       name: "body",
@@ -62,7 +64,7 @@ export const page = defineType({
       type: "portableText",
       group: "content",
       description:
-        "Optional main text of the page, with headings, lists and links.",
+        "Optional main text under the page heading, with headings, lists, links and images.",
     }),
     defineField({
       name: "sections",
@@ -70,7 +72,7 @@ export const page = defineType({
       type: "pageSections",
       group: "content",
       description:
-        "Optional building blocks shown after the page text. Click “Add item” to add a section.",
+        "Optional building blocks shown after the page text, top to bottom. Click “Add item” to add a section and drag to reorder.",
     }),
     defineField({
       name: "seo",

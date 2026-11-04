@@ -9,11 +9,12 @@
  * removed from anything used as a url, id, class, option, number or meta tag.
  */
 import { stegaClean } from "@sanity/client/stega";
-import { enabledLanguages } from "@/lib/utils/i18nUtils";
+import { enabledLanguages, useTranslations } from "@/lib/utils/i18nUtils";
 import { sanityFetch } from "./fetch";
 import {
   footerQuery,
   homePageQuery,
+  layoutQuery,
   navigationQuery,
   pageQuery,
   pageSlugsQuery,
@@ -69,6 +70,15 @@ const toNumber = (value: unknown): number | undefined => {
 
 const asArray = <T>(value: T[] | null | undefined): T[] =>
   Array.isArray(value) ? value.filter(Boolean) : [];
+
+/** Language codes of the documents that share this slug (enabled languages only) */
+const toTranslations = (list: unknown): string[] => [
+  ...new Set(
+    asArray(Array.isArray(list) ? list : [])
+      .map(clean)
+      .filter((lang) => enabledLanguages.includes(lang)),
+  ),
+];
 
 /** Applies a section limit (empty or 0 means "show all") */
 const applyLimit = <T>(list: T[], limit: unknown): T[] => {
@@ -202,28 +212,28 @@ const toNavigationLink = (item: Raw): NavigationLink => {
   };
 };
 
+const toNavigation = (raw: Raw): NavigationData => ({
+  _id: raw._id,
+  _type: raw._type,
+  menu: asArray<Raw>(raw.menu).map(toNavigationLink),
+  headerButton: toButton(raw.headerButton),
+  sidePanel: {
+    enable: raw.sidePanel?.enabled === true,
+    description: text(raw.sidePanel?.description),
+    button: toButton(raw.sidePanel?.button),
+  },
+});
+
 export async function getNavigation(
   lang: string,
   preview = false,
 ): Promise<NavigationData> {
-  const raw =
-    (await sanityFetch<Raw | null>({
-      query: navigationQuery,
-      params: { lang },
-      preview,
-    })) || {};
-
-  return {
-    _id: raw._id,
-    _type: raw._type,
-    menu: asArray<Raw>(raw.menu).map(toNavigationLink),
-    headerButton: toButton(raw.headerButton),
-    sidePanel: {
-      enable: raw.sidePanel?.enabled === true,
-      description: text(raw.sidePanel?.description),
-      button: toButton(raw.sidePanel?.button),
-    },
-  };
+  const raw = await sanityFetch<Raw | null>({
+    query: navigationQuery,
+    params: { lang },
+    preview,
+  });
+  return toNavigation(raw || {});
 }
 
 // Footer & contact form -------------------------------------------------------------
@@ -283,6 +293,9 @@ const toFormInputs = (field: Raw): ContactFormInput[] => {
         label: option.label,
         value: option.value,
         group: name,
+        // Unique per field and option, so two radio fields with the same
+        // option labels (e.g. "Yes"/"No") never share an id
+        id: [toId(name), toId(option.value)].filter(Boolean).join("-"),
         // The group label is shown once, above the first option
         groupLabel: index === 0 ? text(field.groupLabel) : "",
       }));
@@ -300,24 +313,37 @@ const toFormInputs = (field: Raw): ContactFormInput[] => {
   }
 };
 
-const toContactForm = (form: Raw | null | undefined): ContactFormData => {
+/** Message texts used when the Studio fields are left empty */
+type FormMessageDefaults = { success: string; error: string };
+
+const getFormMessageDefaults = async (
+  lang: string,
+): Promise<FormMessageDefaults> => {
+  const t = await useTranslations(lang);
+  return { success: t("common.formSuccess"), error: t("common.formError") };
+};
+
+const toContactForm = (
+  form: Raw | null | undefined,
+  defaults: FormMessageDefaults,
+): ContactFormData => {
   const inputs = asArray<Raw>(form?.fields).flatMap(toFormInputs);
 
-  // Hidden messages, shown by the form script after submitting
-  if (form?.successMessage) {
-    inputs.push({
+  // Hidden messages, shown by the form script after submitting. Both are
+  // always added (even when the Studio fields are empty) because the form
+  // script writes its "sending…" and error texts into them.
+  inputs.push(
+    {
       note: "success",
       parentClass: "hidden text-sm message success",
-      content: text(form.successMessage),
-    });
-  }
-  if (form?.errorMessage) {
-    inputs.push({
+      content: text(form?.successMessage) || defaults.success,
+    },
+    {
       note: "deprecated",
       parentClass: "hidden text-sm message error",
-      content: text(form.errorMessage),
-    });
-  }
+      content: text(form?.errorMessage) || defaults.error,
+    },
+  );
 
   return {
     emailSubject: clean(form?.emailSubject) || undefined,
@@ -327,24 +353,41 @@ const toContactForm = (form: Raw | null | undefined): ContactFormData => {
   };
 };
 
+const toFooter = (raw: Raw, defaults: FormMessageDefaults): FooterData => ({
+  _id: raw._id,
+  _type: raw._type,
+  title: text(raw.title),
+  description: text(raw.description),
+  copyright: text(raw.copyright),
+  form: toContactForm(raw.contactForm, defaults),
+});
+
 export async function getFooter(
   lang: string,
   preview = false,
 ): Promise<FooterData> {
-  const raw =
-    (await sanityFetch<Raw | null>({
-      query: footerQuery,
-      params: { lang },
-      preview,
-    })) || {};
+  const [raw, defaults] = await Promise.all([
+    sanityFetch<Raw | null>({ query: footerQuery, params: { lang }, preview }),
+    getFormMessageDefaults(lang),
+  ]);
+  return toFooter(raw || {}, defaults);
+}
 
+/**
+ * Navigation menu and footer of one language in ONE request. Used by every
+ * page (see `Base.astro`), which keeps the preview server's API usage low.
+ */
+export async function getLayoutContent(
+  lang: string,
+  preview = false,
+): Promise<{ navigation: NavigationData; footer: FooterData }> {
+  const [raw, defaults] = await Promise.all([
+    sanityFetch<Raw | null>({ query: layoutQuery, params: { lang }, preview }),
+    getFormMessageDefaults(lang),
+  ]);
   return {
-    _id: raw._id,
-    _type: raw._type,
-    title: text(raw.title),
-    description: text(raw.description),
-    copyright: text(raw.copyright),
-    form: toContactForm(raw.contactForm),
+    navigation: toNavigation(raw?.navigation || {}),
+    footer: toFooter(raw?.footer || {}, defaults),
   };
 }
 
@@ -450,6 +493,7 @@ export async function getProject(
     prev: index > 0 ? siblings[index - 1] : null,
     next:
       index >= 0 && index < siblings.length - 1 ? siblings[index + 1] : null,
+    translations: toTranslations(raw.translations),
   };
 }
 
@@ -590,6 +634,7 @@ export async function getPage(
     body: cleanBody(raw.body),
     seo: cleanSeo(raw.seo),
     sections: toSections(raw.sections),
+    translations: toTranslations(raw.translations),
   };
 }
 

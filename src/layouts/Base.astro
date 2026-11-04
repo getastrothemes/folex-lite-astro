@@ -10,7 +10,7 @@ import BreakpointIndicator from "@/components/widgets/BreakpointIndicator.astro"
 import PreviewBar from "@/components/widgets/PreviewBar.astro";
 import FooterThree from "@/components/global/FooterThree.astro";
 import GlobalScripts from "./components/widgets/GlobalScripts.astro";
-import { getFooter, getNavigation, getSiteSettings } from "@/lib/sanity/data";
+import { getLayoutContent, getSiteSettings } from "@/lib/sanity/data";
 import { buildSiteConfig, type PageSeo } from "@/lib/utils/sanityAdapters";
 
 interface Props extends PageSeo {
@@ -22,6 +22,9 @@ interface Props extends PageSeo {
   hasBodyDarkBackground?: boolean;
   hideOffcanvas?: boolean;
   footerLayout?: "footer-1" | "footer-2" | "footer-3";
+  // Languages this page exists in (pages and projects are separate documents
+  // per language). Empty/undefined means every language (home, 404).
+  translations?: string[];
 }
 
 // destructure props
@@ -42,6 +45,7 @@ let {
   disableTagline,
   canonical,
   pageType,
+  translations,
 } = Astro.props;
 
 // Current language, e.g. "en" or "fr"
@@ -52,10 +56,10 @@ const lang =
 const preview = Astro.locals.preview === true;
 
 // Global content from Studio, fetched once per page and passed down
-const [settings, navigation, footer] = await Promise.all([
+// (navigation + footer come from one request)
+const [settings, { navigation, footer }] = await Promise.all([
   getSiteSettings(preview),
-  getNavigation(lang, preview),
-  getFooter(lang, preview),
+  getLayoutContent(lang, preview),
 ]);
 
 // Meta tags: config.toml + "Site settings" + this page's SEO fields
@@ -77,7 +81,7 @@ className = fitToScreen
 
 <!doctype html>
 <html lang={lang}>
-  <Head config={siteConfig} meta={meta} />
+  <Head config={siteConfig} meta={meta} translations={translations} />
   <body class:list={[hasBodyDarkBackground && "bg-body-dark"]}>
     <Header
       position={headerPosition}
@@ -85,6 +89,7 @@ className = fitToScreen
       hideOffcanvas={hideOffcanvas}
       settings={settings}
       navigation={navigation}
+      translations={translations}
     />
 
     <main class:list={[className]}>
@@ -117,6 +122,10 @@ className = fitToScreen
 
     {/* Draft preview only: preview bar + click-to-edit overlays */}
     {preview && <PreviewBar />}
-    <VisualEditing enabled={preview} />
+    {/* Reloads the preview after each edit, then once more so text typed during the reload shows up */}
+    <VisualEditing
+      enabled={preview}
+      experimental_refreshStrategy={{ type: "reload", followUpDelayMs: 1500 }}
+    />
   </body>
 </html>

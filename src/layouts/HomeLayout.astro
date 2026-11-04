@@ -20,6 +20,7 @@ const hasBanner = startsWithBanner(page.sections);
 ---
 
 <Base
+  title={page.title}
   seo={page.seo}
   headerPosition={hasBanner ? "fixed" : "sticky"}
   hasHeaderDarkBackground={hasBanner}>

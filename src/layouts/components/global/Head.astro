@@ -12,9 +12,11 @@ interface Props {
   config: SiteConfig;
   // Title, description, image and robots of the current page
   meta: ResolvedPageMeta;
+  // Languages this page exists in (undefined = every language)
+  translations?: string[];
 }
 
-const { config, meta } = Astro.props;
+const { config, meta, translations } = Astro.props;
 
 const fontVariables = fontsJson.map((font) => font.cssVariable) as any[];
 ---
@@ -36,6 +38,7 @@ const fontVariables = fontsJson.map((font) => font.cssVariable) as any[];
     disableTagline={meta.disableTagline}
     robots={meta.robots}
     config={config}
+    translations={translations}
   />
   <meta
     name="theme-color"
@@ -78,6 +81,7 @@ const fontVariables = fontsJson.map((font) => font.cssVariable) as any[];
       pageType: meta.pageType,
     }}
     config={config}
+    translations={translations}
   />
 
   <!------------------

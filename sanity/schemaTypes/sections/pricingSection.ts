@@ -1,7 +1,7 @@
 import { CreditCardIcon } from "@sanity/icons/CreditCard";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { hiddenSectionField } from "../../lib/fields";
-import { sectionTitle } from "../../lib/preview";
+import { arrayLength, countLabel, sectionTitle } from "../../lib/preview";
 
 /** Pricing cards with features and a button each. */
 export const pricingSection = defineType({
@@ -22,7 +22,8 @@ export const pricingSection = defineType({
       name: "plans",
       title: "Plans",
       type: "array",
-      description: "Three plans fit best in one row.",
+      description:
+        "Up to three plans sit side by side on large screens (two on tablets, one on phones).",
       of: [defineArrayMember({ type: "pricingPlan" })],
     }),
   ],
@@ -30,7 +31,7 @@ export const pricingSection = defineType({
     select: { title: "title", hidden: "hidden", plans: "plans" },
     prepare: ({ title, hidden, plans }) => ({
       title: sectionTitle("Pricing", title, hidden),
-      subtitle: `${plans?.length ?? 0} plan${plans?.length === 1 ? "" : "s"}`,
+      subtitle: countLabel(arrayLength(plans), "plan"),
       media: CreditCardIcon,
     }),
   },

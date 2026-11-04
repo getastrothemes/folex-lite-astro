@@ -8,6 +8,29 @@ export const slugifyyy = (content: string) => {
   return slug_maker(content, { lower: true });
 };
 
+// Escapes text for use in HTML (text and attribute values)
+const escapeHtml = (value: string) =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+// Links may point to pages, anchors, websites, email addresses or phone
+// numbers. Anything else (e.g. `javascript:`) is replaced with "#".
+const SAFE_URL_SCHEMES = ["http", "https", "mailto", "tel"];
+const safeHref = (href: string) => {
+  // Browsers ignore spaces and control characters inside the scheme
+  const compact = href.replace(/[\u0000-\u0020\u007f]+/g, "");
+  const scheme = compact.match(/^([a-z][a-z0-9+.-]*):/i)?.[1]?.toLowerCase();
+  return scheme && !SAFE_URL_SCHEMES.includes(scheme) ? "#" : href;
+};
+
+// Raw HTML typed into a text field is shown as text, except line breaks
+// (`<br />`, used for multi-line titles)
+const LINE_BREAK = /^<br\s*\/?>$/i;
+
 // markdownify
 export const markdownify = (content: string, container?: boolean) => {
   if (!content) return "";
@@ -15,16 +38,23 @@ export const markdownify = (content: string, container?: boolean) => {
   const renderer = new marked.Renderer();
 
   // Override the link renderer
-  renderer.link = (link) => {
-    const isExternal = link.href.startsWith("http");
-    const targetAttrs = link.href.includes("getastrothemes")
+  renderer.link = function (link) {
+    const href = safeHref(link.href);
+    const isExternal = href.startsWith("http");
+    const targetAttrs = href.includes("getastrothemes")
       ? `target="_blank" rel="noopener"`
       : isExternal
         ? `target="_blank" rel="noopener noreferrer nofollow"`
         : "";
 
-    return `<a href="${link.href}" ${targetAttrs}>${link.text}</a>`;
+    // The link text goes through this same renderer (bold, raw HTML, ...)
+    const text = this.parser.parseInline(link.tokens);
+    return `<a href="${escapeHtml(href)}" ${targetAttrs}>${text}</a>`;
   };
+
+  // Content comes from the CMS, so raw HTML is escaped instead of rendered
+  renderer.html = ({ text }) =>
+    LINE_BREAK.test(text.trim()) ? text : escapeHtml(text);
 
   // Set the custom renderer
   marked.setOptions({

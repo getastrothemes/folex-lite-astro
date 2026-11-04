@@ -49,7 +49,7 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
-    // Add templates that preset the language ("Page (Fr)", "Home page (En)"…).
+    // Add templates that preset the language ("Page (French)", "Home page (English)"…).
     templates: (previous) => [...previous, ...languageTemplates],
   },
 

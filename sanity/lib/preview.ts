@@ -14,6 +14,21 @@ export function shorten(text: unknown, max = 40): string {
   return lines.length > 1 && !cut.endsWith("…") ? `${cut}…` : cut;
 }
 
+/** "1 logo", "8 logos", "0 logos". */
+export function countLabel(
+  count: unknown,
+  singular: string,
+  plural = `${singular}s`,
+): string {
+  const n = typeof count === "number" ? count : 0;
+  return `${n} ${n === 1 ? singular : plural}`;
+}
+
+/** Number of items in an array value selected for a preview (0 when not an array). */
+export function arrayLength(value: unknown): number {
+  return Array.isArray(value) ? value.length : 0;
+}
+
 /** "Banner — We Help to Grow…", or just "Banner" when the title is empty. */
 export function sectionTitle(
   sectionName: string,

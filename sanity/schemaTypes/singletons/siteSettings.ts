@@ -24,7 +24,7 @@ export const siteSettings = defineType({
       type: "string",
       group: "content",
       description:
-        'Your website or company name, used in page titles and when sharing, e.g. "Acme Studio".',
+        'Your website or company name, e.g. "Acme Studio". Used as the browser tab title when a page has no title, in the logo\'s alternative text, and shown instead of the logo when no logo image or logo text is set.',
       validation: (rule) => rule.required().error("Add the site name."),
     }),
     defineField({
@@ -33,7 +33,7 @@ export const siteSettings = defineType({
       type: "string",
       group: "content",
       description:
-        'Short phrase added after page titles, e.g. "Creative digital agency".',
+        'Short phrase added after every page title in browser tabs and search results, e.g. "About us - Creative digital agency".',
       validation: (rule) =>
         rule
           .max(60)
@@ -46,7 +46,7 @@ export const siteSettings = defineType({
       rows: 3,
       group: "content",
       description:
-        "Default description for search engines when a page has none of its own.",
+        "Default description for search engines, used when a page has no meta description of its own.",
       validation: (rule) =>
         rule
           .max(160)
@@ -59,14 +59,16 @@ export const siteSettings = defineType({
       title: "“Page not found” (404) page",
       type: "object",
       group: "content",
-      description: "Shown when a visitor opens an address that doesn't exist.",
+      description:
+        "Shown when a visitor opens an address that doesn't exist. The same text is used for every language.",
       options: { collapsible: true, collapsed: true },
       fields: [
         defineField({
           name: "title",
           title: "Heading",
           type: "string",
-          description: 'e.g. "Page not found".',
+          description:
+            'e.g. "Page not found". Leave empty to use the theme\'s default text.',
         }),
         defineField({
           name: "description",
@@ -74,14 +76,14 @@ export const siteSettings = defineType({
           type: "text",
           rows: 2,
           description:
-            'e.g. "The page you are looking for might have been moved or deleted."',
+            'e.g. "The page you are looking for might have been moved or deleted." Leave empty for the theme\'s default text.',
         }),
         defineField({
           name: "buttonLabel",
           title: "Button label",
           type: "string",
           description:
-            'The button goes back to the home page, e.g. "Back to home".',
+            'The button goes back to the home page, e.g. "Back to home". Leave empty to use the theme\'s default text.',
         }),
       ],
     }),
@@ -92,28 +94,30 @@ export const siteSettings = defineType({
       title: "Logo (for light backgrounds)",
       group: "branding",
       description:
-        "Dark logo shown on white pages. SVG or transparent PNG works best.",
+        "Dark logo for the header on white pages. SVG or transparent PNG works best.",
     }),
     imageField({
       name: "logoLight",
       title: "Logo (for dark backgrounds)",
       group: "branding",
       description:
-        "Light logo shown on the home page header and the side panel.",
+        "Light logo for the header of pages that start with a Banner section (like the home page) and for the side panel. If empty, the dark logo is used there.",
     }),
     defineField({
       name: "logoText",
       title: "Logo text",
       type: "string",
       group: "branding",
-      description: "Shown instead of a logo image when no logo is uploaded.",
+      description:
+        "Optional text shown next to the logo image, or on its own when no logo image is uploaded. When both are empty, the site name is shown.",
     }),
     defineField({
       name: "logoWidth",
       title: "Logo width (px)",
       type: "number",
       group: "branding",
-      description: "Display width of the logo in pixels, e.g. 86.",
+      description:
+        "Width of the logo in the header, in pixels, e.g. 86. The side panel uses its own size.",
       initialValue: 86,
       validation: (rule) =>
         rule
@@ -127,7 +131,8 @@ export const siteSettings = defineType({
       title: "Logo height (px)",
       type: "number",
       group: "branding",
-      description: "Display height of the logo in pixels, e.g. 24.",
+      description:
+        "Height of the logo in the header, in pixels, e.g. 24. Keep the same proportions as your logo image.",
       initialValue: 24,
       validation: (rule) =>
         rule
@@ -143,14 +148,16 @@ export const siteSettings = defineType({
       title: "Contact information",
       type: "object",
       group: "contact",
-      description: "Shown in the footer and side panel.",
+      description:
+        "Shown at the bottom of the footer and in the side panel. Email and phone become clickable links.",
       fields: [
         defineField({
           name: "address",
           title: "Address",
           type: "text",
           rows: 3,
-          description: "Line breaks are kept on the website.",
+          description:
+            "Press Enter for a new line; line breaks are kept on the website.",
         }),
         defineField({
           name: "email",
@@ -173,7 +180,8 @@ export const siteSettings = defineType({
       title: "Social media links",
       type: "array",
       group: "contact",
-      description: "Icons linking to your social profiles. Drag to reorder.",
+      description:
+        "Icons linking to your social profiles, shown in the footer and the side panel. Drag to reorder.",
       of: [defineArrayMember({ type: "socialLink" })],
     }),
     defineField({
@@ -188,7 +196,8 @@ export const siteSettings = defineType({
           name: "provider",
           title: "Form service",
           type: "string",
-          description: "The free service that emails you the form submissions.",
+          description:
+            "The service that emails you the form submissions. Netlify Forms only works when the website is hosted on Netlify.",
           options: {
             list: [
               { title: "FormSubmit (formsubmit.co)", value: "formsubmit.co" },
@@ -239,7 +248,8 @@ export const siteSettings = defineType({
       title: "Sticky header",
       type: "boolean",
       group: "settings",
-      description: "Keep the header visible at the top while scrolling.",
+      description:
+        "On: the header stays at the top while scrolling. It hides when visitors scroll down and comes back when they scroll up. Off: the header scrolls away with the page. Pages that start with a Banner always use the On behavior.",
       initialValue: true,
     }),
     defineField({
@@ -247,7 +257,8 @@ export const siteSettings = defineType({
       title: "Show copyright",
       type: "boolean",
       group: "settings",
-      description: "Show the copyright line at the bottom of the footer.",
+      description:
+        "Show the copyright line in the footer. The text is edited per language in “Footer & contact form”.",
       initialValue: true,
     }),
   ],

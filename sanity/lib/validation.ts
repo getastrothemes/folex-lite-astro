@@ -7,6 +7,8 @@ import { apiVersion } from "../env";
 /**
  * Accepts the link formats the website understands:
  * - internal paths: "/contact/", "/fr/about/", "#pricing", "?ref=menu"
+ *   (buttons and menu links add the language prefix and trailing slash
+ *   automatically, so no trailing-slash warning is needed)
  * - full URLs: "https://example.com"
  * - email and phone links: "mailto:hello@example.com", "tel:+123456789"
  */
@@ -21,19 +23,6 @@ export function validateLinkUrl(value: unknown): true | string {
   if (/^(mailto|tel):.+/i.test(value)) return true;
   if (/^https?:\/\/[^/]+\.[^/]+/i.test(value)) return true;
   return 'Use a path like "/contact/", a full URL like "https://example.com", "mailto:hello@example.com" or "tel:+123456789".';
-}
-
-/** Soft reminder that internal page links should end with a slash ("/about/"). */
-export function warnMissingTrailingSlash(value: unknown): true | string {
-  if (
-    typeof value !== "string" ||
-    !value.startsWith("/") ||
-    value.startsWith("//")
-  )
-    return true;
-  const path = value.split(/[?#]/)[0];
-  if (path.endsWith("/") || /\.[a-z0-9]+$/i.test(path)) return true;
-  return `Internal links on this site end with a slash, e.g. "${path}/".`;
 }
 
 /** Simple email check for contact info fields. */

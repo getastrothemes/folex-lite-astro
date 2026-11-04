@@ -1,6 +1,7 @@
 import { MenuIcon } from "@sanity/icons/Menu";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import {
+  MENU_URL_HELP,
   menuBadgeField,
   menuLabelField,
   menuSubtitle,
@@ -16,15 +17,17 @@ export const menuItem = defineType({
   fields: [
     menuLabelField(),
     menuUrlField(
-      'Where the link goes, e.g. "/" or "/contact/". Leave empty when this item only opens a dropdown.',
+      `Where the link goes, e.g. "/" or "/contact/". Not used when the item has dropdown links (it then only opens the dropdown). ${MENU_URL_HELP}`,
     ),
-    menuBadgeField(),
+    menuBadgeField(
+      "Optional. Leave the text empty for no badge. Badges are not shown on items with dropdown links.",
+    ),
     defineField({
       name: "children",
       title: "Dropdown links",
       type: "array",
       description:
-        "Optional. Add links here to turn this item into a dropdown menu.",
+        "Optional. Add links here to turn this item into a dropdown menu. The item itself then only opens the dropdown.",
       of: [defineArrayMember({ type: "menuChild" })],
     }),
   ],

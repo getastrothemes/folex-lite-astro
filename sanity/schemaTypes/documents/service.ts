@@ -20,7 +20,8 @@ export const service = defineType({
       title: "Service name",
       type: "string",
       group: "content",
-      description: 'e.g. "Branding Design".',
+      description:
+        'Shown in the Services section list, e.g. "Branding Design".',
       validation: (rule) => [
         rule.required().error("Add a service name."),
         rule
@@ -35,14 +36,15 @@ export const service = defineType({
       rows: 4,
       group: "content",
       description:
-        "Shown when a visitor opens the service. You can use **bold text** and links like [Contact us](/contact/).",
+        "Shown when a visitor opens the service. You can use **bold text** and links like [Contact us](/contact/) (in other languages include the language, e.g. /fr/contact/).",
     }),
     defineField({
       name: "order",
       title: "Order",
       type: "number",
       group: "settings",
-      description: "Lower numbers are shown first (1, 2, 3…).",
+      description:
+        "Lower numbers are shown first (1, 2, 3…). Services without a number come last, A–Z.",
       validation: (rule) => rule.integer().error("Use a whole number, e.g. 1."),
     }),
     languageField({ group: "settings" }),

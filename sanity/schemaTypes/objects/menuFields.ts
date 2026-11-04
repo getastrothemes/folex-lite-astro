@@ -3,10 +3,7 @@
  * Not a schema type itself.
  */
 import { defineField } from "sanity";
-import {
-  validateLinkUrl,
-  warnMissingTrailingSlash,
-} from "../../lib/validation";
+import { validateLinkUrl } from "../../lib/validation";
 
 export function menuLabelField() {
   return defineField({
@@ -31,18 +28,21 @@ export function menuUrlField(description: string) {
     title: "Link",
     type: "string",
     description,
-    validation: (rule) => [
-      rule.custom(validateLinkUrl),
-      rule.custom(warnMissingTrailingSlash).warning(),
-    ],
+    validation: (rule) => rule.custom(validateLinkUrl),
   });
 }
 
-export function menuBadgeField() {
+/** Explains how menu links are written; appended to every menu link description. */
+export const MENU_URL_HELP =
+  'Page paths get the language added automatically ("/about/" opens "/fr/about/" in the French menu). Full URLs (https://…) open in a new tab.';
+
+export function menuBadgeField(description?: string) {
   return defineField({
     name: "badge",
     title: "Badge",
     type: "menuBadge",
+    // Only override the menuBadge type's own description when one is given
+    ...(description ? { description } : {}),
   });
 }
 
@@ -53,9 +53,9 @@ export function menuSubtitle(
   badge?: string,
 ): string {
   const parts = [] as string[];
-  if (children?.length)
+  if (Array.isArray(children) && children.length)
     parts.push(
-      `${children.length} sub-item${children.length === 1 ? "" : "s"}`,
+      `Dropdown · ${children.length} link${children.length === 1 ? "" : "s"}`,
     );
   else parts.push(url || "No link");
   if (badge) parts.push(`Badge: ${badge}`);

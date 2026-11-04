@@ -2,18 +2,20 @@
 
 Follow `AGENTS.md` for the full project instructions.
 
-This is an Astro and Tailwind CSS theme. When editing code:
+This is the Sanity CMS edition of an Astro and Tailwind CSS theme. When editing code:
 
-- Reuse existing components, widgets, cards, schemas, styles, and content patterns.
-- Keep editable copy, links, images, buttons, and section options in `src/content/`.
-- Add or update schemas in `src/sections.schema.ts` when adding content fields.
-- For new sections, create both a section component and a matching content file.
-- Use page frontmatter named blocks for page-specific section overrides.
-- Use `CustomButton.astro`, `Icons.astro`, and `OptimizedImage.astro` instead of rebuilding shared primitives.
+- Reuse existing components, widgets, cards, schemas, queries, styles, and patterns.
+- Content lives in Sanity and is edited in Sanity Studio. There is no `src/content/` folder; never hardcode editable copy, links, images, buttons, or options in components.
+- Studio schemas live in `sanity/schemaTypes/` (registered in `index.ts`); the website data layer lives in `src/lib/sanity/` (GROQ in `queries.ts`, typed getters in `data.ts`, types in `types.ts`).
+- A new page section needs: a schema in `sanity/schemaTypes/sections/`, registration in `index.ts` and `objects/pageSections.ts`, a projection in `sectionsFields` (`queries.ts`), a type in `types.ts`, a component in `src/layouts/components/sections/` (props `content`, `dataSanity`), a mapping in `PageSections.astro`, and demo data in `scripts/sanity/build-seed.mjs` (regenerate `sanity/seed/demo-content.json`).
+- Without `PUBLIC_SANITY_PROJECT_ID`, the site runs the same GROQ queries against the demo seed, so keep the seed valid for every query.
+- `stegaClean` every non-text value (enums, URLs, slugs, languages, form field names, SEO/meta) in `data.ts`; never derive ids or classes from possibly stega-encoded strings.
+- Never use `SANITY_API_READ_TOKEN` in client code or commit `.env`.
+- Use `CustomButton.astro`, `Icons.astro`, `SanityImage.astro` (Sanity images), and `OptimizedImage.astro` (local images) instead of rebuilding shared primitives.
 - Use nearest Tailwind theme values from `src/styles/theme.css`.
 - Avoid Tailwind arbitrary values.
 - Do not add heading classes already covered by `base.css`, including default font weight, tracking, leading, or wrapping classes.
 - Prefer static rendering and add client JavaScript only when interaction requires it.
-- Keep copy generic for a shippable theme and avoid hardcoded brand names in reusable content.
+- Keep copy generic for a shippable theme and avoid hardcoded brand names in reusable content, schema descriptions, and seed data.
 
-Before finishing code or schema changes, run `npm run astro-check`. Run `npm run build` for broad routing, content, or asset changes.
+Before finishing code or schema changes, run `npm run astro-check`. After Studio schema changes, run `SANITY_STUDIO_PROJECT_ID=<any-id> npx sanity schema validate`. Run `npm run build` for broad routing, data layer, seed, or asset changes.

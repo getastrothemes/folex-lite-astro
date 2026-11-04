@@ -19,7 +19,7 @@ const bodyHtml = body?.length ? await portableTextToHtml(body) : "";
 <section data-sanity={dataSanity}>
   <div class="container">
     <div class="max-w-full space-y-10 lg:p-5">
-      {title && <h2 class="text-h2-sm md:text-h2" set:html={title} />}
+      {title && <h2 class="text-h2-sm md:text-h2">{title}</h2>}
       {
         bodyHtml && (
           <div

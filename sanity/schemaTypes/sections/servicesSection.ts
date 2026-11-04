@@ -1,7 +1,7 @@
 import { WrenchIcon } from "@sanity/icons/Wrench";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { hiddenSectionField, sectionGroups } from "../../lib/fields";
-import { sectionTitle } from "../../lib/preview";
+import { arrayLength, countLabel, sectionTitle } from "../../lib/preview";
 
 /** Accordion list of services. */
 export const servicesSection = defineType({
@@ -10,7 +10,7 @@ export const servicesSection = defineType({
   type: "object",
   icon: WrenchIcon,
   description:
-    "Your services in an expandable list. Shows all services automatically, or the ones you pick.",
+    "Your services in an expandable list (click a service to read its description). Shows all services automatically, or the ones you pick.",
   groups: sectionGroups,
   fields: [
     hiddenSectionField(),
@@ -27,7 +27,7 @@ export const servicesSection = defineType({
       type: "array",
       group: "content",
       description:
-        'Leave empty to show all services of this language (sorted by their "Order" number). Or pick specific services and drag them into order.',
+        'Leave empty to show all services of this page\'s language, sorted by their "Order" number. Or pick specific services and drag them into order. Services are edited under "Services" in the sidebar.',
       of: [
         defineArrayMember({
           type: "reference",
@@ -54,11 +54,11 @@ export const servicesSection = defineType({
       type: "string",
       group: "settings",
       description:
-        "Heading above the list (vertical) or beside it (horizontal).",
+        "Where the heading goes. On phones it is always above the list.",
       options: {
         list: [
-          { title: "Vertical", value: "vertical" },
-          { title: "Horizontal", value: "horizontal" },
+          { title: "Heading above, centered", value: "vertical" },
+          { title: "Heading on the left", value: "horizontal" },
         ],
         layout: "radio",
         direction: "horizontal",
@@ -70,7 +70,8 @@ export const servicesSection = defineType({
       title: "Maximum number of services",
       type: "number",
       group: "settings",
-      description: "Optional. Leave empty to show every service.",
+      description:
+        "Optional. Shows only the first services of the list. Leave empty to show every service.",
       validation: (rule) =>
         rule.integer().min(1).error("Use a whole number of 1 or more."),
     }),
@@ -79,9 +80,9 @@ export const servicesSection = defineType({
     select: { title: "title", hidden: "hidden", services: "services" },
     prepare: ({ title, hidden, services }) => ({
       title: sectionTitle("Services", title, hidden),
-      subtitle: services?.length
-        ? `${services.length} selected services`
-        : "All services",
+      subtitle: arrayLength(services)
+        ? `${countLabel(arrayLength(services), "selected service")}`
+        : "All services of this language",
       media: WrenchIcon,
     }),
   },

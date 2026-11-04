@@ -68,9 +68,9 @@ const toAccordionId = (id: string, index: number) =>
                 title="show or hide accordion content"
                 aria-controls={"accordion-content-" + id}
                 aria-expanded={index === 0 ? "true" : "false"}
-                class="hs-accordion-toggle text-dark font-secondary text-h5 w-full pe-20 text-start font-medium lg:pe-0"
-                set:html={item.title}
-              />
+                class="hs-accordion-toggle text-dark font-secondary text-h5 w-full pe-20 text-start font-medium lg:pe-0">
+                {item.title}
+              </button>
               <div
                 role="region"
                 id={"accordion-content-" + id}

@@ -195,6 +195,8 @@ export type Project = ProjectCard & {
   seo: Seo;
   prev: ProjectLink | null;
   next: ProjectLink | null;
+  /** Language codes that have a project with this slug */
+  translations: string[];
 };
 
 // Page sections --------------------------------------------------------------------------
@@ -291,6 +293,8 @@ export type PageData = {
   body: PortableTextValue;
   seo: Seo;
   sections: SectionData[];
+  /** Language codes that have a page with this slug */
+  translations: string[];
 };
 
 export type LocalizedSlug = { lang: string; slug: string };

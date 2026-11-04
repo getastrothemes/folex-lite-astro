@@ -47,13 +47,14 @@ export const pricingPlan = defineType({
       title: "Features",
       type: "array",
       description:
-        'What the plan includes, one per line, e.g. "Free custom domain".',
+        'What the plan includes. Add one item per feature, e.g. "Free custom domain".',
       of: [defineArrayMember({ type: "string" })],
     }),
     defineField({
       name: "button",
       title: "Button",
       type: "link",
+      description: "Button at the bottom of the card.",
       initialValue: {
         enabled: true,
         label: "Choose this plan",

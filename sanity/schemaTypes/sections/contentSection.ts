@@ -23,6 +23,8 @@ export const contentSection = defineType({
       name: "body",
       title: "Text",
       type: "portableText",
+      description:
+        "Headings, lists, links, quotes and images, styled like the privacy policy page.",
     }),
   ],
   preview: {

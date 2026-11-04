@@ -40,7 +40,7 @@ export const portableText = defineType({
                 title: "Link",
                 type: "string",
                 description:
-                  'A page path like "/contact/", a full URL like "https://example.com", "mailto:" or "tel:" link.',
+                  'A page path like "/contact/" (include the language for other languages, e.g. "/fr/contact/"), a full URL like "https://example.com", or a "mailto:" or "tel:" link.',
                 validation: (rule) => [
                   rule.required().error("Add where the link goes."),
                   rule.custom(validateLinkUrl),
@@ -50,6 +50,8 @@ export const portableText = defineType({
                 name: "openInNewTab",
                 title: "Open in a new tab",
                 type: "boolean",
+                description:
+                  "Full URLs to other websites (https://…) always open in a new tab. Turn this on to also open a page of your own site in a new tab.",
                 initialValue: false,
               }),
             ],

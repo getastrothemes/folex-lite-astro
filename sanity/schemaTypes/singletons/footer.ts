@@ -21,7 +21,7 @@ export const footer = defineType({
       type: "string",
       group: "content",
       description:
-        'Large call-to-action heading in the footer, e.g. "Let\'s work together".',
+        'Large call-to-action heading at the top of the footer, e.g. "Let\'s work together". Use **double asterisks** for bold text.',
     }),
     defineField({
       name: "description",
@@ -29,7 +29,8 @@ export const footer = defineType({
       type: "text",
       rows: 3,
       group: "content",
-      description: "A short sentence under the heading.",
+      description:
+        "A short sentence under the heading. You can use **bold text** and links like [Contact us](/contact/) (in other languages include the language, e.g. /fr/contact/).",
     }),
     defineField({
       name: "copyright",
@@ -37,7 +38,7 @@ export const footer = defineType({
       type: "string",
       group: "content",
       description:
-        'Use {{ year }} for the current year and [Name](https://example.com) for a link, e.g. "© {{ year }} [Your Company](https://example.com). All rights reserved."',
+        'Use {{ year }} for the current year and [Name](https://example.com) for a link. A " / " splits the line into separate parts, e.g. "© {{ year }} Your Company / Made with [Astro](https://astro.build)". Any other slash outside a full https:// link splits it too, so use full URLs in links. Turn the line off in Site settings → Settings.',
     }),
     defineField({
       name: "contactForm",
@@ -59,7 +60,7 @@ export const footer = defineType({
           title: "Form fields",
           type: "array",
           description:
-            "The inputs visitors fill in, top to bottom. Drag to reorder.",
+            "The inputs visitors fill in, top to bottom. Drag to reorder. Fields set to half width sit side by side.",
           of: [defineArrayMember({ type: "formField" })],
           validation: (rule) =>
             rule.custom((fields: Array<{ name?: string }> | undefined) => {
@@ -80,13 +81,13 @@ export const footer = defineType({
           type: "text",
           rows: 2,
           description:
-            "Optional small text under the fields. You can use **bold** and links like [privacy policy](/privacy-policy/).",
+            "Optional small text under the send button. You can use **bold** and links like [privacy policy](/privacy-policy/) (in other languages include the language, e.g. /fr/privacy-policy/).",
         }),
         defineField({
           name: "submitLabel",
           title: "Send button label",
           type: "string",
-          description: 'e.g. "Send message".',
+          description: 'Text on the send button, e.g. "Send message".',
         }),
         defineField({
           name: "successMessage",

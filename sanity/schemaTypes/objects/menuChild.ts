@@ -1,6 +1,7 @@
 import { LinkIcon } from "@sanity/icons/Link";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import {
+  MENU_URL_HELP,
   menuBadgeField,
   menuLabelField,
   menuSubtitle,
@@ -16,14 +17,17 @@ export const menuChild = defineType({
   fields: [
     menuLabelField(),
     menuUrlField(
-      'Where the link goes, e.g. "/services/". Leave empty when this item only opens its own submenu below.',
+      `Where the link goes, e.g. "/services/". Not used when this link has its own submenu (it then only opens the submenu). ${MENU_URL_HELP}`,
     ),
-    menuBadgeField(),
+    menuBadgeField(
+      "Optional. Leave the text empty for no badge. Badges are not shown on links with a submenu.",
+    ),
     defineField({
       name: "children",
       title: "Submenu",
       type: "array",
-      description: "Optional links shown in a nested dropdown under this item.",
+      description:
+        "Optional. Links shown in a nested dropdown that opens beside this link.",
       of: [defineArrayMember({ type: "menuGrandchild" })],
     }),
   ],

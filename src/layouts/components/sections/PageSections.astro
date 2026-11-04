@@ -18,9 +18,12 @@ type Props = {
   // The document that owns the sections (used for visual editing)
   document: { _id: string; _type: string };
   sections?: (SectionData & { hidden?: boolean })[];
+  // True when the page already shows its own `h1` (title block above the
+  // sections). A banner then uses `h2`, so the page has one `h1` only.
+  hasPageHeading?: boolean;
 };
 
-const { document, sections = [] } = Astro.props;
+const { document, sections = [], hasPageHeading = false } = Astro.props;
 
 // Section type in Studio → component that renders it
 const components: Record<SectionData["_type"], any> = {
@@ -50,10 +53,20 @@ const visibleSections = sections.filter(
 ---
 
 {
-  visibleSections.map((section) => {
-    const Component = components[stegaClean(section._type)];
+  visibleSections.map((section, index) => {
+    const type = stegaClean(section._type);
+    const Component = components[type];
+    // Only a banner that opens a page without its own title gets the `h1`
+    const headingProps =
+      type === "bannerSection"
+        ? { headingTag: index === 0 && !hasPageHeading ? "h1" : "h2" }
+        : {};
     return Component ? (
-      <Component content={section} dataSanity={getDataSanity(section._key)} />
+      <Component
+        content={section}
+        dataSanity={getDataSanity(section._key)}
+        {...headingProps}
+      />
     ) : null;
   })
 }

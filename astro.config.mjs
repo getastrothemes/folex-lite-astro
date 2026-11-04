@@ -4,7 +4,7 @@ import node from "@astrojs/node";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig } from "astro/config";
+import { defineConfig, envField } from "astro/config";
 import { fileURLToPath } from "node:url";
 import { loadEnv } from "vite";
 import rehypeExternalLinks from "rehype-external-links";
@@ -31,7 +31,16 @@ const env = {
 // `SANITY_VISUAL_EDITING=true` turns the site into a small Node server that
 // can show unpublished (draft) content inside Sanity Studio. Otherwise the
 // site is built as plain static files, exactly like the original theme.
-const visualEditing = env.SANITY_VISUAL_EDITING === "true";
+// `npm run build` always makes the static site, even when `.env` turns preview
+// on for local development. Preview servers are built with `npm run build:preview`.
+// `astro preview` serves that static build too (`npm run preview`).
+// This is the ONLY place that decides between static and server output; the
+// site code reads the result through `__FOLEX_SERVER_OUTPUT__` (see below).
+const isBuildOrPreview =
+  process.argv.includes("build") || process.argv.includes("preview");
+const visualEditing =
+  env.SANITY_VISUAL_EDITING === "true" &&
+  (!isBuildOrPreview || env.SANITY_PREVIEW_BUILD === "true");
 console.log(
   visualEditing
     ? "[sanity] Preview mode: server output with draft mode and visual editing"
@@ -134,8 +143,24 @@ export default defineConfig({
       wrap: false,
     },
   },
+  env: {
+    schema: {
+      // PRIVATE Viewer token for the preview server. Declared as a secret so
+      // Astro reads it from the server's environment at runtime and never
+      // writes its value into the built files.
+      SANITY_API_READ_TOKEN: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
+      }),
+    },
+  },
   vite: {
     plugins: [tailwindcss()],
+    // Tells the site code whether this is the preview server (see above)
+    define: {
+      __FOLEX_SERVER_OUTPUT__: JSON.stringify(visualEditing),
+    },
     // Static builds swap <VisualEditing /> for an empty component, so the
     // live site loads none of its CSS/JS (see src/sanity-routes/)
     resolve: visualEditing

@@ -34,7 +34,7 @@ const bodyHtml = body?.length ? await portableTextToHtml(body) : "";
       }
 
       <div class="space-y-2">
-        {title && <h1 class="text-h2-sm md:text-h2" set:html={title} />}
+        {title && <h1 class="text-h2-sm md:text-h2">{title}</h1>}
       </div>
       <div
         class="prose-styles content has-video-modal prose-headings:mb-6 prose-headings:mt-10"

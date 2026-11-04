@@ -11,7 +11,8 @@ if (
 }
 ---
 
-<Fragment set:html={label} />
-{addAriaLabel && <span class="sr-only" set:html={title} />}
+{/* Plain text from the CMS (escaped, never rendered as HTML) */}
+{label}
+{addAriaLabel && <span class="sr-only">{title}</span>}
 
 {isCreativeHoverEffect && <span class="hover-bg" />}

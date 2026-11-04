@@ -5,7 +5,7 @@ import {
   imageArrayMember,
   sectionGroups,
 } from "../../lib/fields";
-import { sectionTitle } from "../../lib/preview";
+import { arrayLength, countLabel, sectionTitle } from "../../lib/preview";
 
 /** A grid of client or partner logos. */
 export const clientsSection = defineType({
@@ -23,7 +23,7 @@ export const clientsSection = defineType({
       type: "string",
       group: "content",
       description:
-        'Optional, e.g. "Trusted by great teams". Leave empty for logos only.',
+        'Optional, e.g. "Trusted by great teams". Leave empty to show only the logos.',
     }),
     defineField({
       name: "logos",
@@ -31,20 +31,21 @@ export const clientsSection = defineType({
       type: "array",
       group: "content",
       description:
-        "Upload logos (SVG or transparent PNG work best). Add the company name as alternative text.",
+        "Logos are shown 32 px tall in a grid of boxes. SVG or transparent PNG works best. Add the company name as alternative text.",
       of: [imageArrayMember("Logo")],
       options: { layout: "grid" },
     }),
     defineField({
       name: "appearance",
-      title: "Appearance",
+      title: "Text color",
       type: "string",
       group: "settings",
-      description: "Light or dark background.",
+      description:
+        'This section has no background of its own. Keep "Dark text" on normal (white) pages. "White text" makes the heading and grid lines white, which is only readable on a dark page background.',
       options: {
         list: [
-          { title: "Light", value: "light" },
-          { title: "Dark", value: "dark" },
+          { title: "Dark text (for white pages)", value: "light" },
+          { title: "White text (for dark pages)", value: "dark" },
         ],
         layout: "radio",
         direction: "horizontal",
@@ -56,7 +57,8 @@ export const clientsSection = defineType({
       title: "Logos per row",
       type: "number",
       group: "settings",
-      description: "How many logos fit in one row on large screens.",
+      description:
+        "Logos per row on large screens. Phones always show 2 per row; with 6, tablets show 3 per row and the grid uses the full page width.",
       options: {
         list: [
           { title: "4 logos", value: 4 },
@@ -69,16 +71,19 @@ export const clientsSection = defineType({
     }),
   ],
   preview: {
-    select: {
-      title: "title",
-      hidden: "hidden",
-      logos: "logos",
-      media: "logos.0",
+    // Select only `logos` (no `logos.0`): selecting both a path and one of its
+    // children makes Sanity pass the array as a plain object, so it can't be
+    // counted. The first logo is taken from the array instead.
+    select: { title: "title", hidden: "hidden", logos: "logos" },
+    prepare: ({ title, hidden, logos }) => {
+      const firstLogo = Array.isArray(logos)
+        ? logos.find((logo) => logo?.asset)
+        : undefined;
+      return {
+        title: sectionTitle("Clients", title, hidden),
+        subtitle: countLabel(arrayLength(logos), "logo"),
+        media: firstLogo ?? UsersIcon,
+      };
     },
-    prepare: ({ title, hidden, logos, media }) => ({
-      title: sectionTitle("Clients", title, hidden),
-      subtitle: `${logos?.length ?? 0} logo${logos?.length === 1 ? "" : "s"}`,
-      media: media ?? UsersIcon,
-    }),
   },
 });

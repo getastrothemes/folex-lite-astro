@@ -18,6 +18,8 @@ interface Props {
   settings: SiteSettings;
   // Menu, header button and side panel from Studio ("Navigation menu")
   navigation: NavigationData;
+  // Languages this page exists in (undefined = every language)
+  translations?: string[];
 }
 
 const isCategoryFilteredPage = ["/category/", "/tag/"].some((path) =>
@@ -31,6 +33,7 @@ const {
   class: ClassName,
   settings,
   navigation,
+  translations,
 } = Astro.props;
 
 const { stickyHeader, logoLight } = settings;
@@ -67,6 +70,7 @@ const sidePanel = navigation.sidePanel;
           <div class="ms-auto me-4 flex lg:hidden">
             <LanguageSwitcher
               appearance={hasDarkBackground ? "light" : "dark"}
+              translations={translations}
             />
           </div>
         )
@@ -79,6 +83,7 @@ const sidePanel = navigation.sidePanel;
             {config.settings.multilingual.enable && !isCategoryFilteredPage && (
               <LanguageSwitcher
                 appearance={hasDarkBackground ? "light" : "dark"}
+                translations={translations}
               />
             )}
             {navigationButton?.enable && (

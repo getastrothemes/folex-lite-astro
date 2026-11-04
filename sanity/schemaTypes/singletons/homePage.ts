@@ -16,7 +16,8 @@ export const homePage = defineType({
       title: "Title",
       type: "string",
       group: "content",
-      description: 'Used as the browser tab title, e.g. "Home".',
+      description:
+        'Used as the browser tab title, e.g. "Home" (the SEO tab\'s meta title wins when set). Not shown on the page itself.',
       validation: (rule) => rule.required().error("Add a title."),
     }),
     defineField({
@@ -25,7 +26,7 @@ export const homePage = defineType({
       type: "pageSections",
       group: "content",
       description:
-        "The building blocks of the home page, top to bottom. Drag to reorder.",
+        "The building blocks of the home page, top to bottom. Drag to reorder. Start with a Banner so the header sits on top of it.",
     }),
     defineField({
       name: "seo",

@@ -9,9 +9,11 @@ interface Props {
   content: Record<string, any>;
   // config.toml merged with the "Site settings" from Studio
   config: SiteConfig;
+  // Languages this page exists in (undefined = every language)
+  translations?: string[];
 }
 
-const { content, config } = Astro.props;
+const { content, config, translations } = Astro.props;
 
 let {
   title = config.site.title,
@@ -28,8 +30,12 @@ let {
   pageType,
 } = content;
 
+// Only languages where this page really exists
 const alternateLangs = config.settings.multilingual.enable
-  ? supportedLanguages
+  ? supportedLanguages.filter(
+      (lang) =>
+        !translations?.length || translations.includes(lang.languageCode),
+    )
   : [];
 
 title =
@@ -58,6 +64,14 @@ const jsonLdData = JsonLdGenerator(
   },
   Astro,
 );
+
+// Content from Studio could contain "</script>", so "<" is escaped as \u003c
+// (still valid JSON) to keep the script tag from being closed early
+const jsonLdHtml = JSON.stringify(
+  jsonLdData,
+  null,
+  import.meta.env.DEV ? 2 : 0,
+).replace(/</g, "\\u003c");
 ---
 
 <!-- JSON-LD -->{
@@ -65,7 +79,7 @@ const jsonLdData = JsonLdGenerator(
     <script
       type="application/ld+json"
       is:inline
-      set:html={JSON.stringify(jsonLdData, null, import.meta.env.DEV ? 2 : 0)}
+      set:html={jsonLdHtml}
     />
   ) : null
 }

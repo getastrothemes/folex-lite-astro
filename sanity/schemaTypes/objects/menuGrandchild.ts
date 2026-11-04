@@ -1,6 +1,7 @@
 import { LinkIcon } from "@sanity/icons/Link";
 import { defineType } from "sanity";
 import {
+  MENU_URL_HELP,
   menuBadgeField,
   menuLabelField,
   menuSubtitle,
@@ -16,7 +17,7 @@ export const menuGrandchild = defineType({
   fields: [
     menuLabelField(),
     menuUrlField(
-      'Where the link goes, e.g. "/about/" or "https://example.com".',
+      `Where the link goes, e.g. "/about/" or "https://example.com". ${MENU_URL_HELP}`,
     ),
     menuBadgeField(),
   ],

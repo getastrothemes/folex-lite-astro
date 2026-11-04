@@ -92,7 +92,7 @@ Options:
                          (only needed when your account has several)
   --dataset <name>       Dataset name (default: "${DEFAULT_DATASET}")
   --cors-origin <url>    Also allow this origin, e.g. your preview server URL
-                         (can be repeated)
+                         (added without credentials; can be repeated)
   --yes, -y              Do not ask questions, use the defaults
   --skip-import          Do not import the demo content
   --skip-token           Do not create the preview (Viewer) token
@@ -644,17 +644,30 @@ async function writeEnvFile(options, updates, previewMode) {
 async function addCorsOrigins(options, projectId) {
   step("Allowing your local website and Studio (CORS)");
 
+  // Only the Studio signs in to Sanity from the browser, so only its origin
+  // may send the editor's login (credentials). The website never calls
+  // Sanity from the browser, so its origins are added without credentials:
+  // another app on the same port can then never act as the logged-in user.
   const origins = [
-    ...new Set([SITE_ORIGIN, STUDIO_ORIGIN, ...options.corsOrigins]),
+    { origin: STUDIO_ORIGIN, credentials: true },
+    ...[...new Set([SITE_ORIGIN, ...options.corsOrigins])]
+      .filter((origin) => origin !== STUDIO_ORIGIN)
+      .map((origin) => ({ origin, credentials: false })),
+  ];
+  const addArgs = ({ origin, credentials }) => [
+    "cors",
+    "add",
+    origin,
+    ...(credentials ? ["--credentials"] : ["--no-credentials"]),
+    "--project",
+    projectId,
   ];
   const listArgs = ["cors", "list", "--project", projectId];
 
   if (options.dryRun) {
     info(`Would run: ${showCommand(listArgs)}`);
-    for (const origin of origins) {
-      info(
-        `Would run (if missing): ${showCommand(["cors", "add", origin, "--credentials", "--project", projectId])}`,
-      );
+    for (const entry of origins) {
+      info(`Would run (if missing): ${showCommand(addArgs(entry))}`);
     }
     return;
   }
@@ -666,15 +679,13 @@ async function addCorsOrigins(options, projectId) {
       : [],
   );
 
-  for (const origin of origins) {
+  for (const entry of origins) {
+    const { origin } = entry;
     if (existing.has(origin)) {
       ok(`${origin} is already allowed`);
       continue;
     }
-    const result = await runSanity(
-      ["cors", "add", origin, "--credentials", "--project", projectId],
-      { capture: true },
-    );
+    const result = await runSanity(addArgs(entry), { capture: true });
     const output = result.stderr + result.stdout;
     if (result.code === 0) ok(`Allowed ${origin}`);
     else if (/already|exist|conflict|409/i.test(output))
@@ -815,19 +826,15 @@ function printNextSteps(env, options) {
     log("");
     log(
       c.yellow(
-        "Note: SANITY_VISUAL_EDITING=true in your .env runs the website as a",
+        "Note: SANITY_VISUAL_EDITING=true lets `npm run dev` show drafts and",
       ),
     );
     log(
       c.yellow(
-        "small Node server (needed for drafts and click-to-edit). To build the",
+        "click-to-edit inside the Studio. `npm run build` still makes the normal",
       ),
     );
-    log(
-      c.yellow(
-        "normal static site locally, set it to false before `npm run build`.",
-      ),
-    );
+    log(c.yellow("static site (use `npm run build:preview` for a preview server)."));
   }
   log("");
 }

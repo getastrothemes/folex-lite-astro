@@ -57,7 +57,8 @@ export const project = defineType({
       type: "text",
       rows: 3,
       group: "content",
-      description: "One or two sentences shown on project cards.",
+      description:
+        "One or two sentences shown on project cards. Also used as the search engine description of the project page (unless the SEO tab has its own).",
       validation: (rule) =>
         rule
           .max(200)
@@ -69,7 +70,7 @@ export const project = defineType({
       group: "content",
       required: true,
       description:
-        "Main image used on project cards and at the top of the project page.",
+        "Image on the project cards (Portfolio sections) and when the project is shared on social media. It is not shown on the project page itself: add images to the Gallery for that.",
     }),
     defineField({
       name: "gallery",
@@ -77,9 +78,17 @@ export const project = defineType({
       type: "array",
       group: "content",
       description:
-        "Extra images shown in a slider on the project page. Drag to reorder.",
+        "Images shown in a slider at the top of the project page. Add at least 2: the slider is hidden with only 1 image. Drag to reorder.",
       of: [imageArrayMember()],
       options: { layout: "grid" },
+      validation: (rule) =>
+        rule
+          .custom((images: unknown[] | undefined) =>
+            images?.length === 1
+              ? "The slider needs at least 2 images. With only 1 image, no gallery is shown."
+              : true,
+          )
+          .warning(),
     }),
     defineField({
       name: "categories",
@@ -87,7 +96,7 @@ export const project = defineType({
       type: "array",
       group: "content",
       description:
-        'Press Enter after each category, e.g. "Branding", "Development".',
+        'Shown on project cards. Press Enter after each category, e.g. "Branding", "Development".',
       of: [defineArrayMember({ type: "string" })],
       options: { layout: "tags" },
     }),
@@ -97,7 +106,7 @@ export const project = defineType({
       type: "array",
       group: "content",
       description:
-        'Facts listed beside the story, e.g. "Client: Eunice Mills" or "Software: Figma".',
+        'Facts listed beside the story, e.g. "Client: Eunice Mills" or "Software: Figma". Rows with an empty value are not shown.',
       of: [defineArrayMember({ type: "projectDetail" })],
     }),
     defineField({
@@ -119,7 +128,7 @@ export const project = defineType({
       type: "date",
       group: "settings",
       description:
-        "When the project was finished. Newer projects are listed first.",
+        'When the project was finished. Newer projects are listed first. To show the date on the project page, add a Project details row with Value set to "Project date".',
       options: { dateFormat: "MMMM D, YYYY" },
       initialValue: () => new Date().toISOString().slice(0, 10),
     }),
@@ -129,7 +138,7 @@ export const project = defineType({
       type: "number",
       group: "settings",
       description:
-        "Optional. Lower numbers are shown first (1, 2, 3…). Leave empty to sort by date.",
+        "Optional. Lower numbers are shown first (1, 2, 3…). Projects without a number come after numbered ones, newest first.",
       validation: (rule) => rule.integer().error("Use a whole number, e.g. 1."),
     }),
     languageField({ group: "settings" }),

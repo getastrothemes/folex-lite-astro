@@ -169,8 +169,7 @@ const menuEntryFields = /* groq */ `
   badge{ label, color }
 `;
 
-export const navigationQuery = /* groq */ `
-  *[_type == "navigation" && language == $lang][0]{
+const navigationProjection = /* groq */ `
     _id,
     _type,
     menu[]{
@@ -182,11 +181,9 @@ export const navigationQuery = /* groq */ `
     },
     headerButton{ ${linkFields} },
     sidePanel{ enabled, description, button{ ${linkFields} } }
-  }
 `;
 
-export const footerQuery = /* groq */ `
-  *[_type == "footer" && language == $lang][0]{
+const footerProjection = /* groq */ `
     _id,
     _type,
     title,
@@ -213,8 +210,25 @@ export const footerQuery = /* groq */ `
         checkboxValue
       }
     }
-  }
 `;
+
+export const navigationQuery = /* groq */ `
+  *[_type == "navigation" && language == $lang][0]{ ${navigationProjection} }
+`;
+
+export const footerQuery = /* groq */ `
+  *[_type == "footer" && language == $lang][0]{ ${footerProjection} }
+`;
+
+/**
+ * Navigation menu + footer of one language in a single request (used by
+ * every page). Site settings stay a separate query because they are always
+ * fetched without visual-editing markers.
+ */
+export const layoutQuery = /* groq */ `{
+  "navigation": *[_type == "navigation" && language == $lang][0]{ ${navigationProjection} },
+  "footer": *[_type == "footer" && language == $lang][0]{ ${footerProjection} }
+}`;
 
 // Pages -----------------------------------------------------------------------
 
@@ -239,7 +253,10 @@ export const pageQuery = /* groq */ `
     image{ ${imageFields} },
     body[]{ ${portableTextFields} },
     seo{ ${seoFields} },
-    ${sectionsFields}
+    ${sectionsFields},
+    // Languages that have a page with the same slug (for hreflang links
+    // and the language switcher)
+    "translations": *[_type == "page" && slug.current == ^.slug.current && defined(language)].language
   }
 `;
 
@@ -267,7 +284,9 @@ export const projectQuery = /* groq */ `
     "siblings": *[_type == "project" && language == $lang && defined(slug.current)] | ${projectOrder} {
       title,
       "slug": slug.current
-    }
+    },
+    // Languages that have a project with the same slug
+    "translations": *[_type == "project" && slug.current == ^.slug.current && defined(language)].language
   }
 `;
 

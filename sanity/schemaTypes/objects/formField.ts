@@ -44,7 +44,17 @@ export const formField = defineType({
       title: "Label",
       type: "string",
       description:
-        'Text shown above the field, e.g. "Your name". For a checkbox, the text next to it.',
+        'Optional text shown above the field, e.g. "Your name". For a checkbox, the text next to the box; links work there, e.g. [privacy policy](/privacy-policy/) (in other languages include the language, e.g. /fr/privacy-policy/).',
+      // Radio buttons use "Question" and the option labels instead.
+      hidden: ({ parent }) => isType(parent, "radio"),
+      validation: (rule) =>
+        rule
+          .custom((label, context) =>
+            isType(context.parent as FieldParent, "checkbox") && !label
+              ? "Add the text shown next to the checkbox."
+              : true,
+          )
+          .warning(),
     }),
     defineField({
       name: "name",
@@ -65,14 +75,25 @@ export const formField = defineType({
       name: "placeholder",
       title: "Placeholder",
       type: "string",
-      description: 'Hint text shown inside an empty field, e.g. "John Doe".',
+      description:
+        'Hint text shown inside the empty field (or in the dropdown before a choice is made), e.g. "Full name *".',
       hidden: ({ parent }) => isType(parent, "radio", "checkbox"),
+      validation: (rule) =>
+        rule
+          .custom((placeholder, context) =>
+            !placeholder &&
+            !isType(context.parent as FieldParent, "radio", "checkbox")
+              ? "Add a placeholder. Without one, the website shows “Please set placeholder” in this field."
+              : true,
+          )
+          .warning(),
     }),
     defineField({
       name: "required",
       title: "Required",
       type: "boolean",
-      description: "Visitors must fill in this field before sending.",
+      description:
+        "Visitors must fill in this field (pick an option, or tick the checkbox) before sending.",
       initialValue: false,
     }),
     defineField({
@@ -80,7 +101,7 @@ export const formField = defineType({
       title: "Half width",
       type: "boolean",
       description:
-        "Show this field at half width on larger screens, so two fields sit side by side.",
+        "Show this field at half width on tablets and larger screens, so two half-width fields in a row sit side by side.",
       initialValue: false,
     }),
     defineField({
@@ -88,7 +109,7 @@ export const formField = defineType({
       title: "Height (rows)",
       type: "number",
       description:
-        "How many lines of text the message box shows, e.g. 4. Leave empty for the default height.",
+        "How many lines of text the message box shows. Leave empty for 4 lines.",
       hidden: onlyFor("textarea"),
       validation: (rule) =>
         rule.integer().min(1).max(20).error("Use a whole number from 1 to 20."),
@@ -126,7 +147,7 @@ export const formField = defineType({
       title: "Search placeholder",
       type: "string",
       description:
-        'Hint text in the search box of the dropdown, e.g. "Search services…".',
+        'Hint text in the search box of the dropdown, e.g. "Search services…". Leave empty for "Search...".',
       hidden: onlyFor("searchSelect"),
     }),
     defineField({
@@ -134,7 +155,7 @@ export const formField = defineType({
       title: "Submitted value when checked",
       type: "string",
       description:
-        'What you receive in the email when the box is ticked, e.g. "yes".',
+        'What you receive in the email when the box is ticked, e.g. "Agreed". Leave empty for "Yes".',
       hidden: onlyFor("checkbox"),
     }),
   ],
@@ -147,7 +168,7 @@ export const formField = defineType({
       required: "required",
     },
     prepare: ({ label, groupLabel, name, fieldType, required }) => ({
-      title: `${label || groupLabel || name || "Untitled field"}${required ? " *" : ""}`,
+      title: `${(fieldType === "radio" ? groupLabel : label) || name || "Untitled field"}${required ? " *" : ""}`,
       subtitle: `${FIELD_TYPES.find((type) => type.value === fieldType)?.title ?? "Field"}${name ? ` · ${name}` : ""}`,
     }),
   },

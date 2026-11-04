@@ -139,7 +139,9 @@ const noteStyles: Record<string, string> = {
               data-name={input.name || input.label || "Please set name value"}
               data-hs-select={JSON.stringify(
                 getPrelineSelectConfig({
-                  placeholder: input.placeholder || "Please set placeholder",
+                  // Without a placeholder in Studio, the field label is used
+                  placeholder:
+                    input.placeholder || stegaClean(input.label) || "Choose",
                   searchPlaceholder: input.dropdown?.search?.placeholder,
                   hasSearch: input.dropdown?.type === "search",
                 }),
@@ -165,7 +167,7 @@ const noteStyles: Record<string, string> = {
           <textarea
             rows={input.rows || "4"}
             name={input.name || input.label || "Please set name value"}
-            placeholder={input.placeholder || "Please set placeholder"}
+            placeholder={input.placeholder || undefined}
             class="form-input"
             {...(input.required && { required: true })}
             set:html={input.defaultValue || ""}
@@ -213,7 +215,6 @@ const noteStyles: Record<string, string> = {
               type={input.type || "text"}
               name={input.name || "Please set name value"}
               id={input.id || genIdFromLabel(input.label || "example-id")}
-              placeholder={input.placeholder || "Please set placeholder"}
               class:list={[
                 input.type === "radio" ? "form-radio" : "form-checkbox",
               ]}
@@ -245,7 +246,7 @@ const noteStyles: Record<string, string> = {
             })}
             type={input.type || "text"}
             name={input.name || input.label || "Please set name value"}
-            placeholder={input.placeholder || "Please set placeholder"}
+            placeholder={input.placeholder || undefined}
             class="form-input"
             {...(input.required && { required: true })}
           />

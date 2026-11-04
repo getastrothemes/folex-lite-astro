@@ -3400,7 +3400,7 @@
                 {
                   "_type": "menuGrandchild",
                   "_key": "e807fc94db32",
-                  "label": "Agence cr atrice",
+                  "label": "Agence créative",
                   "url": "https://folex-astro.pages.dev/creative-agency/"
                 },
                 {
@@ -3412,7 +3412,7 @@
                 {
                   "_type": "menuGrandchild",
                   "_key": "1b9c5c4218bb",
-                  "label": "Agence de d",
+                  "label": "Agence de démarrage",
                   "url": "/",
                   "badge": {
                     "_type": "menuBadge",
@@ -3425,7 +3425,7 @@
             {
               "_type": "menuChild",
               "_key": "72501096a459",
-              "label": "propos",
+              "label": "À propos",
               "url": "https://folex-astro.pages.dev/about/"
             },
             {
@@ -3467,7 +3467,7 @@
                 {
                   "_type": "menuGrandchild",
                   "_key": "4d0a327bd874",
-                  "label": "Mosa que",
+                  "label": "Mosaïque",
                   "url": "https://folex-astro.pages.dev/portfolio/"
                 },
                 {
@@ -3485,7 +3485,7 @@
                 {
                   "_type": "menuGrandchild",
                   "_key": "7290b4f2d4c5",
-                  "label": "Largeur",
+                  "label": "Pleine largeur",
                   "url": "https://folex-astro.pages.dev/portfolio/full-width/"
                 },
                 {
@@ -3510,7 +3510,7 @@
                 {
                   "_type": "menuGrandchild",
                   "_key": "2590a869d173",
-                  "label": "Cr atif",
+                  "label": "Créatif",
                   "url": "https://folex-astro.pages.dev/blog/creative/"
                 },
                 {
@@ -3530,13 +3530,13 @@
             {
               "_type": "menuChild",
               "_key": "274c68b87496",
-              "label": "quipe",
+              "label": "Équipe",
               "url": "https://folex-astro.pages.dev/team/"
             },
             {
               "_type": "menuChild",
               "_key": "dbda304a4283",
-              "label": "quipe simple",
+              "label": "Équipe simple",
               "url": "https://folex-astro.pages.dev/team/daniyel-karlos/"
             },
             {
@@ -3568,7 +3568,7 @@
         {
           "_type": "menuItem",
           "_key": "153f1c717b28",
-          "label": "l ments",
+          "label": "Éléments",
           "url": "https://folex-astro.pages.dev/elements/",
           "badge": {
             "_type": "menuBadge",
@@ -3747,7 +3747,7 @@
     {
       "_id": "page-fr-privacy-policy",
       "_type": "page",
-      "title": "Politique de confidentialit",
+      "title": "Politique de confidentialité",
       "slug": {
         "_type": "slug",
         "current": "privacy-policy"
@@ -4686,7 +4686,7 @@
       ],
       "seo": {
         "_type": "seo",
-        "metaDescription": "Ceci est un exemple de description m ta"
+        "metaDescription": "Ceci est un exemple de description méta"
       }
     },
     {
@@ -5222,7 +5222,7 @@
       ],
       "seo": {
         "_type": "seo",
-        "metaDescription": "Ceci est un exemple de description m ta"
+        "metaDescription": "Ceci est un exemple de description méta"
       }
     },
     {

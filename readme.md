@@ -50,20 +50,23 @@
 
 ## 🧭 Theme Editions
 
-Folex Lite comes in two editions. Each one lives on its own Git branch:
+Folex Lite comes in three editions. Each one lives on its own Git branch:
 
 | Branch                                                                             | Edition                   | Content management                                  |
 | ---------------------------------------------------------------------------------- | ------------------------- | --------------------------------------------------- |
 | [`main`](https://github.com/getastrothemes/folex-lite-astro/tree/main)             | Original Folex Lite Astro | Existing code-first workflow (Markdown, JSON, TOML) |
 | [`sanity-cms`](https://github.com/getastrothemes/folex-lite-astro/tree/sanity-cms) | Sanity CMS edition        | Visual editing and structured content management    |
+| [`tina-cms`](https://github.com/getastrothemes/folex-lite-astro/tree/tina-cms)     | Tina CMS edition          | Visual editing of the same Git-based Markdown files |
 
 - **You are on `main`.** This branch is the original theme. You edit content in Markdown files under `src/content/` and settings in `src/config/`. It has no Sanity support.
 - **Want to edit your website in a visual editor instead of in code?** Use the `sanity-cms` branch. It has the same design and pages, managed from Sanity Studio with live preview and click-to-edit, and it works on Sanity's free plan. See the [Sanity CMS edition README](https://github.com/getastrothemes/folex-lite-astro/blob/sanity-cms/readme.md) for setup.
+- **Prefer to keep your content as files in Git?** Use the `tina-cms` branch. Tina CMS edits the same Markdown, JSON and TOML files as this branch, with a visual editor, live preview, click-to-edit and a page section builder. Local editing needs no account, and online editing works on Tina Cloud's free plan. See the [Tina CMS edition README](https://github.com/getastrothemes/folex-lite-astro/blob/tina-cms/readme.md) for setup.
 
-To get the CMS edition:
+To get a CMS edition:
 
 ```bash
 git clone --branch sanity-cms https://github.com/getastrothemes/folex-lite-astro.git folex-lite-sanity
+git clone --branch tina-cms https://github.com/getastrothemes/folex-lite-astro.git folex-lite-tina
 ```
 
 ## ⚡ Quick Start

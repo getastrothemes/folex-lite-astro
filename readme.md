@@ -6,6 +6,8 @@
 
 > ⚡ Built with Astro 7, Tailwind CSS 4, and Markdown — optimized for performance, SEO, and simplicity.
 
+> 🧩 **Prefer a visual editor?** Folex Lite is also available as a [Tina CMS edition](https://github.com/getastrothemes/folex-lite-astro/blob/tina-cms/readme.md) and a [Sanity CMS edition](https://github.com/getastrothemes/folex-lite-astro/blob/sanity-cms/readme.md). See [Theme Editions](#-theme-editions).
+
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/getastrothemes/folex-lite-astro) [![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/getastrothemes/folex-lite-astro) [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/getastrothemes/folex-lite-astro?devcontainer_path=.devcontainer/devcontainer.json)
 
 ![Folex Lite Banner](/public/images/og-image.jpg)
@@ -50,23 +52,26 @@
 
 ## 🧭 Theme Editions
 
-Folex Lite comes in three editions. Each one lives on its own Git branch:
+Folex Lite comes in three editions with the same design and pages. Each one lives on its own Git branch and has its own setup guide:
 
-| Branch                                                                             | Edition                   | Content management                                  |
-| ---------------------------------------------------------------------------------- | ------------------------- | --------------------------------------------------- |
-| [`main`](https://github.com/getastrothemes/folex-lite-astro/tree/main)             | Original Folex Lite Astro | Existing code-first workflow (Markdown, JSON, TOML) |
-| [`sanity-cms`](https://github.com/getastrothemes/folex-lite-astro/tree/sanity-cms) | Sanity CMS edition        | Visual editing and structured content management    |
-| [`tina-cms`](https://github.com/getastrothemes/folex-lite-astro/tree/tina-cms)     | Tina CMS edition          | Visual editing of the same Git-based Markdown files |
+| Edition                    | Branch                                                                             | Content management                                        | Setup guide                                                                                       |
+| -------------------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| **Original** (this README) | [`main`](https://github.com/getastrothemes/folex-lite-astro/tree/main)             | Edit Markdown, JSON and TOML files in your code editor    | [Quick Start](#-quick-start)                                                                      |
+| **Tina CMS edition**       | [`tina-cms`](https://github.com/getastrothemes/folex-lite-astro/tree/tina-cms)     | Visual editor on top of the same Git-based Markdown files | [Tina CMS README](https://github.com/getastrothemes/folex-lite-astro/blob/tina-cms/readme.md)     |
+| **Sanity CMS edition**     | [`sanity-cms`](https://github.com/getastrothemes/folex-lite-astro/tree/sanity-cms) | Sanity Studio with structured content                     | [Sanity CMS README](https://github.com/getastrothemes/folex-lite-astro/blob/sanity-cms/readme.md) |
 
-- **You are on `main`.** This branch is the original theme. You edit content in Markdown files under `src/content/` and settings in `src/config/`. It has no Sanity support.
-- **Want to edit your website in a visual editor instead of in code?** Use the `sanity-cms` branch. It has the same design and pages, managed from Sanity Studio with live preview and click-to-edit, and it works on Sanity's free plan. See the [Sanity CMS edition README](https://github.com/getastrothemes/folex-lite-astro/blob/sanity-cms/readme.md) for setup.
-- **Prefer to keep your content as files in Git?** Use the `tina-cms` branch. Tina CMS edits the same Markdown, JSON and TOML files as this branch, with a visual editor, live preview, click-to-edit and a page section builder. Local editing needs no account, and online editing works on Tina Cloud's free plan. See the [Tina CMS edition README](https://github.com/getastrothemes/folex-lite-astro/blob/tina-cms/readme.md) for setup.
+- **You are on `main`.** This branch is the original theme. You edit content in Markdown files under `src/content/` and settings in `src/config/`. It has no CMS.
+- **Want to keep your content as files in Git, but edit it visually?** Use the [Tina CMS edition](https://github.com/getastrothemes/folex-lite-astro/blob/tina-cms/readme.md). Click text on your website, type, and see the change immediately. Add, remove and reorder page sections, create pages and upload images. Editing on your computer needs no account, and online editing works on Tina Cloud's free plan.
+- **Prefer a hosted content platform?** Use the [Sanity CMS edition](https://github.com/getastrothemes/folex-lite-astro/blob/sanity-cms/readme.md). It is managed from Sanity Studio with live preview and click-to-edit, and it works on Sanity's free plan.
 
-To get a CMS edition:
+To get a CMS edition, clone its branch:
 
 ```bash
-git clone --branch sanity-cms https://github.com/getastrothemes/folex-lite-astro.git folex-lite-sanity
+# Tina CMS edition
 git clone --branch tina-cms https://github.com/getastrothemes/folex-lite-astro.git folex-lite-tina
+
+# Sanity CMS edition
+git clone --branch sanity-cms https://github.com/getastrothemes/folex-lite-astro.git folex-lite-sanity
 ```
 
 ## ⚡ Quick Start

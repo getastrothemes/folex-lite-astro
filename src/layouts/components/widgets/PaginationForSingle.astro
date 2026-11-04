@@ -11,9 +11,11 @@ interface Props {
   nextBtnText?: string;
   currentPage?: CollectionEntry<"portfolio">;
   class?: string;
+  lang?: string;
 }
 
-const t = await useTranslations(Astro.currentLocale as string);
+const lang = Astro.props.lang ?? Astro.currentLocale;
+const t = await useTranslations(lang as string);
 
 let {
   prevBtnText = t("common.paginationPrevious"),
@@ -25,10 +27,7 @@ let {
 
 let pages;
 if (collection) {
-  pages = await getCollectionCTM(
-    collection as "portfolio",
-    Astro.currentLocale,
-  );
+  pages = await getCollectionCTM(collection as "portfolio", lang);
 }
 
 if (!pages) return;
@@ -61,7 +60,7 @@ const nextPage = pages[currentIndex + 1];
         hoverEffect="creative-fill"
         url={getLocaleUrlCTM(
           extractSlug(prevPage),
-          Astro.currentLocale,
+          lang,
           collection,
         )}
         label={prevBtnText}
@@ -77,7 +76,7 @@ const nextPage = pages[currentIndex + 1];
         hoverEffect="creative-fill"
         url={getLocaleUrlCTM(
           extractSlug(nextPage),
-          Astro.currentLocale,
+          lang,
           collection,
         )}
         label={nextBtnText}

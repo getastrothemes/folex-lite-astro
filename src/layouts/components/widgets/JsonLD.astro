@@ -1,5 +1,6 @@
 ---
 import { absoluteUrl } from "@/lib/utils/absoluteUrl";
+import { socialImageUrl } from "@/lib/utils/socialImage";
 import JsonLdGenerator from "@/lib/utils/JsonLdGenerator";
 import { supportedLanguages } from "@/lib/utils/i18nUtils";
 import config from ".astro/config.generated.json";
@@ -33,7 +34,7 @@ title =
 description = metaDescription ? metaDescription : description;
 canonical = canonical ? canonical : Astro.url.href;
 lang = Astro.currentLocale;
-image = absoluteUrl(image, Astro);
+image = absoluteUrl((await socialImageUrl(image)) ?? image, Astro);
 
 // Generate JSON-LD dynamically
 const jsonLdData = JsonLdGenerator(

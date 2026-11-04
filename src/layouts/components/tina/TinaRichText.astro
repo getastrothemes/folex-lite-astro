@@ -1,0 +1,55 @@
+---
+import TinaMarkdown from "@tinacms/astro/TinaMarkdown.astro";
+import ClassHeading from "./ClassHeading.astro";
+
+// Renders Tina rich text in the live preview. Built pages render the Markdown
+// file with Astro instead (see ContentBody.astro).
+interface Props {
+  content: any;
+}
+
+type Node = { type: string; text?: string; children?: Node[]; [key: string]: any };
+
+const CLASS_NOTATION = /\[([^\]]+)\]/g;
+const HEADINGS = new Set(["h1", "h2", "h3", "h4", "h5", "h6"]);
+
+const textOf = (node: Node): string =>
+  node.type === "text" ? (node.text ?? "") : (node.children ?? []).map(textOf).join("");
+
+const stripNotation = (node: Node): Node =>
+  node.type === "text"
+    ? { ...node, text: (node.text ?? "").replace(CLASS_NOTATION, "").trimEnd() }
+    : node.children
+      ? { ...node, children: node.children.map(stripNotation) }
+      : node;
+
+// Mirrors remarkParseContent: `## Title [.class-a .class-b]` gets those classes.
+const transform = (nodes: Node[]): Node[] =>
+  nodes.map((node) => {
+    if (HEADINGS.has(node.type)) {
+      const classes = [...textOf(node).matchAll(CLASS_NOTATION)]
+        .flatMap((match) => match[1].split(/\s+/))
+        .filter((cls) => cls.startsWith("."))
+        .map((cls) => cls.slice(1));
+      if (classes.length) {
+        return {
+          type: "mdxJsxFlowElement",
+          name: "ClassHeading",
+          props: {
+            level: node.type,
+            className: classes.join(" "),
+            content: (node.children ?? []).map(stripNotation),
+          },
+        };
+      }
+    }
+    return node.children ? { ...node, children: transform(node.children) } : node;
+  });
+
+const { content } = Astro.props;
+const nodes = transform(
+  Array.isArray(content) ? content : (content?.children ?? []),
+);
+---
+
+<TinaMarkdown content={nodes as any} components={{ ClassHeading }} />

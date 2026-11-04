@@ -1,0 +1,15 @@
+---
+import { render } from "astro:content";
+import TinaRichText from "./TinaRichText.astro";
+
+// Renders an entry's Markdown body. Content from the Tina live preview arrives
+// as rich text (`tinaBody`); built pages render the Markdown file with Astro.
+interface Props {
+  entry: any;
+}
+
+const { entry } = Astro.props;
+const Content = entry.tinaBody ? null : (await render(entry)).Content;
+---
+
+{entry.tinaBody ? <TinaRichText content={entry.tinaBody} /> : Content && <Content />}

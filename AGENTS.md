@@ -85,6 +85,15 @@ button:
 - Keep content editable through `.md` or `.mdx` files.
 - Do not leave placeholders like "Lorem ipsum" unless an existing file already uses placeholder content intentionally.
 
+## Tina CMS (tina-cms branch)
+
+- Tina edits the same content files Astro renders. When adding or renaming a content field, also update the Tina schema in `tina/collections/`, with a human-readable `label` and a `description`.
+- Tina drops nested fields that are missing from its schema when a file is saved, so model every nested key.
+- Section components take their content through props (`data`, `lang`) with a fallback to `getEntryCTM`. Pass `lang` instead of reading `Astro.currentLocale` in anything rendered inside `EditableRegion`.
+- Mark editable elements with `data-tina-field={tinaAttr(object, "field")}` from `@/lib/tina/field`.
+- Never import `tina/__generated__/client` outside `src/lib/tina/tinaData.ts`: it contains the read-only token.
+- Run `npm run tina:audit` after schema changes.
+
 ## Verification
 
 - Run `npm run astro-check` after code or schema changes.

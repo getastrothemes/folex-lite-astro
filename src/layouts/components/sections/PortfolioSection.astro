@@ -7,6 +7,7 @@ import { useTranslations } from "@/lib/utils/i18nUtils";
 import { getCollectionCTM, getEntryCTM } from "@/lib/contentParser.astro";
 import config from ".astro/config.generated.json";
 import type { CollectionEntry } from "astro:content";
+import { tinaAttr } from "@/lib/tina/field";
 
 // Type for this section data
 export type PortfolioInterface = Section & {
@@ -15,12 +16,18 @@ export type PortfolioInterface = Section & {
 
 type Props = {
   content?: PortfolioInterface;
+  // Section content and projects passed in by a page or the Tina live preview
+  data?: PortfolioInterface;
+  projects?: any[];
+  lang?: string;
 };
 
+const lang = Astro.props.lang ?? Astro.currentLocale;
+
 // Fetching the default content for the this section
-let defaultContent = (
-  await getEntryCTM("sections", "portfolio-section", Astro.currentLocale)
-)?.data as PortfolioInterface;
+let defaultContent = (Astro.props.data ??
+  (await getEntryCTM("sections", "portfolio-section", lang))
+    ?.data) as PortfolioInterface;
 
 // Enables content customization (e.g., title, description) with a fallback to 'defaultContent' if not provided.
 // The 'content' prop should match the structure of 'defaultContent'.
@@ -31,17 +38,16 @@ let actualContent = overrideObjects(
   Astro.props.content,
 ) as PortfolioInterface;
 
-const t = await useTranslations(Astro.currentLocale as string);
+const t = await useTranslations(lang as string);
 
 // Extracting required values from 'content' object
 let { enable = true, title, options } = actualContent as PortfolioInterface;
 
 const { layout, appearance, limit } = options || {};
 
-let projects = await getCollectionCTM(
-  config.settings.portfolioFolder as "portfolio",
-  Astro.currentLocale,
-);
+let projects =
+  Astro.props.projects ??
+  (await getCollectionCTM(config.settings.portfolioFolder as "portfolio", lang));
 
 const isDarkAppearance = appearance === "dark";
 
@@ -63,6 +69,7 @@ if (!enable) {
       {
         title && (
           <h2
+            data-tina-field={tinaAttr(actualContent, "title")}
             class:list={[
               "text-h1-sm md:text-h1 mx-auto max-w-4xl text-center",
               isDarkAppearance && "text-light",
@@ -85,6 +92,8 @@ if (!enable) {
                 translations={t}
                 content={item}
                 index={index}
+                lang={lang}
+                data-tina-field={tinaAttr(item.data)}
               />
             ))}
           </div>

@@ -1,0 +1,15 @@
+---
+import TinaMarkdown from "@tinacms/astro/TinaMarkdown.astro";
+
+// Heading with classes from the theme's `## Title [.text-h3]` syntax, used by
+// TinaRichText in the live preview (see remarkParseContent for the build).
+interface Props {
+  level: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  className: string;
+  content: any[];
+}
+
+const { level: Tag, className, content } = Astro.props;
+---
+
+<Tag class={className}><TinaMarkdown content={content} /></Tag>

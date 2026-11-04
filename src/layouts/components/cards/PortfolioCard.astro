@@ -10,6 +10,8 @@ type Props = {
   translations?: any;
   content: CollectionEntry<"portfolio">;
   options: CollectionEntry<"portfolio">["data"]["options"];
+  lang?: string;
+  "data-tina-field"?: string;
   [key: string]: any;
 };
 
@@ -20,6 +22,8 @@ let {
   options: { layout = "grid" } = {},
   options,
   class: className,
+  lang = Astro.currentLocale,
+  "data-tina-field": tinaField,
 } = Astro.props;
 
 let {
@@ -28,8 +32,8 @@ let {
   data: { title, categories, image, description, customSlug },
 } = content;
 
-const t = await useTranslations(Astro.currentLocale as string);
-const slug = getLocaleUrlCTM(customSlug || id, Astro.currentLocale, collection);
+const t = await useTranslations(lang as string);
+const slug = getLocaleUrlCTM(customSlug || id, lang, collection);
 const hasCategories = Array.isArray(categories) && categories.length > 0;
 const isDarkAppearance = options?.appearance === "dark";
 ---
@@ -44,6 +48,7 @@ const isDarkAppearance = options?.appearance === "dark";
         layout === "grid" && "flex flex-col items-start justify-start",
         isDarkAppearance ? "text-white" : "text-text-default",
       ]}
+      data-tina-field={tinaField}
       {...rest}>
       {image && (
         <a

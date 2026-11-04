@@ -7,27 +7,47 @@ import social from "@/config/social.json";
 import { useTranslations } from "@/lib/utils/i18nUtils";
 import { getEntryCTM } from "@/lib/contentParser.astro";
 import ContactForm from "../widgets/ContactForm.astro";
+import type { FooterData } from "@/lib/tina/types";
+import type { SocialLink } from "@/types";
+import { tinaAttr } from "@/lib/tina/field";
 
-const t = await useTranslations(Astro.currentLocale as string);
+interface Props {
+  footerSpaceTop?: boolean;
+  lang?: string;
+  // Footer content from the Tina live preview. Missing parts use the files.
+  data?: FooterData;
+}
 
-let {
-  copyright,
-  footerDescription,
-  contactInfo: { address, email, phone },
-} = config.settings;
-const { footerSpaceTop = true } = Astro.props;
+const { footerSpaceTop = true, data = {} } = Astro.props;
+const lang = Astro.props.lang ?? Astro.currentLocale;
 
-const {
-  data: { title, description },
-} = await getEntryCTM("sections", "call-to-action", Astro.currentLocale);
+const t = await useTranslations(lang as string);
+const dictionary = data.dictionary;
+const translate = (section: string, key: string) =>
+  dictionary?.[section]?.[key] ?? t(`${section}.${key}`);
 
-let { form } = (
-  await getEntryCTM("sections", "contact-section", Astro.currentLocale)
-)?.data;
+const settings = data.settings ?? config.settings;
+let { copyright, footerDescription } = settings;
+const contactInfo = settings.contactInfo ?? {};
+const { address, email, phone } = contactInfo;
 
-footerDescription = footerDescription || t("footer.description") || "";
+const cta =
+  data.cta ??
+  (await getEntryCTM("sections", "call-to-action", lang))?.data ??
+  {};
+const { title, description } = cta;
 
-const copyrightText = copyright.text || t("footer.copyright") || "";
+let form =
+  data.form ??
+  (await getEntryCTM("sections", "contact-section", lang))?.data?.form;
+
+const socialList = (data.social ?? social.main).filter(
+  (s) => s.enable,
+) as SocialLink[];
+
+footerDescription = footerDescription || translate("footer", "description") || "";
+
+const copyrightText = copyright?.text || translate("footer", "copyright") || "";
 const copyrightParts = splitProtectedText(copyrightText);
 ---
 
@@ -42,6 +62,7 @@ const copyrightParts = splitProtectedText(copyrightText);
           title && (
             <h2
               class="text-display-6 xs:text-display-5 md:text-display-4"
+              data-tina-field={tinaAttr(cta, "title")}
               set:html={markdownify(title)}
             />
           )
@@ -50,14 +71,21 @@ const copyrightParts = splitProtectedText(copyrightText);
           description && (
             <div
               class="w-full max-w-lg text-lg"
+              data-tina-field={tinaAttr(cta, "description")}
               set:html={markdownify(description, true)}
             />
           )
         }
         <div class="space-y-4">
           {
-            config.settings.copyright?.enable && (
-              <ul class="has-list has-list-slash prose-a:text-inherit flex flex-wrap gap-y-2">
+            copyright?.enable && (
+              <ul
+                class="has-list has-list-slash prose-a:text-inherit flex flex-wrap gap-y-2"
+                data-tina-field={
+                  copyright.text
+                    ? tinaAttr(copyright, "text")
+                    : tinaAttr(dictionary?.footer, "copyright")
+                }>
                 {copyrightParts.map((value) => (
                   <li class="prose-a:text-text-default/70 prose-a:hover:text-text-default">
                     <span set:html={markdownify(value)} />
@@ -72,18 +100,39 @@ const copyrightParts = splitProtectedText(copyrightText);
             layout="dark"
             class="gap-5"
             linkType="follow"
-            list={social.main.filter((s) => s.enable)}
+            list={socialList}
           />
         </div>
       </div>
-      <ContactForm form={form} />
+      <ContactForm form={form} data-tina-field={tinaAttr(form)} />
     </div>
     <div
       class="font-secondary flex flex-wrap items-center justify-between gap-x-8 gap-y-6 pt-6 text-sm leading-loose font-semibold uppercase">
-      {address && <p set:html={markdownify(address)} />}
+      {
+        address && (
+          <p
+            data-tina-field={tinaAttr(contactInfo, "address")}
+            set:html={markdownify(address)}
+          />
+        )
+      }
       <div class="md:text-end">
-        {phone && <p set:html={markdownify(phone)} />}
-        {email && <p set:html={markdownify(email)} />}
+        {
+          phone && (
+            <p
+              data-tina-field={tinaAttr(contactInfo, "phone")}
+              set:html={markdownify(phone)}
+            />
+          )
+        }
+        {
+          email && (
+            <p
+              data-tina-field={tinaAttr(contactInfo, "email")}
+              set:html={markdownify(email)}
+            />
+          )
+        }
       </div>
     </div>
   </div>

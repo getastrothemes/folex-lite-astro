@@ -1,6 +1,7 @@
 ---
 import { absoluteUrl } from "@/lib/utils/absoluteUrl";
 import { plainify, removeWhitespace } from "@/lib/utils/textConverter";
+import { socialImageUrl } from "@/lib/utils/socialImage";
 
 const config = Astro.props.config;
 
@@ -36,10 +37,15 @@ resolvedDescription = removeWhitespace(resolvedDescription);
 
 // Page URL
 const pageUrl = new URL(Astro.url.pathname, Astro.site);
+
+// Images chosen in the CMS live in src/assets, so they need a built URL
+const imageUrl = await socialImageUrl(image);
 ---
 
 <!------------------------ Open Graph Meta Tags ------------------------>{
-  image && <meta property="og:image" content={absoluteUrl(image, Astro)} />
+  imageUrl && (
+    <meta property="og:image" content={absoluteUrl(imageUrl, Astro)} />
+  )
 }
 {resolvedTitle && <meta property="og:title" content={resolvedTitle} />}
 {
@@ -68,4 +74,8 @@ const pageUrl = new URL(Astro.url.pathname, Astro.site);
   )
 }
 {twitterCard && <meta name="twitter:card" content={twitterCard} />}
-{image && <meta name="twitter:image" content={absoluteUrl(image, Astro)} />}
+{
+  imageUrl && (
+    <meta name="twitter:image" content={absoluteUrl(imageUrl, Astro)} />
+  )
+}

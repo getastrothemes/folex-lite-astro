@@ -5,6 +5,7 @@ import { getEntryCTM } from "@/lib/contentParser.astro";
 import config from ".astro/config.generated.json";
 import { getCollectionCTM } from "@/lib/contentParser.astro";
 import PortfolioSingle from "@/components/PortfolioSingle.astro";
+import EditableRegion from "@/components/tina/EditableRegion.astro";
 import Breadcrumbs from "@/components/widgets/Breadcrumbs.astro";
 import { supportedLanguages } from "@/lib/utils/i18nUtils";
 import type { CollectionKey } from "astro:content";
@@ -53,5 +54,13 @@ const { portfolio } = Astro.props;
 
 <Base {...portfolio.data}>
   <Breadcrumbs breadcrumbExcludedPaths={["Portfolio"]} />
-  <PortfolioSingle content={portfolio} />
+  <EditableRegion
+    name="portfolio"
+    params={{
+      lang: Astro.currentLocale ?? "",
+      file: portfolio.filePath?.split("/").pop() ?? "",
+    }}
+    primary>
+    <PortfolioSingle content={portfolio} />
+  </EditableRegion>
 </Base>

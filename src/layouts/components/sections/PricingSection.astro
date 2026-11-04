@@ -5,18 +5,24 @@ import { markdownify } from "@/lib/utils/textConverter";
 import overrideObjects from "@/lib/utils/overrideObjects.ts";
 import type { pricingSectionSchema } from "@/sections.schema";
 import PricingCard from "@/layouts/components/cards/PricingCard.astro";
+import { tinaAttr } from "@/lib/tina/field";
 
 // Type for this section data
 type pricingSectionSchema = NonNullable<z.infer<typeof pricingSectionSchema>>;
 
 type Props = {
   content?: pricingSectionSchema;
+  // Section content passed in by a page or the Tina live preview
+  data?: pricingSectionSchema;
+  lang?: string;
 };
 
+const lang = Astro.props.lang ?? Astro.currentLocale;
+
 // Fetching the default content for the this section
-let defaultContent = (
-  await getEntryCTM("sections", "pricing-section", Astro.currentLocale)
-)?.data as pricingSectionSchema;
+let defaultContent = (Astro.props.data ??
+  (await getEntryCTM("sections", "pricing-section", lang))
+    ?.data) as pricingSectionSchema;
 
 // Enables content customization (e.g., title, description) with a fallback to 'defaultContent' if not provided.
 // The 'content' prop should match the structure of 'defaultContent'.
@@ -40,13 +46,25 @@ if (!enable) {
     {
       title && (
         <div class="text-center">
-          <h2 class="text-h1-sm md:text-h1" set:html={markdownify(title)} />
+          <h2
+            class="text-h1-sm md:text-h1"
+            data-tina-field={tinaAttr(actualContent, "title")}
+            set:html={markdownify(title)}
+          />
         </div>
       )
     }
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {list.map((item) => <PricingCard content={item} />)}
+      {
+        list?.map((item) => (
+          <PricingCard
+            content={item}
+            lang={lang}
+            data-tina-field={tinaAttr(item)}
+          />
+        ))
+      }
     </div>
   </div>
 </section>

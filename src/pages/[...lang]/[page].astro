@@ -3,8 +3,11 @@ import Base from "@/layouts/Base.astro";
 import { getCollectionCTM } from "@/lib/contentParser.astro";
 import { supportedLanguages } from "@/lib/utils/i18nUtils";
 import config from ".astro/config.generated.json";
-import SinglePageLayout from "@/components/SinglePageLayout.astro";
 import extractSlug from "@/lib/utils/extractSlug";
+import PageSections from "@/components/PageSections.astro";
+import EditableRegion from "@/components/tina/EditableRegion.astro";
+import { DEFAULT_PAGE_SECTIONS, resolveSections } from "@/lib/pageSections";
+import { loadSectionsFromCollections } from "@/lib/tina/collectionData";
 
 // get static paths for all pages
 export async function getStaticPaths() {
@@ -35,8 +38,26 @@ export async function getStaticPaths() {
 }
 
 const { page } = Astro.props;
+const lang = Astro.currentLocale;
+
+// Pages show their text by default. The `sections` list (editable in the CMS)
+// can add theme sections around it.
+const sections = resolveSections(page.data.sections, DEFAULT_PAGE_SECTIONS);
+const bundle = await loadSectionsFromCollections(sections, lang);
+
+// The header overlays the dark hero banner when the page starts with it.
+const startsWithBanner =
+  sections[0] === "banner" && bundle.data.banner?.enable !== false;
 ---
 
-<Base {...page.data}>
-  <SinglePageLayout content={{ ...page.data, ...page }} />
+<Base
+  {...page.data}
+  headerPosition={startsWithBanner ? "fixed" : undefined}
+  hasHeaderDarkBackground={startsWithBanner}>
+  <EditableRegion
+    name="page"
+    params={{ lang: lang ?? "", file: page.filePath?.split("/").pop() ?? "" }}
+    primary>
+    <PageSections sections={sections} bundle={bundle} lang={lang} page={page} />
+  </EditableRegion>
 </Base>

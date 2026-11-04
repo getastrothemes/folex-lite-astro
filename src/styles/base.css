@@ -12,12 +12,19 @@ main section {
 }
 
 /* If the page has no CTA section, add top margin to the footer for better visual spacing */
-body > main:not(:has(section.cta-section)) + footer {
+/* ([data-tina-island] wraps the footer when Tina live visual editing is enabled) */
+body > main:not(:has(section.cta-section)) + footer,
+body > main:not(:has(section.cta-section)) ~ [data-tina-island] > footer {
   @apply section-spacing-m;
 }
 
 /* If current page has no CTA section, remove top padding from appropriate footers */
-body > main:not(:has(section.cta-section)) + footer .has-footer-padding {
+body > main:not(:has(section.cta-section)) + footer .has-footer-padding,
+body
+  > main:not(:has(section.cta-section))
+  ~ [data-tina-island]
+  > footer
+  .has-footer-padding {
   @apply !pt-0;
 }
 

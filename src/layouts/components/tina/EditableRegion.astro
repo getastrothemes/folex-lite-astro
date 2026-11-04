@@ -1,0 +1,35 @@
+---
+import TinaIsland from "@tinacms/astro/TinaIsland.astro";
+import config from ".astro/config.generated.json";
+import { REGIONS, type RegionName } from "@/lib/tina/regions";
+
+// Marks a part of the page as editable in the Tina live preview. When live
+// visual editing is off for the build (static hosting), the content renders
+// without any wrapper or script, exactly as in the original theme.
+interface Props {
+  name: RegionName;
+  params: Record<string, string>;
+  // The page's main document, opened first in the editor
+  primary?: boolean;
+}
+
+const { name, params, primary } = Astro.props;
+const enabled = import.meta.env.TINA_VISUAL_EDITING;
+
+// The island route follows the site's trailing slash setting.
+const islandName = config.site.trailingSlash ? `${name}/` : name;
+---
+
+{
+  enabled ? (
+    <TinaIsland
+      name={islandName}
+      wrapper={{ ...REGIONS[name] }}
+      params={params}
+      primary={primary}>
+      <slot />
+    </TinaIsland>
+  ) : (
+    <slot />
+  )
+}

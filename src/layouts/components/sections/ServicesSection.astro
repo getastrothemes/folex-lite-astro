@@ -7,22 +7,31 @@ import uniqueIdGenerator from "@/lib/utils/uniqueIdGenerator";
 import type { z } from "astro/zod";
 import type { Section } from "@/types";
 import type { servicesSectionSchema } from "@/sections.schema";
+import { tinaAttr } from "@/lib/tina/field";
 
 // Type for this section data
 type Service = {
   title: string;
   description: string;
+  titleField?: string;
+  descriptionField?: string;
 };
 
 type ServicesInterface = Section & z.infer<typeof servicesSectionSchema>;
 type Props = {
   content?: ServicesInterface;
+  // Section content and services passed in by a page or the Tina live preview
+  data?: ServicesInterface;
+  services?: any[];
+  lang?: string;
 };
 
+const lang = Astro.props.lang ?? Astro.currentLocale;
+
 // Fetching the default content for the this section
-let defaultContent = (
-  await getEntryCTM("sections", "services-section", Astro.currentLocale)
-)?.data as ServicesInterface;
+let defaultContent = (Astro.props.data ??
+  (await getEntryCTM("sections", "services-section", lang))
+    ?.data) as ServicesInterface;
 
 // Enables content customization (e.g., title, description) with a fallback to 'defaultContent' if not provided.
 // The 'content' prop should match the structure of 'defaultContent'.
@@ -41,15 +50,17 @@ let {
   options: { layout = "accordion", appearance, limit = false } = {},
 } = actualContent as ServicesInterface;
 
-let services = (await getCollectionCTM("services", Astro.currentLocale)) as
-  | Service[]
-  | any[];
+let services = (Astro.props.services ??
+  (await getCollectionCTM("services", lang))) as Service[] | any[];
 
 if (layout === "accordion") {
   services = services.map((service) => {
     return {
       title: service.data.title,
       description: service.data.description,
+      // Click-to-edit targets in the Tina preview
+      titleField: tinaAttr(service.data, "title"),
+      descriptionField: tinaAttr(service.data, "description"),
     };
   }) as Service[];
 }
@@ -75,6 +86,7 @@ if (!enable) {
     {
       title && (
         <h2
+          data-tina-field={tinaAttr(actualContent, "title")}
           class:list={[
             "text-h1-sm md:text-h1 mx-auto max-w-3xl",
             appearance === "dark" && "text-light",
@@ -111,6 +123,7 @@ if (!enable) {
                   aria-controls={"accordion-content-" + id}
                   aria-expanded={index === 0 ? "true" : "false"}
                   class="hs-accordion-toggle text-dark font-secondary text-h5 w-full pe-20 text-start font-medium lg:pe-0"
+                  data-tina-field={item.titleField}
                   set:html={item.title}
                 />
                 <div
@@ -121,7 +134,9 @@ if (!enable) {
                     "hs-accordion-content hs-accordion-active:opacity-100 w-full max-w-lg overflow-hidden opacity-0 transition-all duration-300 ease-linear",
                     index !== 0 && "hidden",
                   ]}>
-                  <div class="prose-styles prose-p:first:mt-0 prose-p:last:mb-0 pt-3 lg:pt-0">
+                  <div
+                    class="prose-styles prose-p:first:mt-0 prose-p:last:mb-0 pt-3 lg:pt-0"
+                    data-tina-field={item.descriptionField}>
                     <div set:html={markdownify(item.description, true)} />
                   </div>
                 </div>

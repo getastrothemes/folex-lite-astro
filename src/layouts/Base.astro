@@ -9,6 +9,7 @@ import HelperButtons from "@/components/utilities/HelperButtons.astro";
 import BreakpointIndicator from "@/components/widgets/BreakpointIndicator.astro";
 import FooterThree from "@/components/global/FooterThree.astro";
 import GlobalScripts from "./components/widgets/GlobalScripts.astro";
+import EditableRegion from "@/components/tina/EditableRegion.astro";
 
 interface Props extends JSONLDProps {
   className?: string;
@@ -79,7 +80,14 @@ className = fitToScreen
           Folex premium version to unlock this layout.
         </div>
       ) : footerLayout === "footer-3" ? (
-        <FooterThree footerSpaceTop={footerSpaceTop} />
+        <EditableRegion
+          name="footer"
+          params={{
+            lang: Astro.currentLocale ?? "",
+            spaceTop: String(footerSpaceTop),
+          }}>
+          <FooterThree footerSpaceTop={footerSpaceTop} />
+        </EditableRegion>
       ) : null
     }
 

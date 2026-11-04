@@ -6,16 +6,21 @@ import { getEntryCTM } from "@/lib/contentParser.astro";
 import overrideObjects from "@/lib/utils/overrideObjects.ts";
 import type { clientsSectionSchema } from "@/sections.schema";
 import OptimizedImage from "../utilities/OptimizedImage.astro";
+import { tinaAttr } from "@/lib/tina/field";
 
 export type ClientsSection = Section & z.infer<typeof clientsSectionSchema>;
 
 type Props = {
   content?: ClientsSection;
+  // Section content passed in by a page or the Tina live preview
+  data?: ClientsSection;
+  lang?: string;
 };
 
-let defaultContent = (
-  await getEntryCTM("sections", "clients", Astro.currentLocale)
-)?.data as ClientsSection;
+const lang = Astro.props.lang ?? Astro.currentLocale;
+
+let defaultContent = (Astro.props.data ??
+  (await getEntryCTM("sections", "clients", lang))?.data) as ClientsSection;
 
 let actualContent = overrideObjects(
   { ...defaultContent },
@@ -42,6 +47,7 @@ if (!enable) {
       title && (
         <div class="mx-auto lg:max-w-3xl">
           <h2
+            data-tina-field={tinaAttr(actualContent, "title")}
             class:list={[
               "text-h1-sm md:text-h1 text-center",
               isDarkAppearance && "text-light",
@@ -60,8 +66,9 @@ if (!enable) {
           : "mx-auto max-w-4xl lg:grid-cols-4",
       ]}>
       {
-        list?.map((item) => (
+        list?.map((item, index) => (
           <li
+            data-tina-field={tinaAttr(actualContent, "list", index)}
             class:list={[
               "group flex h-32 w-full items-center justify-center border",
               isDarkAppearance && "border-white",

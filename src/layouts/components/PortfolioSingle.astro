@@ -5,16 +5,21 @@ import { markdownify } from "@/lib/utils/textConverter";
 import { useTranslations } from "@/lib/utils/i18nUtils";
 import OptimizedImage from "./utilities/OptimizedImage.astro";
 import PaginationForSingle from "./widgets/PaginationForSingle.astro";
-import { render } from "astro:content";
+import ContentBody from "./tina/ContentBody.astro";
+import { tinaAttr } from "@/lib/tina/field";
 import "aos/dist/aos.css";
+
+const lang = Astro.props.lang ?? Astro.currentLocale;
 
 let {
   collection,
+  data,
   data: { title, images, information },
 }: {
   render: any;
   id: string;
   collection: string;
+  tinaBody?: unknown;
   data: {
     title: string;
     images: string[];
@@ -23,8 +28,7 @@ let {
   };
 } = Astro.props.content;
 
-const t = await useTranslations(Astro.currentLocale as string);
-const { Content } = await render(Astro.props.content);
+const t = await useTranslations(lang as string);
 
 if (Array.isArray(information)) {
   information = information.map((item) => {
@@ -34,7 +38,7 @@ if (Array.isArray(information)) {
         if (Astro.props.content.data.date) {
           newItem.value = new Date(
             Astro.props.content.data.date,
-          ).toLocaleDateString(Astro.currentLocale, {
+          ).toLocaleDateString(lang, {
             year: "numeric",
             month: "long",
             day: "numeric",
@@ -58,6 +62,7 @@ if (Array.isArray(information)) {
       {
         Array.isArray(images) && images.length > 1 && (
           <Swiper
+            data-tina-field={tinaAttr(data, "images")}
             id="portfolio-slider"
             aria-label="Portfolio image slider"
             options={{
@@ -107,7 +112,9 @@ if (Array.isArray(information)) {
         class="grid max-w-full grid-cols-1 max-xl:space-y-8 xl:grid-cols-7 xl:gap-x-20">
         {
           information && Array.isArray(information) && (
-            <ul class="space-y-4 xl:order-2 xl:col-span-2">
+            <ul
+              class="space-y-4 xl:order-2 xl:col-span-2"
+              data-tina-field={tinaAttr(data, "information")}>
               {information.map((item) => (
                 <li class="w-fit">
                   {item.label && (
@@ -126,15 +133,21 @@ if (Array.isArray(information)) {
           )
         }
         <div class="space-y-10 pe-10 xl:col-span-5">
-          {title && <h1 class="md:text-display-5" set:html={title} />}
-
           {
-            Content && (
-              <div class="prose-styles has-video-modal [&_.image-list-component]:xl:-ms-31.5 [&_.image-list-component]:xl:w-6xl">
-                <Content />
-              </div>
+            title && (
+              <h1
+                class="md:text-display-5"
+                data-tina-field={tinaAttr(data, "title")}
+                set:html={title}
+              />
             )
           }
+
+          <div
+            class="prose-styles has-video-modal [&_.image-list-component]:xl:-ms-31.5 [&_.image-list-component]:xl:w-6xl"
+            data-tina-field={tinaAttr(data, "body")}>
+            <ContentBody entry={Astro.props.content} />
+          </div>
         </div>
       </div>
       <div class="mt-10 flex justify-between border-t pt-10">
@@ -143,6 +156,7 @@ if (Array.isArray(information)) {
           nextBtnText={t("common.paginationPortfolioNext")}
           currentPage={Astro.props.content}
           collection={collection}
+          lang={lang}
         />
       </div>
     </div>

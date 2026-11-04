@@ -2,8 +2,9 @@
 import OptimizedImage from "./utilities/OptimizedImage.astro";
 import formatRelativeDate from "@/lib/utils/formatRelativeDate";
 import { markdownify } from "@/lib/utils/textConverter";
-import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
+import ContentBody from "./tina/ContentBody.astro";
+import { tinaAttr } from "@/lib/tina/field";
 
 interface Props {
   content: CollectionEntry<"pages">;
@@ -12,8 +13,6 @@ interface Props {
 
 const { content, class: className } = Astro.props;
 let { title, date, image, categories } = content.data;
-
-const { Content } = await render(content);
 ---
 
 <section>
@@ -23,6 +22,7 @@ const { Content } = await render(content);
       {
         image && (
           <OptimizedImage
+            data-tina-field={tinaAttr(content.data, "image")}
             width={896}
             height={500}
             alt={title}
@@ -51,15 +51,21 @@ const { Content } = await render(content);
             ))
           }
         </ul>
-        {title && <h1 class="text-h2-sm md:text-h2" set:html={title} />}
+        {
+          title && (
+            <h1
+              class="text-h2-sm md:text-h2"
+              data-tina-field={tinaAttr(content.data, "title")}
+              set:html={title}
+            />
+          )
+        }
       </div>
-      {
-        Content && (
-          <div class="prose-styles content has-video-modal prose-headings:mb-6 prose-headings:mt-10">
-            <Content />
-          </div>
-        )
-      }
+      <div
+        class="prose-styles content has-video-modal prose-headings:mb-6 prose-headings:mt-10"
+        data-tina-field={tinaAttr(content.data, "body")}>
+        <ContentBody entry={content} />
+      </div>
     </div>
   </div>
 </section>

@@ -32,7 +32,9 @@ import CustomButtonContent from "./CustomButtonContent.astro";
 import type { sharedButton, sharedButtonTag } from "@/sections.schema";
 import type { z } from "astro/zod";
 
-type Props = z.infer<typeof sharedButton | typeof sharedButtonTag>;
+type Props = z.infer<typeof sharedButton | typeof sharedButtonTag> & {
+  lang?: string;
+};
 
 const {
   enable = true,
@@ -46,6 +48,9 @@ const {
   icon = "/images/icons/svg/arrow-top-right.svg",
   variant = "fill",
   class: className,
+  lang = Astro.currentLocale,
+  // Tina preview metadata, not an HTML attribute
+  _content_source,
   ...rest
 } = Astro.props;
 
@@ -86,7 +91,7 @@ const buttonClasses = [
       rel={resolvedRel}
       target={resolvedTarget}
       class:list={buttonClasses}
-      href={getLocaleUrlCTM(url, Astro.currentLocale)}
+      href={getLocaleUrlCTM(url, lang)}
       {...rest}>
       <CustomButtonContent
         {...{

@@ -1,0 +1,48 @@
+---
+import Banner from "@/components/sections/Banner.astro";
+import Clients from "@/components/sections/Clients.astro";
+import PricingSection from "@/components/sections/PricingSection.astro";
+import ServicesSection from "@/components/sections/ServicesSection.astro";
+import PortfolioSection from "@/components/sections/PortfolioSection.astro";
+import SinglePageLayout from "@/components/SinglePageLayout.astro";
+import type { PageSectionKey } from "@/lib/pageSections";
+import type { SectionsBundle } from "@/lib/tina/types";
+
+// Renders a page's sections in the order chosen in the CMS. "content" is the
+// page's own Markdown text.
+interface Props {
+  sections: PageSectionKey[];
+  bundle: SectionsBundle;
+  lang?: string;
+  page?: any;
+}
+
+const { sections, bundle, page } = Astro.props;
+const lang = Astro.props.lang ?? Astro.currentLocale;
+---
+
+{
+  sections.map((key) =>
+    key === "banner" ? (
+      <Banner data={bundle.data.banner} lang={lang} />
+    ) : key === "clients" ? (
+      <Clients data={bundle.data.clients} lang={lang} />
+    ) : key === "services" ? (
+      <ServicesSection
+        data={bundle.data.services}
+        services={bundle.services}
+        lang={lang}
+      />
+    ) : key === "portfolio" ? (
+      <PortfolioSection
+        data={bundle.data.portfolio}
+        projects={bundle.projects}
+        lang={lang}
+      />
+    ) : key === "pricing" ? (
+      <PricingSection data={bundle.data.pricing} lang={lang} />
+    ) : key === "content" && page ? (
+      <SinglePageLayout content={page} />
+    ) : null,
+  )
+}

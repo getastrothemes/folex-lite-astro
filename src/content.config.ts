@@ -3,6 +3,7 @@ import config from ".astro/config.generated.json";
 import { button, sectionsSchema } from "./sections.schema";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { PAGE_SECTIONS } from "./lib/pageSections";
 
 const portfolioFolder = config.settings.portfolioFolder || "portfolio";
 const servicesFolder = config.settings.servicesFolder || "services";
@@ -13,7 +14,8 @@ export const page = z.object({
   author: z.string().optional(),
   categories: z.array(z.string()).default(["others"]).optional(),
   tags: z.array(z.string()).default(["others"]).optional(),
-  date: z.date().optional(), // example date format 2022-01-01 or 2022-01-01T00:00:00+00:00 (Year-Month-Day Hour:Minute:Second+Timezone)
+  // Coerced so dates saved as text by the CMS also work
+  date: z.coerce.date().optional(), // example date format 2022-01-01 or 2022-01-01T00:00:00+00:00 (Year-Month-Day Hour:Minute:Second+Timezone)
   description: z.string().optional(),
   image: z.string().optional(),
   draft: z.boolean().optional(),
@@ -27,6 +29,18 @@ export const page = z.object({
   canonical: z.string().optional(),
   keywords: z.array(z.string()).optional(),
   disableTagline: z.boolean().optional(),
+  // Display order in lists (lower first)
+  weight: z.number().optional(),
+  // Page builder: sections shown on the page, in order (see src/lib/pageSections.ts)
+  sections: z
+    .array(
+      z.object({
+        section: z.enum(
+          Object.keys(PAGE_SECTIONS) as [keyof typeof PAGE_SECTIONS],
+        ),
+      }),
+    )
+    .optional(),
   ...sectionsSchema,
 });
 

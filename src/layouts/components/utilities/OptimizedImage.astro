@@ -47,6 +47,10 @@ if (!src) {
   throw new Error("No image source provided.");
 }
 
+// Images uploaded in Tina Cloud but not deployed yet arrive as full URLs in
+// the live preview. They are shown as is until the next build optimizes them.
+const isRemote = /^https?:\/\//.test(src);
+
 const normalizedSrc = src.startsWith("/src/assets") ? src : `/src/assets${src}`;
 
 const images = import.meta.glob(
@@ -57,9 +61,9 @@ const rawSvgs = import.meta.glob("/src/assets/images/**/*.svg", {
   import: "default",
 });
 
-const isValidPath = !!images[normalizedSrc];
+const isValidPath = !isRemote && !!images[normalizedSrc];
 
-if (!isValidPath) {
+if (!isRemote && !isValidPath) {
   console.error(
     `\x1b[31mImage not found - ${normalizedSrc}.\x1b[0m Make sure the image is in the /src/assets/images folder.`,
   );
@@ -85,6 +89,19 @@ if (inlineSvg && normalizedSrc.includes(".svg")) {
 }
 ---
 
+{
+  isRemote && (
+    <img
+      src={src}
+      alt={alt || ""}
+      width={width}
+      height={height}
+      loading={loading ?? "lazy"}
+      style={style}
+      class={Astro.props.class}
+    />
+  )
+}
 {
   isValidPath &&
     (inlineSvg && SVG && normalizedSrc.includes(".svg") ? (

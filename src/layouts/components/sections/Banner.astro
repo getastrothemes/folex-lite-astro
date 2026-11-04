@@ -7,6 +7,7 @@ import CustomButton from "@/components/CustomButton.astro";
 import overrideObjects from "@/lib/utils/overrideObjects.ts";
 import type { bannerAgencySectionSchema } from "@/sections.schema";
 import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
+import { tinaAttr } from "@/lib/tina/field";
 
 // Type for this section data
 type bannerAgency = Section &
@@ -14,12 +15,16 @@ type bannerAgency = Section &
 
 type Props = {
   content?: bannerAgency;
+  // Section content passed in by a page or the Tina live preview
+  data?: bannerAgency;
+  lang?: string;
 };
 
+const lang = Astro.props.lang ?? Astro.currentLocale;
+
 // Fetching the default content for the this section
-let defaultContent = (
-  await getEntryCTM("sections", "banner", Astro.currentLocale)
-)?.data as bannerAgency;
+let defaultContent = (Astro.props.data ??
+  (await getEntryCTM("sections", "banner", lang))?.data) as bannerAgency;
 
 // Enables content customization (e.g., title, description) with a fallback to 'defaultContent' if not provided.
 // The 'content' prop should match the structure of 'defaultContent'.
@@ -31,8 +36,14 @@ let actualContent = overrideObjects(
 ) as bannerAgency;
 
 // Extracting required values from 'content' object
-let { title, image, titleSize, description, button } =
-  actualContent as bannerAgency;
+let {
+  enable = true,
+  title,
+  image,
+  titleSize,
+  description,
+  button,
+} = actualContent as bannerAgency;
 
 // Font sizes for the heading (useful if you have a long heading)
 const fontSizeMap: Record<NonNullable<typeof titleSize>, string> = {
@@ -42,6 +53,10 @@ const fontSizeMap: Record<NonNullable<typeof titleSize>, string> = {
 };
 
 const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
+
+if (!enable) {
+  return null;
+}
 ---
 
 <section class="text-light mb-24 bg-black pt-52 md:mb-32">
@@ -52,6 +67,7 @@ const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
           <h1
             data-aos="reveal-anim-top"
             data-aos-duration="1500"
+            data-tina-field={tinaAttr(actualContent, "title")}
             class:list={[
               "text-inherit",
               fontSize,
@@ -71,6 +87,7 @@ const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
             {description && (
               <p
                 class="text-lg text-inherit opacity-80"
+                data-tina-field={tinaAttr(actualContent, "description")}
                 set:html={markdownify(description)}
               />
             )}
@@ -79,6 +96,8 @@ const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
                 hoverEffect="creative-fill"
                 class="btn-accent effect-color-dark mx-auto"
                 {...button}
+                lang={lang}
+                data-tina-field={tinaAttr(button)}
               />
             )}
           </div>
@@ -89,6 +108,7 @@ const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
               data-aos-delay="200"
               data-aos-duration="1500"
               class="mx-auto max-w-2xl text-lg text-inherit opacity-80"
+              data-tina-field={tinaAttr(actualContent, "description")}
               set:html={markdownify(description)}
             />
           )
@@ -102,7 +122,8 @@ const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
             data-aos-duration="1500"
             data-aos-delay="300"
             data-aos-offset="0"
-            class="mx-auto mt-10 -mb-24 max-w-4xl md:mt-20 md:-mb-32">
+            class="mx-auto mt-10 -mb-24 max-w-4xl md:mt-20 md:-mb-32"
+            data-tina-field={tinaAttr(actualContent, "image")}>
             <OptimizedImage
               src={image}
               alt={title || "Banner"}

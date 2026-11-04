@@ -2,23 +2,32 @@
 import Base from "@/layouts/Base.astro";
 import { generatePaths } from "@/lib/utils/i18nUtils";
 import { getEntryCTM } from "@/lib/contentParser.astro";
-import Clients from "@/components/sections/Clients.astro";
-import BannerAgencyStartup from "@/components/sections/Banner.astro";
-import PricingSection from "@/components/sections/PricingSection.astro";
-import ServicesSection from "@/components/sections/ServicesSection.astro";
-import PortfolioSection from "@/components/sections/PortfolioSection.astro";
+import PageSections from "@/components/PageSections.astro";
+import EditableRegion from "@/components/tina/EditableRegion.astro";
+import { DEFAULT_HOME_SECTIONS, resolveSections } from "@/lib/pageSections";
+import { loadSectionsFromCollections } from "@/lib/tina/collectionData";
 
 export function getStaticPaths() {
   return generatePaths();
 }
 
-const page = await getEntryCTM("homepage", "-index", Astro.currentLocale);
+const lang = Astro.currentLocale;
+const page = await getEntryCTM("homepage", "-index", lang);
+
+// Section order comes from the homepage `sections` list (editable in the CMS).
+const sections = resolveSections(page?.data.sections, DEFAULT_HOME_SECTIONS);
+const bundle = await loadSectionsFromCollections(sections, lang);
+
+// The header overlays the dark hero banner when the page starts with it.
+const startsWithBanner =
+  sections[0] === "banner" && bundle.data.banner?.enable !== false;
 ---
 
-<Base {...page?.data} headerPosition="fixed" hasHeaderDarkBackground={true}>
-  <BannerAgencyStartup />
-  <Clients />
-  <ServicesSection />
-  <PortfolioSection />
-  <PricingSection />
+<Base
+  {...page?.data}
+  headerPosition={startsWithBanner ? "fixed" : undefined}
+  hasHeaderDarkBackground={startsWithBanner}>
+  <EditableRegion name="home" params={{ lang: lang ?? "" }} primary>
+    <PageSections sections={sections} bundle={bundle} lang={lang} />
+  </EditableRegion>
 </Base>

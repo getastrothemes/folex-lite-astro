@@ -1,57 +1,38 @@
 ---
 import Base from "@/layouts/Base.astro";
-import extractSlug from "@/lib/utils/extractSlug";
-import { getEntryCTM } from "@/lib/contentParser.astro";
-import config from ".astro/config.generated.json";
-import { getCollectionCTM } from "@/lib/contentParser.astro";
 import PortfolioSingle from "@/components/PortfolioSingle.astro";
 import Breadcrumbs from "@/components/widgets/Breadcrumbs.astro";
-import { supportedLanguages } from "@/lib/utils/i18nUtils";
-import type { CollectionKey } from "astro:content";
+import { getAllProjectSlugs, getProject } from "@/lib/sanity/data";
+import { langToParam, resolveLangParam } from "@/lib/utils/i18nUtils";
 
+// Static builds: every published project of every enabled language
 export async function getStaticPaths() {
-  const paths = await Promise.all(
-    supportedLanguages.map(async (lang) => {
-      const { portfolioFolder }: { portfolioFolder: string } = config.settings;
-      const portfolioKey = portfolioFolder as CollectionKey;
-      const { defaultLanguage, showDefaultLangInUrl } =
-        config.settings.multilingual;
-
-      const portfolioIndex = await getEntryCTM(
-        portfolioKey,
-        "-index",
-        lang.languageCode,
-      );
-
-      let portfolios = await getCollectionCTM(portfolioKey, lang.languageCode);
-
-      // If draft true in index.md file frontmatter don't include any page related to this page collection in production
-      if (portfolioIndex?.data.draft && import.meta.env.PROD) {
-        return [];
-      }
-
-      return portfolios.map((portfolio) => ({
-        params: {
-          lang:
-            lang.languageCode === defaultLanguage && !showDefaultLangInUrl
-              ? undefined
-              : lang.languageCode,
-          single: extractSlug(portfolio).split("/").pop(),
-        },
-        props: {
-          portfolio,
-        },
-      }));
-    }),
-  );
-
-  return paths.flat();
+  const projects = await getAllProjectSlugs();
+  return projects.map(({ lang, slug }) => ({
+    params: { lang: langToParam(lang), single: slug },
+  }));
 }
 
-const { portfolio } = Astro.props;
+// The data is resolved from the URL (not from getStaticPaths props) so the
+// same page also works on the preview server
+const lang = resolveLangParam(Astro.params.lang);
+const slug = Astro.params.single;
+const project =
+  lang && slug
+    ? await getProject(lang, slug, Astro.locals.preview === true)
+    : null;
+
+// Unknown language prefix or project → 404 page
+if (!project) {
+  return new Response(null, { status: 404 });
+}
 ---
 
-<Base {...portfolio.data}>
+<Base
+  title={project.title}
+  description={project.description}
+  seo={project.seo}
+  image={project.coverImage}>
   <Breadcrumbs breadcrumbExcludedPaths={["Portfolio"]} />
-  <PortfolioSingle content={portfolio} />
+  <PortfolioSingle content={project} />
 </Base>

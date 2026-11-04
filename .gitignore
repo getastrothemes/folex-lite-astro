@@ -1,5 +1,6 @@
 # build output
 dist/
+studio-dist/
 .output/
 .json/
 
@@ -20,6 +21,8 @@ pnpm-lock.yaml
 # environment variables
 .env
 .env.production
+.env.local
+.env.*.local
 
 # macOS-specific files
 .DS_Store
@@ -27,6 +30,12 @@ pnpm-lock.yaml
 # ignore .astro directory
 .astro
 
+# Sanity Studio local cache
+.sanity
+
 # Local Netlify folder
 .netlify
 .vercel
+
+# TypeScript incremental build info (created by astro check)
+tsconfig.tsbuildinfo

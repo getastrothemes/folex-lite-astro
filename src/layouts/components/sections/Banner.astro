@@ -1,54 +1,45 @@
 ---
-import type { z } from "astro/zod";
-import type { Section } from "@/types";
-import { getEntryCTM } from "@/lib/contentParser.astro";
+import { stegaClean } from "@sanity/client/stega";
+import type { BannerSectionData } from "@/lib/sanity/types";
 import { markdownify } from "@/lib/utils/textConverter";
+import { markdownifyLines } from "@/lib/utils/sanityAdapters";
 import CustomButton from "@/components/CustomButton.astro";
-import overrideObjects from "@/lib/utils/overrideObjects.ts";
-import type { bannerAgencySectionSchema } from "@/sections.schema";
-import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
-
-// Type for this section data
-type bannerAgency = Section &
-  NonNullable<z.infer<typeof bannerAgencySectionSchema>>;
+import SanityImage from "@/components/utilities/SanityImage.astro";
 
 type Props = {
-  content?: bannerAgency;
+  // Section data from Sanity (see `bannerSection` in Studio)
+  content: BannerSectionData;
+  // `data-sanity` attribute for visual editing (preview only)
+  dataSanity?: string;
 };
 
-// Fetching the default content for the this section
-let defaultContent = (
-  await getEntryCTM("sections", "banner", Astro.currentLocale)
-)?.data as bannerAgency;
-
-// Enables content customization (e.g., title, description) with a fallback to 'defaultContent' if not provided.
-// The 'content' prop should match the structure of 'defaultContent'.
-// Allows using this section with different content across multiple pages.
-// If 'content' is missing, 'defaultContent' will be used.
-let actualContent = overrideObjects(
-  { ...defaultContent },
-  Astro.props.content,
-) as bannerAgency;
+const { content, dataSanity } = Astro.props;
 
 // Extracting required values from 'content' object
-let { title, image, titleSize, description, button } =
-  actualContent as bannerAgency;
+const { title, titleLines, image, description, button } = content;
 
 // Font sizes for the heading (useful if you have a long heading)
-const fontSizeMap: Record<NonNullable<typeof titleSize>, string> = {
+const fontSizeMap: Record<BannerSectionData["titleSize"], string> = {
   "display-1": "text-display-3 lg:text-display-2 xl:text-display-1",
   "display-2": "text-display-5 md:text-display-3 xl:text-display-2",
   "display-3": "text-display-5 md:text-display-4 xl:text-display-3",
 };
 
-const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
+// Options are cleaned so visual-editing markers never break the lookup
+const titleSize = stegaClean(content.titleSize);
+const fontSize = fontSizeMap[titleSize] || fontSizeMap["display-1"];
+
+// Each line break in the Studio title becomes a <br />
+const titleHtml = markdownifyLines(titleLines?.length ? titleLines : title);
 ---
 
-<section class="text-light mb-24 bg-black pt-52 md:mb-32">
+<section
+  class="text-light mb-24 bg-black pt-52 md:mb-32"
+  data-sanity={dataSanity}>
   <div class="container">
     <div class="mx-auto max-w-7xl space-y-7 text-center md:space-y-10">
       {
-        title && (
+        titleHtml && (
           <h1
             data-aos="reveal-anim-top"
             data-aos-duration="1500"
@@ -57,7 +48,7 @@ const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
               fontSize,
               "block leading-tight font-bold break-words text-inherit",
             ]}
-            set:html={markdownify(title)}
+            set:html={titleHtml}
           />
         )
       }
@@ -74,13 +65,11 @@ const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
                 set:html={markdownify(description)}
               />
             )}
-            {button && button.enable && (
-              <CustomButton
-                hoverEffect="creative-fill"
-                class="btn-accent effect-color-dark mx-auto"
-                {...button}
-              />
-            )}
+            <CustomButton
+              hoverEffect="creative-fill"
+              class="btn-accent effect-color-dark mx-auto"
+              {...button}
+            />
           </div>
         ) : (
           description && (
@@ -96,16 +85,16 @@ const fontSize = titleSize ? fontSizeMap[titleSize] : fontSizeMap["display-1"];
       }
 
       {
-        image && (
+        image?.asset && (
           <div
             data-aos="reveal-anim-top"
             data-aos-duration="1500"
             data-aos-delay="300"
             data-aos-offset="0"
             class="mx-auto mt-10 -mb-24 max-w-4xl md:mt-20 md:-mb-32">
-            <OptimizedImage
-              src={image}
-              alt={title || "Banner"}
+            <SanityImage
+              image={image}
+              alt={image.alt || stegaClean(title) || "Banner"}
               class="h-110 w-full object-cover md:h-135"
             />
           </div>

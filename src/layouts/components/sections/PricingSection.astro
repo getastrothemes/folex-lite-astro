@@ -1,41 +1,20 @@
 ---
-import type { z } from "astro/zod";
-import { getEntryCTM } from "@/lib/contentParser.astro";
+import type { PricingSectionData } from "@/lib/sanity/types";
 import { markdownify } from "@/lib/utils/textConverter";
-import overrideObjects from "@/lib/utils/overrideObjects.ts";
-import type { pricingSectionSchema } from "@/sections.schema";
 import PricingCard from "@/layouts/components/cards/PricingCard.astro";
 
-// Type for this section data
-type pricingSectionSchema = NonNullable<z.infer<typeof pricingSectionSchema>>;
-
 type Props = {
-  content?: pricingSectionSchema;
+  // Section data from Sanity (see `pricingSection` in Studio)
+  content: PricingSectionData;
+  // `data-sanity` attribute for visual editing (preview only)
+  dataSanity?: string;
 };
 
-// Fetching the default content for the this section
-let defaultContent = (
-  await getEntryCTM("sections", "pricing-section", Astro.currentLocale)
-)?.data as pricingSectionSchema;
-
-// Enables content customization (e.g., title, description) with a fallback to 'defaultContent' if not provided.
-// The 'content' prop should match the structure of 'defaultContent'.
-// Allows using this section with different content across multiple pages.
-// If 'content' is missing, 'defaultContent' will be used.
-let actualContent = overrideObjects(
-  { ...defaultContent },
-  Astro.props.content,
-) as pricingSectionSchema;
-
-// Extracting required values from 'content' object
-let { enable = true, title, list } = actualContent || {};
-
-if (!enable) {
-  return null;
-}
+const { content, dataSanity } = Astro.props;
+const { title, plans = [] } = content;
 ---
 
-<section id="pricing">
+<section id="pricing" data-sanity={dataSanity}>
   <div class="container space-y-14">
     {
       title && (
@@ -46,7 +25,7 @@ if (!enable) {
     }
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {list.map((item) => <PricingCard content={item} />)}
+      {plans.map((plan) => <PricingCard content={plan} />)}
     </div>
   </div>
 </section>

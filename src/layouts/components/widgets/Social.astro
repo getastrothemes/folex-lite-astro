@@ -1,6 +1,4 @@
 ---
-import extractSlug from "@/lib/utils/extractSlug";
-import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
 import { slugifyyy } from "@/lib/utils/textConverter";
 import type { SocialLink } from "@/types";
 import OptimizedImage from "../utilities/OptimizedImage.astro";
@@ -34,31 +32,15 @@ let {
   disabled,
   layout = "light",
   linkType,
-  currentPage,
   class: className,
   ...rest
 } = Astro.props as Props; // Ensure Astro.props is typed as Props
 
 let slug: string | undefined,
   shareLinks = {} as Record<string, string>;
-if (linkType === "share" && currentPage) {
-  if (!currentPage) {
-    console.error(
-      "[Social.astro] Prop `currentPage` is required when `linkType` is set to 'share'.",
-    );
-    return;
-  }
-
-  slug = getLocaleUrlCTM(
-    extractSlug(currentPage),
-    Astro.currentLocale,
-    currentPage?.collection,
-  );
-
-  if (!slug) return;
-
-  const baseURL = Astro.url.origin;
-  slug = new URL(slug, baseURL).href;
+if (linkType === "share") {
+  // Share links point to the current page
+  slug = new URL(Astro.url.pathname, Astro.url.origin).href;
   list = linkType === "share" ? list : list.filter((social) => social.url);
 
   function getShareLink(

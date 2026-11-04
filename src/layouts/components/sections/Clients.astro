@@ -1,42 +1,27 @@
 ---
-import type { Section } from "@/types";
-import type { z } from "astro/zod";
+import { stegaClean } from "@sanity/client/stega";
+import type { ClientsSectionData } from "@/lib/sanity/types";
 import { markdownify } from "@/lib/utils/textConverter";
-import { getEntryCTM } from "@/lib/contentParser.astro";
-import overrideObjects from "@/lib/utils/overrideObjects.ts";
-import type { clientsSectionSchema } from "@/sections.schema";
-import OptimizedImage from "../utilities/OptimizedImage.astro";
-
-export type ClientsSection = Section & z.infer<typeof clientsSectionSchema>;
+import SanityImage from "../utilities/SanityImage.astro";
 
 type Props = {
-  content?: ClientsSection;
+  // Section data from Sanity (see `clientsSection` in Studio)
+  content: ClientsSectionData;
+  // `data-sanity` attribute for visual editing (preview only)
+  dataSanity?: string;
 };
 
-let defaultContent = (
-  await getEntryCTM("sections", "clients", Astro.currentLocale)
-)?.data as ClientsSection;
+const { content, dataSanity } = Astro.props;
+const { title, logos } = content;
 
-let actualContent = overrideObjects(
-  { ...defaultContent },
-  Astro.props.content,
-) as ClientsSection;
-
-let {
-  enable = true,
-  title,
-  list,
-  options: { columnsPerRow, appearance } = {},
-} = actualContent;
+// Options are cleaned so visual-editing markers never break the comparisons
+const appearance = stegaClean(content.appearance);
+const columnsPerRow = Number(stegaClean(content.columnsPerRow));
 
 const isDarkAppearance = appearance === "dark";
-
-if (!enable) {
-  return null;
-}
 ---
 
-<section>
+<section data-sanity={dataSanity}>
   <div class="container space-y-8 md:space-y-16">
     {
       title && (
@@ -60,25 +45,26 @@ if (!enable) {
           : "mx-auto max-w-4xl lg:grid-cols-4",
       ]}>
       {
-        list?.map((item) => (
+        logos?.map((logo) => (
           <li
             class:list={[
               "group flex h-32 w-full items-center justify-center border",
               isDarkAppearance && "border-white",
             ]}>
+            {/* The logo is shown twice so it can slide up on hover */}
             <div class="relative h-8 grow overflow-hidden px-8">
-              <OptimizedImage
+              <SanityImage
                 width={140}
                 height={32}
-                src={item.src}
-                alt={item.alt}
+                image={logo}
+                alt={logo.alt || ""}
                 class="mx-auto h-8 transition-all duration-300 group-hover:-translate-y-8"
               />
-              <OptimizedImage
+              <SanityImage
                 width={140}
                 height={32}
-                src={item.src}
-                alt={item.alt}
+                image={logo}
+                alt={logo.alt || ""}
                 class="mx-auto h-8 transition-all duration-300 group-hover:-translate-y-8"
               />
             </div>

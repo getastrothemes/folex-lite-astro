@@ -1,0 +1,27 @@
+---
+/**
+ * Home page layout (one per language, edited in Studio → "Home page").
+ * Used by `src/pages/[...lang]/index.astro` and, on the preview server, by
+ * `[page].astro` when the URL is just a language prefix such as `/fr/`.
+ */
+import Base from "@/layouts/Base.astro";
+import PageSections from "@/components/sections/PageSections.astro";
+import type { HomePageData } from "@/lib/sanity/types";
+import { startsWithBanner } from "@/lib/utils/sanityAdapters";
+
+interface Props {
+  page: HomePageData;
+}
+
+const { page } = Astro.props;
+
+// A banner as first section gets the fixed, transparent header on top of it
+const hasBanner = startsWithBanner(page.sections);
+---
+
+<Base
+  seo={page.seo}
+  headerPosition={hasBanner ? "fixed" : "sticky"}
+  hasHeaderDarkBackground={hasBanner}>
+  <PageSections document={page} sections={page.sections} />
+</Base>

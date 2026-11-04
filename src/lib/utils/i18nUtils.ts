@@ -58,20 +58,19 @@ export const useTranslations = async (lang: string): Promise<Function> => {
   }
 
   const contentDir = language.contentDir;
-  let menu, dictionary;
+  let dictionary;
 
+  // UI microcopy only (e.g. pagination labels). Menus, footer text and other
+  // editable content come from Sanity Studio.
   try {
-    menu = await import(`../../../src/config/menu.${lang}.json`);
     dictionary = await import(`../../../src/i18n/${lang}.json`);
   } catch (error) {
-    // Fallback to default language if the requested language files fail to load
-    menu = await import(`../../../src/config/menu.${defaultLanguage}.json`);
+    // Fallback to default language if the requested language file fails to load
     dictionary = await import(`../../../src/i18n/${defaultLanguage}.json`);
   }
 
   // Combine translations
   const translations = {
-    ...menu,
     ...dictionary,
     contentDir,
   };
@@ -169,6 +168,30 @@ export function generatePaths(): Array<{
 
   return paths;
 }
+
+/**
+ * Turns the `[...lang]` route param into a language code.
+ * Returns `null` when the param is not a valid URL prefix (the page should
+ * then respond with a 404). The default language has no prefix unless
+ * `showDefaultLangInUrl` is enabled.
+ *
+ * @example resolveLangParam(undefined) // "en"
+ * @example resolveLangParam("fr") // "fr"
+ * @example resolveLangParam("xyz") // null
+ */
+export const resolveLangParam = (param: string | undefined): string | null => {
+  if (!param) return showDefaultLangInUrl ? null : defaultLanguage;
+  if (!enabledLanguages.includes(param)) return null;
+  if (param === defaultLanguage && !showDefaultLangInUrl) return null;
+  return param;
+};
+
+/**
+ * The `[...lang]` route param for a language code (used in `getStaticPaths`).
+ * The default language has no URL prefix unless `showDefaultLangInUrl` is on.
+ */
+export const langToParam = (lang: string): string | undefined =>
+  lang === defaultLanguage && !showDefaultLangInUrl ? undefined : lang;
 
 /**
  * Generates a localized URL for a given URL and language.

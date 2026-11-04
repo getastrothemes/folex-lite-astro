@@ -8,7 +8,6 @@ import { absoluteUrl } from "./absoluteUrl";
 import { getLocaleUrlCTM } from "./i18nUtils";
 import removeEmptyKeys from "./removeEmptyKeys";
 import trailingSlashChecker from "./trailingSlashChecker";
-import social from "@/config/social.json";
 
 // This component dynamically generates appropriate JSON-LD data based on the page type
 export type JSONLDProps = {
@@ -82,11 +81,14 @@ export default function JsonLdGenerator(content: JSONLDProps, Astro: any) {
     "@type": "Organization",
     name: config.seo.author,
     url: trailingSlashChecker(Astro.url.origin),
-    sameAs: social.main.filter((item) => item.enable).map((item) => item.url),
-    logo: {
-      "@type": "ImageObject",
-      url: absoluteUrl(config.site.logo, Astro),
-    },
+    // Social profile urls from the "Site settings" in Studio
+    sameAs: config.socialUrls || [],
+    logo: config.site.logo
+      ? {
+          "@type": "ImageObject",
+          url: absoluteUrl(config.site.logo, Astro),
+        }
+      : undefined,
   };
 
   // Utility to remove empty or undefined keys

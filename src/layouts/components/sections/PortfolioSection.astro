@@ -1,64 +1,35 @@
 ---
-import type { Section } from "@/types";
+import { stegaClean } from "@sanity/client/stega";
+import type { PortfolioSectionData } from "@/lib/sanity/types";
 import PortfolioCard from "@/components/cards/PortfolioCard.astro";
 import { markdownify } from "@/lib/utils/textConverter";
-import overrideObjects from "@/lib/utils/overrideObjects.ts";
 import { useTranslations } from "@/lib/utils/i18nUtils";
-import { getCollectionCTM, getEntryCTM } from "@/lib/contentParser.astro";
-import config from ".astro/config.generated.json";
-import type { CollectionEntry } from "astro:content";
-
-// Type for this section data
-export type PortfolioInterface = Section & {
-  options?: CollectionEntry<"portfolio">["data"]["options"];
-};
 
 type Props = {
-  content?: PortfolioInterface;
+  // Section data from Sanity (see `portfolioSection` in Studio)
+  content: PortfolioSectionData;
+  // `data-sanity` attribute for visual editing (preview only)
+  dataSanity?: string;
 };
 
-// Fetching the default content for the this section
-let defaultContent = (
-  await getEntryCTM("sections", "portfolio-section", Astro.currentLocale)
-)?.data as PortfolioInterface;
-
-// Enables content customization (e.g., title, description) with a fallback to 'defaultContent' if not provided.
-// The 'content' prop should match the structure of 'defaultContent'.
-// Allows using this section with different content across multiple pages.
-// If 'content' is missing, 'defaultContent' will be used.
-let actualContent = overrideObjects(
-  { ...defaultContent },
-  Astro.props.content,
-) as PortfolioInterface;
+const { content, dataSanity } = Astro.props;
 
 const t = await useTranslations(Astro.currentLocale as string);
 
-// Extracting required values from 'content' object
-let { enable = true, title, options } = actualContent as PortfolioInterface;
+// `projects` already contains the picked (or all) projects with the limit applied
+const { title, projects = [] } = content;
 
-const { layout, appearance, limit } = options || {};
-
-let projects = await getCollectionCTM(
-  config.settings.portfolioFolder as "portfolio",
-  Astro.currentLocale,
-);
+// Options are cleaned so visual-editing markers never break the comparisons
+const layout: "grid" | "masonry" =
+  stegaClean(content.layout) === "masonry" ? "masonry" : "grid";
+const appearance = stegaClean(content.appearance);
+const options = { layout, appearance };
 
 const isDarkAppearance = appearance === "dark";
-
-// Limiting the number of projects to be displayed
-projects = limit ? projects.slice(0, limit as number) : projects;
-
-if (!enable) {
-  return null;
-}
 ---
 
-<section id="projects">
-  <div
-    class:list={[
-      isDarkAppearance && "bg-theme-darker py-20 md:py-32",
-      layout === "slider" && "overflow-hidden",
-    ]}>
+<section id="projects" data-sanity={dataSanity}>
+  <div class:list={[isDarkAppearance && "bg-theme-darker py-20 md:py-32"]}>
     <div class="container space-y-14">
       {
         title && (
@@ -71,35 +42,23 @@ if (!enable) {
           />
         )
       }
-      {
-        layout === "masonry" || layout === "grid" ? (
-          <div
-            class:list={[
-              "gap-x-20 lg:columns-2",
-              layout === "grid" && "space-y-10",
-            ]}>
-            {projects.map((item, index) => (
-              <PortfolioCard
-                class:list={["space-y-4 overflow-hidden"]}
-                options={options}
-                translations={t}
-                content={item}
-                index={index}
-              />
-            ))}
-          </div>
-        ) : layout === "slider" ? (
-          <div class="py-8 text-center text-sm text-gray-400 italic">
-            Portfolio "Slider" layout is only available in the Pro version.
-            Purchase Folex premium version to unlock this layout.
-          </div>
-        ) : layout === "full-width" ? (
-          <div class="py-8 text-center text-sm text-gray-400 italic">
-            Portfolio "full-width" layout is only available in the Pro version.
-            Purchase Folex premium version to unlock this layout.
-          </div>
-        ) : null
-      }
+      <div
+        class:list={[
+          "gap-x-20 lg:columns-2",
+          layout === "grid" && "space-y-10",
+        ]}>
+        {
+          projects.map((item, index) => (
+            <PortfolioCard
+              class:list={["space-y-4 overflow-hidden"]}
+              options={options}
+              translations={t}
+              content={item}
+              index={index}
+            />
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>

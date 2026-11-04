@@ -1,0 +1,6291 @@
+{
+  "documents": [
+    {
+      "_id": "siteSettings",
+      "_type": "siteSettings",
+      "title": "Folex",
+      "tagline": "Creative Agency & Personal Portfolio Business Theme",
+      "description": "A highly customizable creative agency business theme built with Tailwind CSS and Astro Js",
+      "logo": {
+        "_type": "image",
+        "_sanityAsset": "image@file://./src/assets/images/logo.svg",
+        "alt": "Brand logo of folex"
+      },
+      "logoLight": {
+        "_type": "image",
+        "_sanityAsset": "image@file://./src/assets/images/logo-light.svg",
+        "alt": "Brand logo of folex"
+      },
+      "logoWidth": 86,
+      "logoHeight": 24,
+      "contactInfo": {
+        "address": "27 Division St, New York,\nNY 10002, USA",
+        "email": "folex.agency@mail.com",
+        "phone": "+1 800 123 654 987"
+      },
+      "socialLinks": [
+        {
+          "_type": "socialLink",
+          "_key": "d6af52acaf7d",
+          "platform": "facebook",
+          "url": "https://www.facebook.com"
+        },
+        {
+          "_type": "socialLink",
+          "_key": "51f16ce668e0",
+          "platform": "twitter",
+          "url": "https://twitter.com"
+        },
+        {
+          "_type": "socialLink",
+          "_key": "cbbdac59ebb2",
+          "platform": "instagram",
+          "url": "https://www.instagram.com"
+        },
+        {
+          "_type": "socialLink",
+          "_key": "9ed6a3b66ac4",
+          "platform": "linkedin",
+          "url": "https://www.linkedin.com"
+        }
+      ],
+      "seo": {
+        "author": "Getastrothemes",
+        "keywords": [
+          "free digital agency",
+          "free astro template",
+          "free astro theme",
+          "free astro agency template",
+          "free astro agency theme"
+        ],
+        "robots": "index, follow",
+        "ogImage": {
+          "_type": "image",
+          "_sanityAsset": "image@file://./public/images/og-image.jpg",
+          "alt": "Folex"
+        }
+      },
+      "contactForm": {
+        "provider": "formsubmit.co",
+        "action": "https://formsubmit.co/your_email@example.com"
+      },
+      "stickyHeader": true,
+      "showCopyright": true,
+      "notFound": {
+        "title": "Look Like You’re Lost",
+        "description": "The link you followed probably broken or the page has been removed",
+        "buttonLabel": "Back to Home"
+      }
+    },
+    {
+      "_id": "homePage-en",
+      "_type": "homePage",
+      "language": "en",
+      "title": "Home",
+      "seo": {
+        "_type": "seo",
+        "metaDescription": "This is a example description"
+      },
+      "sections": [
+        {
+          "_type": "bannerSection",
+          "_key": "3d533c30bdc2",
+          "hidden": false,
+          "title": "We Help to Grow\nYour Business",
+          "titleSize": "display-2",
+          "description": "We are digital agency that helps businesses develop immersive and engaging user experiences that drive top level growth",
+          "image": {
+            "_type": "image",
+            "_sanityAsset": "image@file://./src/assets/images/banner/startup.png",
+            "alt": "We Help to Grow Your Business"
+          },
+          "button": {
+            "_type": "link",
+            "enabled": false,
+            "label": "VIEW OUR WORKS",
+            "url": "/",
+            "openInNewTab": false
+          }
+        },
+        {
+          "_type": "clientsSection",
+          "_key": "774caed885f0",
+          "hidden": false,
+          "logos": [
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/1.svg",
+              "alt": "example alt text",
+              "_key": "2c68c34d48d8"
+            },
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/2.svg",
+              "alt": "example alt text",
+              "_key": "a69116260c3a"
+            },
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/3.svg",
+              "alt": "example alt text",
+              "_key": "05ed0c022fe5"
+            },
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/4.svg",
+              "alt": "example alt text",
+              "_key": "6365b8a18b27"
+            },
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/5.svg",
+              "alt": "example alt text",
+              "_key": "6b135cdd97e4"
+            },
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/6.svg",
+              "alt": "example alt text",
+              "_key": "82709f2ee195"
+            },
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/1.svg",
+              "alt": "example alt text",
+              "_key": "27b3c9cb84b6"
+            },
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/2.svg",
+              "alt": "example alt text",
+              "_key": "9c4c76993cb3"
+            }
+          ],
+          "appearance": "light",
+          "columnsPerRow": 4
+        },
+        {
+          "_type": "servicesSection",
+          "_key": "8b48859af566",
+          "hidden": false,
+          "title": "What We Can Do for Our Clients",
+          "sectionDirection": "vertical",
+          "limit": 6
+        },
+        {
+          "_type": "portfolioSection",
+          "_key": "5428c801ca91",
+          "hidden": false,
+          "layout": "grid",
+          "appearance": "light",
+          "limit": 4,
+          "button": {
+            "_type": "link",
+            "enabled": true,
+            "label": "View all",
+            "url": "/",
+            "openInNewTab": false
+          }
+        },
+        {
+          "_type": "pricingSection",
+          "_key": "9166159890a0",
+          "hidden": false,
+          "plans": [
+            {
+              "_type": "pricingPlan",
+              "_key": "41effaca3cb8",
+              "name": "Personal",
+              "description": "We care about their success. For us real relationships feel real",
+              "pricePrefix": "$",
+              "price": "180",
+              "priceSuffix": "/mo",
+              "features": [
+                "WEB & MOBILE",
+                "FREE CUSTOM DOMAIN",
+                "BEST HOSTING EVER",
+                "OUTSTANDING SUPPORT",
+                "WEB DESIGN"
+              ],
+              "button": {
+                "_type": "link",
+                "enabled": true,
+                "label": "CHOOSE THIS PLAN",
+                "url": "/",
+                "openInNewTab": false
+              }
+            },
+            {
+              "_type": "pricingPlan",
+              "_key": "f518b9e2d7b6",
+              "name": "Startup",
+              "description": "We care about their success. For us real relationships feel real",
+              "pricePrefix": "$",
+              "price": "180",
+              "priceSuffix": "/mo",
+              "features": [
+                "WEB & MOBILE",
+                "FREE CUSTOM DOMAIN",
+                "BEST HOSTING EVER",
+                "OUTSTANDING SUPPORT",
+                "WEB DESIGN"
+              ],
+              "button": {
+                "_type": "link",
+                "enabled": true,
+                "label": "CHOOSE THIS PLAN",
+                "url": "/",
+                "openInNewTab": false
+              }
+            },
+            {
+              "_type": "pricingPlan",
+              "_key": "553957b927cd",
+              "name": "Corporate",
+              "description": "We care about their success. For us real relationships feel real",
+              "pricePrefix": "$",
+              "price": "180",
+              "priceSuffix": "/mo",
+              "features": [
+                "WEB & MOBILE",
+                "FREE CUSTOM DOMAIN",
+                "BEST HOSTING EVER",
+                "OUTSTANDING SUPPORT",
+                "WEB DESIGN"
+              ],
+              "button": {
+                "_type": "link",
+                "enabled": true,
+                "label": "CHOOSE THIS PLAN",
+                "url": "/",
+                "openInNewTab": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "navigation-en",
+      "_type": "navigation",
+      "language": "en",
+      "menu": [
+        {
+          "_type": "menuItem",
+          "_key": "a79ee1bb0b02",
+          "label": "Home",
+          "url": "/"
+        },
+        {
+          "_type": "menuItem",
+          "_key": "98a689933797",
+          "label": "Pages",
+          "children": [
+            {
+              "_type": "menuChild",
+              "_key": "d2651c8ab4f5",
+              "label": "Home",
+              "children": [
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "882f2f7516d7",
+                  "label": "Digital Agency",
+                  "url": "https://folex-astro.pages.dev/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "d7e67802cc19",
+                  "label": "Creative Agency",
+                  "url": "https://folex-astro.pages.dev/creative-agency/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "a6f5b781dad2",
+                  "label": "Personal Portfolio",
+                  "url": "https://folex-astro.pages.dev/personal-portfolio/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "007c330a2777",
+                  "label": "Startup Agency",
+                  "url": "/",
+                  "badge": {
+                    "_type": "menuBadge",
+                    "label": "FREE",
+                    "color": "success"
+                  }
+                }
+              ]
+            },
+            {
+              "_type": "menuChild",
+              "_key": "0f7a6cdb6731",
+              "label": "About Us",
+              "url": "https://folex-astro.pages.dev/about/"
+            },
+            {
+              "_type": "menuChild",
+              "_key": "a76db9d12d52",
+              "label": "Services",
+              "children": [
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "9452b3b1fcc5",
+                  "label": "Grid",
+                  "url": "https://folex-astro.pages.dev/services/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "e0bd088c0510",
+                  "label": "Two Column",
+                  "url": "https://folex-astro.pages.dev/services/two-column/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "53475f98effe",
+                  "label": "Accordion",
+                  "url": "https://folex-astro.pages.dev/services/accordion/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "5629555d9c59",
+                  "label": "Single",
+                  "url": "https://folex-astro.pages.dev/services/branding-design/"
+                }
+              ]
+            },
+            {
+              "_type": "menuChild",
+              "_key": "7944348aea58",
+              "label": "Portfolio",
+              "children": [
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "9be8b3deefb7",
+                  "label": "masonry",
+                  "url": "https://folex-astro.pages.dev/portfolio/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "bb5cf2a1491c",
+                  "label": "Gallery",
+                  "url": "https://folex-astro.pages.dev/portfolio/gallery/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "da6b92f44726",
+                  "label": "Slider",
+                  "url": "https://folex-astro.pages.dev/portfolio/slider/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "491cf9c6600c",
+                  "label": "Full Width",
+                  "url": "https://folex-astro.pages.dev/portfolio/full-width/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "a12587d3773a",
+                  "label": "Single",
+                  "url": "https://folex-astro.pages.dev/portfolio/custom-portfolio-slug/"
+                }
+              ]
+            },
+            {
+              "_type": "menuChild",
+              "_key": "d06c33b333c6",
+              "label": "Blog",
+              "children": [
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "4020561aca07",
+                  "label": "Grid",
+                  "url": "https://folex-astro.pages.dev/blog/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "f982a923d698",
+                  "label": "Creative",
+                  "url": "https://folex-astro.pages.dev/blog/creative/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "f0ef736e5fe0",
+                  "label": "Single",
+                  "url": "https://folex-astro.pages.dev/blog/custom-blog-slug/"
+                }
+              ]
+            },
+            {
+              "_type": "menuChild",
+              "_key": "a57e4bc0045b",
+              "label": "Pricing",
+              "url": "https://folex-astro.pages.dev/pricing/"
+            },
+            {
+              "_type": "menuChild",
+              "_key": "a38312e1934e",
+              "label": "Team",
+              "url": "https://folex-astro.pages.dev/team/"
+            },
+            {
+              "_type": "menuChild",
+              "_key": "20a187c08915",
+              "label": "Team Single",
+              "url": "https://folex-astro.pages.dev/team/daniyel-karlos/"
+            },
+            {
+              "_type": "menuChild",
+              "_key": "9d5f5765078d",
+              "label": "Faqs",
+              "url": "https://folex-astro.pages.dev/faq/"
+            },
+            {
+              "_type": "menuChild",
+              "_key": "90297d66c2ea",
+              "label": "Contact",
+              "url": "https://folex-astro.pages.dev/contact/"
+            },
+            {
+              "_type": "menuChild",
+              "_key": "5ee533500b96",
+              "label": "Terms & Conditions",
+              "url": "https://folex-astro.pages.dev/terms-conditions/"
+            },
+            {
+              "_type": "menuChild",
+              "_key": "620ee0fda1e1",
+              "label": "404",
+              "url": "https://folex-astro.pages.dev/404/"
+            }
+          ]
+        },
+        {
+          "_type": "menuItem",
+          "_key": "0191a92b7751",
+          "label": "Elements",
+          "url": "https://folex-astro.pages.dev/elements/",
+          "badge": {
+            "_type": "menuBadge",
+            "label": "NEW",
+            "color": "accent"
+          }
+        }
+      ],
+      "headerButton": {
+        "_type": "link",
+        "enabled": true,
+        "label": "Get Started",
+        "url": "/",
+        "openInNewTab": false
+      },
+      "sidePanel": {
+        "enabled": true,
+        "description": "We are a digital agency that helps businesses create immersive experiences.",
+        "button": {
+          "_type": "link",
+          "enabled": true,
+          "label": "Let’s Talk With Us",
+          "url": "/",
+          "openInNewTab": false
+        }
+      }
+    },
+    {
+      "_id": "footer-en",
+      "_type": "footer",
+      "language": "en",
+      "title": "Let’s Work Together",
+      "description": "We are digital agency that helps businesses develop immersive and engaging user experiences",
+      "copyright": "Copyright © {{ year }} by your company / Crafted with [Getastrothemes](https://getastrothemes.com/)",
+      "contactForm": {
+        "emailSubject": "New form submission from folex website",
+        "submitLabel": "SEND MESSAGE",
+        "fields": [
+          {
+            "_key": "790bd566dc77",
+            "_type": "formField",
+            "name": "Full Name",
+            "placeholder": "Full Name *",
+            "required": true,
+            "halfWidth": true,
+            "fieldType": "text"
+          },
+          {
+            "_key": "62bc3201bbe5",
+            "_type": "formField",
+            "name": "Email Address",
+            "placeholder": "Email Address *",
+            "required": true,
+            "halfWidth": true,
+            "fieldType": "email"
+          },
+          {
+            "_key": "d4bc708646f2",
+            "_type": "formField",
+            "name": "Subject",
+            "placeholder": "Subject *",
+            "required": false,
+            "halfWidth": true,
+            "fieldType": "select",
+            "options": [
+              {
+                "_type": "formOption",
+                "_key": "d14380c3ba84",
+                "label": "General Inquiry",
+                "value": "General Inquiry"
+              },
+              {
+                "_type": "formOption",
+                "_key": "28f0353d106e",
+                "label": "Partnership Opportunity",
+                "value": "Partnership Opportunity"
+              },
+              {
+                "_type": "formOption",
+                "_key": "e840ef510241",
+                "label": "Investment Opportunity",
+                "value": "Investment Opportunity"
+              }
+            ]
+          },
+          {
+            "_key": "e6f3fa411397",
+            "_type": "formField",
+            "name": "Subject With Search",
+            "placeholder": "Subject With Search *",
+            "required": false,
+            "halfWidth": true,
+            "fieldType": "searchSelect",
+            "searchPlaceholder": "Subject With Search",
+            "options": [
+              {
+                "_type": "formOption",
+                "_key": "9f6fb59c5958",
+                "label": "General Inquiry",
+                "value": "General Inquiry"
+              },
+              {
+                "_type": "formOption",
+                "_key": "10da9682f0c7",
+                "label": "Partnership Opportunity",
+                "value": "Partnership Opportunity"
+              },
+              {
+                "_type": "formOption",
+                "_key": "77cea6a86e1b",
+                "label": "Career Opportunity",
+                "value": "Career Opportunity"
+              },
+              {
+                "_type": "formOption",
+                "_key": "aceac0a5333e",
+                "label": "Investment Opportunity",
+                "value": "Investment Opportunity"
+              },
+              {
+                "_type": "formOption",
+                "_key": "276eaba0d1f7",
+                "label": "Media Inquiry",
+                "value": "Media Inquiry"
+              }
+            ]
+          },
+          {
+            "_key": "ee7ad8560cfd",
+            "_type": "formField",
+            "name": "Message",
+            "placeholder": "How can we help you *",
+            "required": true,
+            "halfWidth": false,
+            "fieldType": "textarea",
+            "rows": 2
+          },
+          {
+            "_key": "0ed00fd837ea",
+            "_type": "formField",
+            "name": "User Source",
+            "required": true,
+            "halfWidth": true,
+            "fieldType": "radio",
+            "groupLabel": "How did you hear about us?",
+            "options": [
+              {
+                "_type": "formOption",
+                "_key": "b8b2880f6b1a",
+                "label": "Google Search",
+                "value": "Google Search"
+              },
+              {
+                "_type": "formOption",
+                "_key": "432822272054",
+                "label": "Social Media",
+                "value": "Social Media"
+              }
+            ]
+          },
+          {
+            "_key": "afc5e21b5041",
+            "_type": "formField",
+            "name": "Agreed Privacy",
+            "label": "I agree to the terms and conditions and [privacy policy](/).",
+            "required": true,
+            "halfWidth": false,
+            "fieldType": "checkbox",
+            "checkboxValue": "Agreed"
+          }
+        ],
+        "successMessage": "We have received your message! We'll get back to you as soon as possible.",
+        "errorMessage": "Something went wrong! Please try again later or contact us by email."
+      }
+    },
+    {
+      "_id": "page-en-privacy-policy",
+      "_type": "page",
+      "title": "Privacy Policy",
+      "slug": {
+        "_type": "slug",
+        "current": "privacy-policy"
+      },
+      "language": "en",
+      "body": [
+        {
+          "_type": "block",
+          "_key": "4c3a9a741f69",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "a398fefdcd90",
+              "text": "Effective Date: July, 2022",
+              "marks": [
+                "strong"
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "9b3fb7c6daab",
+          "style": "normal",
+          "markDefs": [
+            {
+              "_key": "8e96c900ad6f",
+              "_type": "link",
+              "href": "https://www.folex.com",
+              "openInNewTab": true
+            }
+          ],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "ca880d5ce7ea",
+              "text": "Welcome to Folex (“we,” “our,” or “us”). Your privacy is important to us, and we are committed to protecting the personal information you share with us. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website, ",
+              "marks": []
+            },
+            {
+              "_type": "span",
+              "_key": "c069ae399729",
+              "text": "https://www.folex.com",
+              "marks": [
+                "8e96c900ad6f"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "354e49fb9913",
+              "text": " (“Website”).",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "db9583f0bef0",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "bd33a2d0b8ca",
+              "text": "Information We Collect",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "a63f37704729",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "54ecd941a87e",
+              "text": "We collect two types of information from you:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "0496ff7089da",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9ffd4c6e9a87",
+              "text": "Personal Information:",
+              "marks": [
+                "strong"
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "c4dd40cc7886",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "69df00e5ec84",
+              "text": "Name",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "70b2b3dcf0fb",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "3ab2f85cc85e",
+              "text": "Email address",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "ef2eaebfe0cd",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "573188c67a40",
+              "text": "Billing information (e.g., credit card details)",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "209e1fdbd6ce",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "e17b0a554099",
+              "text": "Any information you provide voluntarily through forms, surveys, or account creation",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "4951957d07f8",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "6bffa91197f6",
+              "text": "Non-Personal Information:",
+              "marks": [
+                "strong"
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "7047ac6e715e",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "c981885c42a3",
+              "text": "IP address",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "eea93e5b887e",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "f7203866e354",
+              "text": "Browser type",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "f9c4bfe6033c",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "85839620621d",
+              "text": "Operating system",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "aac22d6afcfc",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "bcbfe6e8e301",
+              "text": "Pages visited and time spent on our site",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "74f6310a2fb4",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "488d60e90ed7",
+              "text": "Referring website",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "5262beb7c32f",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "3c0f8510ee6e",
+              "text": "How We Use Your Information",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "848287e11fb5",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "357eab5d354b",
+              "text": "We use the information we collect for the following purposes:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "fa02c60656e6",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "4c4cb530e82b",
+              "text": "To provide and improve our services",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "149c1110ac5f",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "b01c12a12f68",
+              "text": "To process transactions and send receipts",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "e59cf566e7c3",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "56aceea3d71b",
+              "text": "To send you updates, promotions, and service-related communications",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "f9ad25d39cc5",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "90f32795cdf1",
+              "text": "To personalize your experience on our Website",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "474d89dd609b",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "497522a6d361",
+              "text": "To comply with legal obligations",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "821d4a834ffe",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9413c8c415ec",
+              "text": "To detect and prevent fraudulent activity",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "65c3b13118fa",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "df89ccb8e0ec",
+              "text": "Cookies and Tracking Technologies",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "0a6544db8ba5",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "584ffcb3783d",
+              "text": "We use cookies and similar tracking technologies to enhance your experience on our Website. These include:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "ef270240fb74",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "66c721fafe63",
+              "text": "Essential Cookies:",
+              "marks": [
+                "strong"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "d58fe8ab6b32",
+              "text": " Required for the operation of our Website.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "aa243ad3219a",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "fccb223b1e5a",
+              "text": "Performance Cookies:",
+              "marks": [
+                "strong"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "f1395400e4ec",
+              "text": " Help us understand how you use our site.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "486cac047bd3",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "e3a9becd5349",
+              "text": "Marketing Cookies:",
+              "marks": [
+                "strong"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "34eea779f817",
+              "text": " Track your browsing behavior for targeted advertising.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "63492a3a7bc6",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "03f6d3380cd1",
+              "text": "You can control cookies through your browser settings.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "1d7038a731ee",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "1f62efbf95a9",
+              "text": "Sharing of Information",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "923bbe256710",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "f9da523ddf4b",
+              "text": "We do not sell, rent, or trade your personal information. However, we may share your information with:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "ed70ac985e30",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "96199313e9d3",
+              "text": "Service Providers:",
+              "marks": [
+                "strong"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "f157f6e19930",
+              "text": " Third-party companies that help us operate our Website and provide services.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "bb5c3ee5d1d5",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "ea42d25e3032",
+              "text": "Legal Authorities:",
+              "marks": [
+                "strong"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "7ea98eb8cbf6",
+              "text": " When required by law or to protect our rights and property.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "21eac551d8f2",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "e6732e468ffe",
+              "text": "Business Transfers:",
+              "marks": [
+                "strong"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "1952a58770a7",
+              "text": " In case of a merger, acquisition, or sale of assets.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "76eb29f3b77e",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "4f094668c147",
+              "text": "Data Security",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "ec45e2c7a37c",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "58ff5b74fa8d",
+              "text": "We implement industry-standard security measures to protect your data. However, no method of transmission over the Internet or electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your personal information, we cannot guarantee absolute security.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "db5cf228f0e7",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "12111770c643",
+              "text": "Your Rights",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "72923dbb862c",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "4edd893a67ce",
+              "text": "Depending on your location, you may have the following rights regarding your personal information:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "a137373e9f13",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "5cc0f1c2d913",
+              "text": "Access your data",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "58a7c5979d17",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "92261e869663",
+              "text": "Correct or update your data",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "7f00b735cca7",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "5a0967ca9387",
+              "text": "Request deletion of your data",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "96e02e0d35b5",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "09bd3853c3b7",
+              "text": "Restrict processing of your data",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "a289488ba07d",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "312afbbaf0b2",
+              "text": "Withdraw consent for data usage",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "7bbad7f1708b",
+          "style": "normal",
+          "markDefs": [
+            {
+              "_key": "95aa87268f6d",
+              "_type": "link",
+              "href": "mailto:privacy@folex.com",
+              "openInNewTab": false
+            }
+          ],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "364c94da7a51",
+              "text": "To exercise your rights, please contact us at ",
+              "marks": []
+            },
+            {
+              "_type": "span",
+              "_key": "c983e189bb81",
+              "text": "privacy@folex.com",
+              "marks": [
+                "95aa87268f6d"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "61abbf1039ea",
+              "text": ".",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "b0c299fdb1f3",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "1a27f85b10c6",
+              "text": "Third-Party Links",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "d05c3e55ad33",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "b30eb3444329",
+              "text": "Our Website may contain links to third-party websites. We are not responsible for the privacy practices of these websites. We encourage you to review their privacy policies before providing any personal information.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "eaa768af4f41",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "70db01f49059",
+              "text": "Children’s Privacy",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "f9a72b8bc093",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "5d616dedd6f0",
+              "text": "Our Website is not intended for individuals under the age of 13. We do not knowingly collect personal information from children under 13. If you believe we have collected such information, please contact us immediately.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "d1ed8407f927",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "fab5fcb2aca1",
+              "text": "Changes to This Privacy Policy",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "19c48b042729",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "270f48477586",
+              "text": "We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated “Effective Date.” We encourage you to review this Privacy Policy periodically.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "219d7a9697a5",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "173c98347b09",
+              "text": "Contact Us",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "208a4a09397b",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9c78c34783d4",
+              "text": "If you have any questions or concerns about this Privacy Policy, please contact us at:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "377157987779",
+          "style": "normal",
+          "markDefs": [
+            {
+              "_key": "87411ac801da",
+              "_type": "link",
+              "href": "mailto:privacy@folex.com",
+              "openInNewTab": false
+            }
+          ],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "2465facbada2",
+              "text": "Folex Email: ",
+              "marks": []
+            },
+            {
+              "_type": "span",
+              "_key": "25d909817873",
+              "text": "privacy@folex.com",
+              "marks": [
+                "87411ac801da"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "ddf090ab6ec4",
+              "text": " Address: 123 Folex Lane, Imaginary City, IC 12345, USA",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "688f69a07878",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "578a5cd0f2c2",
+              "text": "Thank you for trusting Folex with your personal information!",
+              "marks": []
+            }
+          ]
+        }
+      ],
+      "seo": {
+        "_type": "seo",
+        "metaDescription": "This is a example description"
+      }
+    },
+    {
+      "_id": "page-en-terms-conditions",
+      "_type": "page",
+      "title": "Terms & Conditions",
+      "slug": {
+        "_type": "slug",
+        "current": "terms-conditions"
+      },
+      "language": "en",
+      "body": [
+        {
+          "_type": "block",
+          "_key": "2562c09458b5",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "ad04904cd939",
+              "text": "Effective Date:",
+              "marks": [
+                "strong"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "1c154898505e",
+              "text": " July, 2022",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "e0beefd63c3a",
+          "style": "normal",
+          "markDefs": [
+            {
+              "_key": "e39cb85d91eb",
+              "_type": "link",
+              "href": "https://www.folex.com",
+              "openInNewTab": true
+            }
+          ],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "f5eea5e6c0e0",
+              "text": "Welcome to Folex (“we,” “our,” or “us”). By accessing or using our website, ",
+              "marks": []
+            },
+            {
+              "_type": "span",
+              "_key": "f420f1c32254",
+              "text": "https://www.folex.com",
+              "marks": [
+                "e39cb85d91eb"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "05242b2a4bd3",
+              "text": " (“Website”), you agree to comply with and be bound by the following Terms and Conditions (“Terms”). If you do not agree with these Terms, please do not use our Website.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "a8d7397ac470",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9cc0fba5bf73",
+              "text": "Acceptance of Terms",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "e968b68e07f5",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "d3b77d5947f1",
+              "text": "By accessing or using the Website, you confirm that you are at least 18 years old or have the legal consent of a parent or guardian. Your continued use of the Website constitutes your agreement to these Terms.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "82d4c69beed5",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "a4942769dd84",
+              "text": "Use of the Website",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "001a7f186a07",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "15f1fbdfe770",
+              "text": "You agree to use the Website only for lawful purposes and in a manner that does not infringe on the rights of others or restrict their use of the Website. Prohibited uses include but are not limited to:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "e9be698d2eb9",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "48321a414ec9",
+              "text": "Engaging in any unlawful activity.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "02ad17d9d5b2",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "1e012ad59fdb",
+              "text": "Attempting to gain unauthorized access to the Website or its servers.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "4ce9bde53213",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "e6bb23b9ff90",
+              "text": "Introducing harmful software or code, such as viruses or malware.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "7e5f26f4da92",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "2a1135657622",
+              "text": "Misrepresenting your identity or affiliations.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "b917e0bcb045",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "37f23fb57f4a",
+              "text": "User Accounts",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "b3e8903639bc",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "f8d080554a97",
+              "text": "If you create an account on our Website, you are responsible for maintaining the confidentiality of your login credentials. You agree to notify us immediately of any unauthorized use of your account. We reserve the right to terminate accounts that violate these Terms.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "c6bd5ff20910",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "cd61b5838d47",
+              "text": "Intellectual Property",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "3078561d4879",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "60b827e45347",
+              "text": "All content on the Website, including but not limited to text, images, logos, and software, is the property of Folex or its licensors and is protected by copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, or modify any content without prior written consent from Folex.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "a843b4fdc3e9",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "a9a5520a8032",
+              "text": "Purchases and Payments",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "b0ac1cf586ed",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "063c846a6263",
+              "text": "All purchases made on the Website are subject to our pricing and payment terms. You agree to provide accurate payment information and authorize us to charge your payment method for the agreed-upon amounts. Refunds, if applicable, will be processed according to our Refund Policy.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "22efc106dcee",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "24f850d71879",
+              "text": "Disclaimer of Warranties",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "fc001f050a90",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "c7f2a7ac9383",
+              "text": "The Website and its content are provided “as is” without warranties of any kind, either express or implied. We do not guarantee that the Website will be error-free, secure, or available at all times.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "aa5313fe57ab",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "158872edcf04",
+              "text": "Limitation of Liability",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "eb35467a39cf",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "e87cdf91c020",
+              "text": "To the fullest extent permitted by law, Folex shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the Website or inability to access it. Our total liability for any claims related to the Website shall not exceed the amount paid by you, if any, to Folex.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "f4d5a5af75dd",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "bd2aa11bb898",
+              "text": "Termination",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "1338c8726f1a",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "ad50296f4dad",
+              "text": "We reserve the right to suspend or terminate your access to the Website at our sole discretion, without notice, if we believe you have violated these Terms or any applicable law.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "15e030dff944",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "2379ac30e651",
+              "text": "Third-Party Links",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "9b7e1df4d6a3",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "43fde67e3bd5",
+              "text": "Our Website may contain links to third-party websites. We are not responsible for the content or practices of these websites. Your use of third-party sites is at your own risk.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "f88521df5b25",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "b7b5f08fdb9c",
+              "text": "Governing Law",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "95fc556035da",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "950fc0568559",
+              "text": "These Terms are governed by and construed in accordance with the laws of the State of Imaginary, USA, without regard to its conflict of law principles. Any disputes arising under these Terms shall be resolved in the courts located in Imaginary City, USA.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "a426e94b88fb",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "bd01b9e7ce39",
+              "text": "Changes to Terms",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "6353b9af5eeb",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "2147c2f1f60d",
+              "text": "We reserve the right to update or modify these Terms at any time without prior notice. Any changes will be effective immediately upon posting on this page. Your continued use of the Website constitutes acceptance of the revised Terms.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "650df7d4f4d3",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "dde6081f77c4",
+              "text": "Contact Us",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "499386a199c3",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "210fdde589a2",
+              "text": "If you have any questions or concerns about these Terms, please contact us at:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "f37a4cb0a83d",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "ccc60ae2ed92",
+              "text": "Folex",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "c8f2c05c9cc8",
+          "style": "normal",
+          "markDefs": [
+            {
+              "_key": "aaa40ac7c3ba",
+              "_type": "link",
+              "href": "mailto:support@folex.com",
+              "openInNewTab": false
+            }
+          ],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "66b5b25319ef",
+              "text": "Email: ",
+              "marks": []
+            },
+            {
+              "_type": "span",
+              "_key": "67dae007ede8",
+              "text": "support@folex.com",
+              "marks": [
+                "aaa40ac7c3ba"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "3e74028d8a0f",
+              "text": "\nAddress: 123 Folex Lane, Imaginary City, IC 12345, USA",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "1ecc68ee04bd",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "1419011bb341",
+              "text": "Thank you for using Folex!",
+              "marks": []
+            }
+          ]
+        }
+      ],
+      "seo": {
+        "_type": "seo",
+        "metaDescription": "This is a example description"
+      }
+    },
+    {
+      "_id": "project-en-portfolio-01",
+      "_type": "project",
+      "title": "Money Laundering Compliance Scanner",
+      "slug": {
+        "_type": "slug",
+        "current": "custom-portfolio-slug"
+      },
+      "language": "en",
+      "date": "2022-06-13",
+      "order": 1,
+      "categories": [
+        "Branding",
+        "Development",
+        "Marketing"
+      ],
+      "coverImage": {
+        "_type": "image",
+        "_sanityAsset": "image@file://./src/assets/images/portfolio/1.jpg",
+        "alt": "Money Laundering Compliance Scanner"
+      },
+      "gallery": [
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/2.jpg",
+          "alt": "Money Laundering Compliance Scanner image 1",
+          "_key": "7de99931d0f0"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/3.jpg",
+          "alt": "Money Laundering Compliance Scanner image 2",
+          "_key": "a1d14da74052"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/4.jpg",
+          "alt": "Money Laundering Compliance Scanner image 3",
+          "_key": "191224572c4a"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/5.jpg",
+          "alt": "Money Laundering Compliance Scanner image 4",
+          "_key": "fa44adce7222"
+        }
+      ],
+      "details": [
+        {
+          "_type": "projectDetail",
+          "_key": "aec189fe306d",
+          "label": "Category:",
+          "valueType": "categories"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "41070b10472a",
+          "label": "Software:",
+          "valueType": "custom",
+          "value": "WordPress, Figma"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "a9823e3f12da",
+          "label": "Service:",
+          "valueType": "custom",
+          "value": "Development"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "7963c307f001",
+          "label": "Client:",
+          "valueType": "custom",
+          "value": "Eunice Mills"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "aef300116a55",
+          "label": "Date:",
+          "valueType": "date"
+        }
+      ],
+      "body": [
+        {
+          "_type": "block",
+          "_key": "ce797574f3b6",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "2914d9348623",
+              "text": "BaseCreate is pleased to announce that it has been commissioned by Leighton Asia reposition its brand. We will help Leighton Asia evolve its brand strategy, and will be responsible updating Leighton Asia’s brand identity, website, and other collaterals. For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "76adb8df6bf1",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "d78e213645dd",
+              "text": "Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "256933f71aa2",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "fea4eeb2085d",
+              "text": "Challenge & Solution",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "5cacef3d47a1",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "bfd0fe7dc0c4",
+              "text": "Future, as it seeks to lead the industry in technological innovation and sustainable building practices to deliver long-lasting value for its clients.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "109ed853e85c",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "c1e44f13def2",
+              "text": "Final Result",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "0d9a84dae77c",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "475c1807db70",
+              "text": "For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "project-en-portfolio-02",
+      "_type": "project",
+      "title": "Optimizing Supply Chain Efficiency",
+      "slug": {
+        "_type": "slug",
+        "current": "portfolio-02"
+      },
+      "language": "en",
+      "date": "2022-06-12",
+      "order": 2,
+      "categories": [
+        "Branding",
+        "Development",
+        "Marketing"
+      ],
+      "coverImage": {
+        "_type": "image",
+        "_sanityAsset": "image@file://./src/assets/images/portfolio/2.jpg",
+        "alt": "Optimizing Supply Chain Efficiency"
+      },
+      "gallery": [
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/2.jpg",
+          "alt": "Optimizing Supply Chain Efficiency image 1",
+          "_key": "8bed4cc3489f"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/3.jpg",
+          "alt": "Optimizing Supply Chain Efficiency image 2",
+          "_key": "2e5801ec0944"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/4.jpg",
+          "alt": "Optimizing Supply Chain Efficiency image 3",
+          "_key": "4fc418e7e37d"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/5.jpg",
+          "alt": "Optimizing Supply Chain Efficiency image 4",
+          "_key": "6327efdf545f"
+        }
+      ],
+      "details": [
+        {
+          "_type": "projectDetail",
+          "_key": "17f8fda5bc9f",
+          "label": "Category:",
+          "valueType": "categories"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "768918f16088",
+          "label": "Software:",
+          "valueType": "custom",
+          "value": "WordPress, Figma"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "dc44d3142ee6",
+          "label": "Service:",
+          "valueType": "custom",
+          "value": "Development"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "08d8904bb511",
+          "label": "Client:",
+          "valueType": "custom",
+          "value": "Eunice Mills"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "9c09d36b8c57",
+          "label": "Date:",
+          "valueType": "date"
+        }
+      ],
+      "body": [
+        {
+          "_type": "block",
+          "_key": "ae2fb2e20e9f",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "2558d3e7ecb3",
+              "text": "BaseCreate is pleased to announce that it has been commissioned by Leighton Asia reposition its brand. We will help Leighton Asia evolve its brand strategy, and will be responsible updating Leighton Asia’s brand identity, website, and other collaterals. For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "644f05eb1dad",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "409d70cce299",
+              "text": "Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "ef7a33480c6a",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "41c4da6726b6",
+              "text": "Challenge & Solution",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "c81c75f530c2",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "531fdcb0fd3c",
+              "text": "Future, as it seeks to lead the industry in technological innovation and sustainable building practices to deliver long-lasting value for its clients.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "2b9a838774a5",
+          "style": "h4",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "c119f66d96a8",
+              "text": "Final Result",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "63d5bc979ef7",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "e706d042321c",
+              "text": "For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "project-en-portfolio-03",
+      "_type": "project",
+      "title": "Enhancing Workplace Safety Protocols",
+      "slug": {
+        "_type": "slug",
+        "current": "portfolio-03"
+      },
+      "language": "en",
+      "date": "2022-06-11",
+      "order": 3,
+      "categories": [
+        "Branding",
+        "Development",
+        "Marketing"
+      ],
+      "coverImage": {
+        "_type": "image",
+        "_sanityAsset": "image@file://./src/assets/images/portfolio/3.jpg",
+        "alt": "Enhancing Workplace Safety Protocols"
+      },
+      "gallery": [
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/2.jpg",
+          "alt": "Enhancing Workplace Safety Protocols image 1",
+          "_key": "1ddd1397058b"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/3.jpg",
+          "alt": "Enhancing Workplace Safety Protocols image 2",
+          "_key": "cc74ec43ea06"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/4.jpg",
+          "alt": "Enhancing Workplace Safety Protocols image 3",
+          "_key": "83d12f47db6a"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/5.jpg",
+          "alt": "Enhancing Workplace Safety Protocols image 4",
+          "_key": "ff3384d54b44"
+        }
+      ],
+      "details": [
+        {
+          "_type": "projectDetail",
+          "_key": "4142e2e1b40c",
+          "label": "Category:",
+          "valueType": "categories"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "f830310e597d",
+          "label": "Software:",
+          "valueType": "custom",
+          "value": "WordPress, Figma"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "8cf043d5f13f",
+          "label": "Service:",
+          "valueType": "custom",
+          "value": "Development"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "ec88b4b90a94",
+          "label": "Client:",
+          "valueType": "custom",
+          "value": "Eunice Mills"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "2017ef54b902",
+          "label": "Date:",
+          "valueType": "date"
+        }
+      ],
+      "body": [
+        {
+          "_type": "block",
+          "_key": "fdb868363f97",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "333207364728",
+              "text": "BaseCreate is pleased to announce that it has been commissioned by Leighton Asia reposition its brand. We will help Leighton Asia evolve its brand strategy, and will be responsible updating Leighton Asia’s brand identity, website, and other collaterals. For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "0b77760f3d2a",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "ce01e782548e",
+              "text": "Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "0ecc01f7ff03",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "ddcd8b5bbf08",
+              "text": "Challenge & Solution",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "9b1177c2c106",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9beb6d7e2ec8",
+              "text": "Future, as it seeks to lead the industry in technological innovation and sustainable building practices to deliver long-lasting value for its clients.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "b33655331687",
+          "style": "h4",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "4248a2c4c38a",
+              "text": "Final Result",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "6fcf4532b9c1",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "7d1a18ed012e",
+              "text": "For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "project-en-portfolio-04",
+      "_type": "project",
+      "title": "Streamlining Financial Reporting",
+      "slug": {
+        "_type": "slug",
+        "current": "portfolio-04"
+      },
+      "language": "en",
+      "date": "2022-06-10",
+      "order": 4,
+      "categories": [
+        "Branding",
+        "Development",
+        "Marketing"
+      ],
+      "coverImage": {
+        "_type": "image",
+        "_sanityAsset": "image@file://./src/assets/images/portfolio/4.jpg",
+        "alt": "Streamlining Financial Reporting"
+      },
+      "gallery": [
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/2.jpg",
+          "alt": "Streamlining Financial Reporting image 1",
+          "_key": "e9a61c9b19a9"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/3.jpg",
+          "alt": "Streamlining Financial Reporting image 2",
+          "_key": "42ff3bfd2a79"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/4.jpg",
+          "alt": "Streamlining Financial Reporting image 3",
+          "_key": "39ac42fe5717"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/5.jpg",
+          "alt": "Streamlining Financial Reporting image 4",
+          "_key": "5f202d4b403c"
+        }
+      ],
+      "details": [
+        {
+          "_type": "projectDetail",
+          "_key": "f574c88279fa",
+          "label": "Category:",
+          "valueType": "categories"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "4b95e50f301d",
+          "label": "Software:",
+          "valueType": "custom",
+          "value": "WordPress, Figma"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "a1ec066ed4a5",
+          "label": "Service:",
+          "valueType": "custom",
+          "value": "Development"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "a5db879fde85",
+          "label": "Client:",
+          "valueType": "custom",
+          "value": "Eunice Mills"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "876493cb4976",
+          "label": "Date:",
+          "valueType": "date"
+        }
+      ],
+      "body": [
+        {
+          "_type": "block",
+          "_key": "42ed9625883e",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9658be417bac",
+              "text": "BaseCreate is pleased to announce that it has been commissioned by Leighton Asia reposition its brand. We will help Leighton Asia evolve its brand strategy, and will be responsible updating Leighton Asia’s brand identity, website, and other collaterals. For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "d8e98e1b1f07",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "8d64fa7b7478",
+              "text": "Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "186435996046",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "6af1703c9b05",
+              "text": "Challenge & Solution",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "73a8f593e468",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "53df0d280981",
+              "text": "Future, as it seeks to lead the industry in technological innovation and sustainable building practices to deliver long-lasting value for its clients.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "e3041347d595",
+          "style": "h4",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "3623f9c2eb0d",
+              "text": "Final Result",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "10139083bd54",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "53e15cf7833a",
+              "text": "For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "project-en-portfolio-05",
+      "_type": "project",
+      "title": "Improving Product Development Processes",
+      "slug": {
+        "_type": "slug",
+        "current": "portfolio-05"
+      },
+      "language": "en",
+      "date": "2022-06-09",
+      "order": 5,
+      "categories": [
+        "Branding",
+        "Development",
+        "Marketing"
+      ],
+      "coverImage": {
+        "_type": "image",
+        "_sanityAsset": "image@file://./src/assets/images/portfolio/5.jpg",
+        "alt": "Improving Product Development Processes"
+      },
+      "gallery": [
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/2.jpg",
+          "alt": "Improving Product Development Processes image 1",
+          "_key": "bc5faed45a7f"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/3.jpg",
+          "alt": "Improving Product Development Processes image 2",
+          "_key": "b2e6e7b8462a"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/4.jpg",
+          "alt": "Improving Product Development Processes image 3",
+          "_key": "4a4fdfa4d5fe"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/5.jpg",
+          "alt": "Improving Product Development Processes image 4",
+          "_key": "de4716a294db"
+        }
+      ],
+      "details": [
+        {
+          "_type": "projectDetail",
+          "_key": "816e5e6a2048",
+          "label": "Category:",
+          "valueType": "categories"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "f5dea078e037",
+          "label": "Software:",
+          "valueType": "custom",
+          "value": "WordPress, Figma"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "ef5f36b4fb61",
+          "label": "Service:",
+          "valueType": "custom",
+          "value": "Development"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "99bb36467779",
+          "label": "Client:",
+          "valueType": "custom",
+          "value": "Eunice Mills"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "479f8338bf91",
+          "label": "Date:",
+          "valueType": "date"
+        }
+      ],
+      "body": [
+        {
+          "_type": "block",
+          "_key": "8162e1612dab",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "0fe30e4befc7",
+              "text": "BaseCreate is pleased to announce that it has been commissioned by Leighton Asia reposition its brand. We will help Leighton Asia evolve its brand strategy, and will be responsible updating Leighton Asia’s brand identity, website, and other collaterals. For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "8b96f8d14367",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "403bfa7454dd",
+              "text": "Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "b5ffecd4999a",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "1c03949fe78b",
+              "text": "Challenge & Solution",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "ff346693daa7",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "a6931cefac00",
+              "text": "Future, as it seeks to lead the industry in technological innovation and sustainable building practices to deliver long-lasting value for its clients.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "e8d642426492",
+          "style": "h4",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9681bf8ef244",
+              "text": "Final Result",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "47f6f34cfdfa",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "75a92ce23a64",
+              "text": "For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "project-en-portfolio-06",
+      "_type": "project",
+      "title": "Enhancing User Experience through UX Design",
+      "slug": {
+        "_type": "slug",
+        "current": "portfolio-06"
+      },
+      "language": "en",
+      "date": "2022-06-08",
+      "order": 6,
+      "categories": [
+        "Branding",
+        "Development",
+        "Marketing"
+      ],
+      "coverImage": {
+        "_type": "image",
+        "_sanityAsset": "image@file://./src/assets/images/portfolio/6.jpg",
+        "alt": "Enhancing User Experience through UX Design"
+      },
+      "gallery": [
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/2.jpg",
+          "alt": "Enhancing User Experience through UX Design image 1",
+          "_key": "64b6c2b974c1"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/3.jpg",
+          "alt": "Enhancing User Experience through UX Design image 2",
+          "_key": "d90d46293c51"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/4.jpg",
+          "alt": "Enhancing User Experience through UX Design image 3",
+          "_key": "0a023d2ecc85"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/5.jpg",
+          "alt": "Enhancing User Experience through UX Design image 4",
+          "_key": "2b73f9e581c7"
+        }
+      ],
+      "details": [
+        {
+          "_type": "projectDetail",
+          "_key": "5fdc72c95675",
+          "label": "Category:",
+          "valueType": "categories"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "dc47e54540f7",
+          "label": "Software:",
+          "valueType": "custom",
+          "value": "WordPress, Figma"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "2d44bfa62b03",
+          "label": "Service:",
+          "valueType": "custom",
+          "value": "Development"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "121df0aafaf5",
+          "label": "Client:",
+          "valueType": "custom",
+          "value": "Eunice Mills"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "4d8554a32b36",
+          "label": "Date:",
+          "valueType": "date"
+        }
+      ],
+      "body": [
+        {
+          "_type": "block",
+          "_key": "27a07766c1c1",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "e9d628368db5",
+              "text": "BaseCreate is pleased to announce that it has been commissioned by Leighton Asia reposition its brand. We will help Leighton Asia evolve its brand strategy, and will be responsible updating Leighton Asia’s brand identity, website, and other collaterals. For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "0acc1670f0a7",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "1c5c31e75758",
+              "text": "Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "949c4a633816",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "c62aa607cec4",
+              "text": "Challenge & Solution",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "e3ac72a5b60e",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "44a177c3a388",
+              "text": "Future, as it seeks to lead the industry in technological innovation and sustainable building practices to deliver long-lasting value for its clients.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "1e858e0b6b9a",
+          "style": "h4",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "27278883bc11",
+              "text": "Final Result",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "1727b230e963",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "728872f9c2e8",
+              "text": "For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "service-en-service-01",
+      "_type": "service",
+      "title": "Branding Design",
+      "language": "en",
+      "description": "Good website tells a story that will make users fully immerse themselves operating",
+      "order": 1
+    },
+    {
+      "_id": "service-en-service-02",
+      "_type": "service",
+      "title": "Web Development",
+      "language": "en",
+      "description": "A well-designed website narrates a story that deeply engages users and enhances their experience.",
+      "order": 2
+    },
+    {
+      "_id": "service-en-service-03",
+      "_type": "service",
+      "title": "Digital Marketing",
+      "language": "en",
+      "description": "An effective website narrates a compelling story that deeply engages users, enhancing their experience.",
+      "order": 3
+    },
+    {
+      "_id": "service-en-service-04",
+      "_type": "service",
+      "title": "Illustration Modelling",
+      "language": "en",
+      "description": "Good website tells a story that will make users fully immerse themselves operating",
+      "order": 4
+    },
+    {
+      "_id": "service-en-service-05",
+      "_type": "service",
+      "title": "Social Advertising",
+      "language": "en",
+      "description": "A well-designed website tells a story that deeply engages users, enhancing their experience.",
+      "order": 5
+    },
+    {
+      "_id": "service-en-service-06",
+      "_type": "service",
+      "title": "Content Marketing",
+      "language": "en",
+      "description": "Good website tells a story that will make users fully immerse themselves operating",
+      "order": 6
+    },
+    {
+      "_id": "homePage-fr",
+      "_type": "homePage",
+      "language": "fr",
+      "title": "Accueil - Startup Agency",
+      "seo": {
+        "_type": "seo",
+        "metaDescription": "Ceci est une description d'exemple"
+      },
+      "sections": [
+        {
+          "_type": "bannerSection",
+          "_key": "1fa333700052",
+          "hidden": false,
+          "title": "Nous Aidons à Grandir Votre Entreprise",
+          "titleSize": "display-2",
+          "description": "Nous sommes une agence digitale qui aide les entreprises à créer des expériences utilisateur immersives et engageantes pour stimuler leur croissance",
+          "image": {
+            "_type": "image",
+            "_sanityAsset": "image@file://./src/assets/images/banner/startup.png",
+            "alt": "Nous Aidons à Grandir Votre Entreprise"
+          },
+          "button": {
+            "_type": "link",
+            "enabled": false,
+            "label": "VOIR NOS RÉALISATIONS",
+            "url": "/",
+            "openInNewTab": false
+          }
+        },
+        {
+          "_type": "clientsSection",
+          "_key": "625d4551d404",
+          "hidden": false,
+          "logos": [
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/1.svg",
+              "alt": "example alt text",
+              "_key": "2213afc8c95b"
+            },
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/2.svg",
+              "alt": "example alt text",
+              "_key": "ebe12cd3f081"
+            },
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/3.svg",
+              "alt": "example alt text",
+              "_key": "770be9085bae"
+            },
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/4.svg",
+              "alt": "example alt text",
+              "_key": "827c2abbfeca"
+            },
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/5.svg",
+              "alt": "example alt text",
+              "_key": "72381775cf20"
+            },
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/6.svg",
+              "alt": "example alt text",
+              "_key": "024f7d0acb14"
+            },
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/1.svg",
+              "alt": "example alt text",
+              "_key": "a588d333ad25"
+            },
+            {
+              "_type": "image",
+              "_sanityAsset": "image@file://./src/assets/images/clients/2.svg",
+              "alt": "example alt text",
+              "_key": "8d27887be3cd"
+            }
+          ],
+          "appearance": "light",
+          "columnsPerRow": 4
+        },
+        {
+          "_type": "servicesSection",
+          "_key": "4eb9706dd732",
+          "hidden": false,
+          "title": "Ce que nous pouvons faire pour nos clients",
+          "sectionDirection": "vertical",
+          "limit": 6
+        },
+        {
+          "_type": "portfolioSection",
+          "_key": "c7bf47818fe4",
+          "hidden": false,
+          "layout": "grid",
+          "appearance": "light",
+          "limit": 4,
+          "button": {
+            "_type": "link",
+            "enabled": true,
+            "label": "Voir tout",
+            "url": "/",
+            "openInNewTab": false
+          }
+        },
+        {
+          "_type": "pricingSection",
+          "_key": "c8d61ec534fd",
+          "hidden": false,
+          "plans": [
+            {
+              "_type": "pricingPlan",
+              "_key": "3412409a057f",
+              "name": "Personnel",
+              "description": "Nous nous soucions de leur réussite. Pour nous, les relations authentiques sont vraies",
+              "pricePrefix": "€",
+              "price": "180",
+              "priceSuffix": "/mois",
+              "features": [
+                "WEB & MOBILE",
+                "DOMAINE PERSONNALISÉ GRATUIT",
+                "MEILLEUR HÉBERGEMENT",
+                "SUPPORT EXCEPTIONNEL",
+                "DESIGN WEB"
+              ],
+              "button": {
+                "_type": "link",
+                "enabled": true,
+                "label": "CHOISIR CE PLAN",
+                "url": "/",
+                "openInNewTab": false
+              }
+            },
+            {
+              "_type": "pricingPlan",
+              "_key": "8bdead4d5c15",
+              "name": "Startup",
+              "description": "Nous nous soucions de leur réussite. Pour nous, les relations authentiques sont vraies",
+              "pricePrefix": "€",
+              "price": "180",
+              "priceSuffix": "/mois",
+              "features": [
+                "WEB & MOBILE",
+                "DOMAINE PERSONNALISÉ GRATUIT",
+                "MEILLEUR HÉBERGEMENT",
+                "SUPPORT EXCEPTIONNEL",
+                "DESIGN WEB"
+              ],
+              "button": {
+                "_type": "link",
+                "enabled": true,
+                "label": "CHOISIR CE PLAN",
+                "url": "/",
+                "openInNewTab": false
+              }
+            },
+            {
+              "_type": "pricingPlan",
+              "_key": "54763991eebb",
+              "name": "Entreprise",
+              "description": "Nous nous soucions de leur réussite. Pour nous, les relations authentiques sont vraies",
+              "pricePrefix": "€",
+              "price": "180",
+              "priceSuffix": "/mois",
+              "features": [
+                "WEB & MOBILE",
+                "DOMAINE PERSONNALISÉ GRATUIT",
+                "MEILLEUR HÉBERGEMENT",
+                "SUPPORT EXCEPTIONNEL",
+                "DESIGN WEB"
+              ],
+              "button": {
+                "_type": "link",
+                "enabled": true,
+                "label": "CHOISIR CE PLAN",
+                "url": "/",
+                "openInNewTab": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "navigation-fr",
+      "_type": "navigation",
+      "language": "fr",
+      "menu": [
+        {
+          "_type": "menuItem",
+          "_key": "74ea3dec2ff1",
+          "label": "Accueil",
+          "url": "/"
+        },
+        {
+          "_type": "menuItem",
+          "_key": "4b4675293c9a",
+          "label": "Pages",
+          "children": [
+            {
+              "_type": "menuChild",
+              "_key": "7289cfd61c34",
+              "label": "Accueil",
+              "children": [
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "45f05dab0831",
+                  "label": "Agence digitale",
+                  "url": "https://folex-astro.pages.dev/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "e807fc94db32",
+                  "label": "Agence cr atrice",
+                  "url": "https://folex-astro.pages.dev/creative-agency/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "e867ec1fb31c",
+                  "label": "Portfolio personnel",
+                  "url": "https://folex-astro.pages.dev/personal-portfolio/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "1b9c5c4218bb",
+                  "label": "Agence de d",
+                  "url": "/",
+                  "badge": {
+                    "_type": "menuBadge",
+                    "label": "GRATUIT",
+                    "color": "success"
+                  }
+                }
+              ]
+            },
+            {
+              "_type": "menuChild",
+              "_key": "72501096a459",
+              "label": "propos",
+              "url": "https://folex-astro.pages.dev/about/"
+            },
+            {
+              "_type": "menuChild",
+              "_key": "e3fe1d6cbf6f",
+              "label": "Services",
+              "children": [
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "b63c35fe55e2",
+                  "label": "Grille",
+                  "url": "https://folex-astro.pages.dev/services/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "91d7402a1ac6",
+                  "label": "Deux colonnes",
+                  "url": "https://folex-astro.pages.dev/services/two-column/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "0c89f469daf8",
+                  "label": "Accordion",
+                  "url": "https://folex-astro.pages.dev/services/accordion/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "7193c8b3a681",
+                  "label": "Simple",
+                  "url": "https://folex-astro.pages.dev/services/branding-design/"
+                }
+              ]
+            },
+            {
+              "_type": "menuChild",
+              "_key": "3e7a898af428",
+              "label": "Portfolio",
+              "children": [
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "4d0a327bd874",
+                  "label": "Mosa que",
+                  "url": "https://folex-astro.pages.dev/portfolio/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "1eeee3918d03",
+                  "label": "Galerie",
+                  "url": "https://folex-astro.pages.dev/portfolio/gallery/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "549cc9157630",
+                  "label": "Diapositive",
+                  "url": "https://folex-astro.pages.dev/portfolio/slider/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "7290b4f2d4c5",
+                  "label": "Largeur",
+                  "url": "https://folex-astro.pages.dev/portfolio/full-width/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "95e1446b4418",
+                  "label": "Simple",
+                  "url": "https://folex-astro.pages.dev/portfolio/custom-portfolio-slug/"
+                }
+              ]
+            },
+            {
+              "_type": "menuChild",
+              "_key": "6cfdc1d92c8c",
+              "label": "Blog",
+              "children": [
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "4e3beb504df3",
+                  "label": "Grille",
+                  "url": "https://folex-astro.pages.dev/blog/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "2590a869d173",
+                  "label": "Cr atif",
+                  "url": "https://folex-astro.pages.dev/blog/creative/"
+                },
+                {
+                  "_type": "menuGrandchild",
+                  "_key": "d96865246b84",
+                  "label": "Simple",
+                  "url": "https://folex-astro.pages.dev/blog/custom-blog-slug/"
+                }
+              ]
+            },
+            {
+              "_type": "menuChild",
+              "_key": "1459164b39ab",
+              "label": "Tarification",
+              "url": "https://folex-astro.pages.dev/pricing/"
+            },
+            {
+              "_type": "menuChild",
+              "_key": "274c68b87496",
+              "label": "quipe",
+              "url": "https://folex-astro.pages.dev/team/"
+            },
+            {
+              "_type": "menuChild",
+              "_key": "dbda304a4283",
+              "label": "quipe simple",
+              "url": "https://folex-astro.pages.dev/team/daniyel-karlos/"
+            },
+            {
+              "_type": "menuChild",
+              "_key": "4f904572df13",
+              "label": "FAQ",
+              "url": "https://folex-astro.pages.dev/faq/"
+            },
+            {
+              "_type": "menuChild",
+              "_key": "03dff8e719b1",
+              "label": "Contact",
+              "url": "https://folex-astro.pages.dev/contact/"
+            },
+            {
+              "_type": "menuChild",
+              "_key": "db389ffd7d16",
+              "label": "Conditions de vente",
+              "url": "https://folex-astro.pages.dev/terms-conditions/"
+            },
+            {
+              "_type": "menuChild",
+              "_key": "2f98dde281a5",
+              "label": "404",
+              "url": "https://folex-astro.pages.dev/404/"
+            }
+          ]
+        },
+        {
+          "_type": "menuItem",
+          "_key": "153f1c717b28",
+          "label": "l ments",
+          "url": "https://folex-astro.pages.dev/elements/",
+          "badge": {
+            "_type": "menuBadge",
+            "label": "NOUVEAU",
+            "color": "accent"
+          }
+        }
+      ],
+      "headerButton": {
+        "_type": "link",
+        "enabled": true,
+        "label": "Commencer",
+        "url": "/",
+        "openInNewTab": false
+      },
+      "sidePanel": {
+        "enabled": true,
+        "description": "Nous sommes une agence numérique qui aide les entreprises à créer des expériences immersives.",
+        "button": {
+          "_type": "link",
+          "enabled": true,
+          "label": "Discutons ensemble",
+          "url": "/",
+          "openInNewTab": false
+        }
+      }
+    },
+    {
+      "_id": "footer-fr",
+      "_type": "footer",
+      "language": "fr",
+      "title": "Travaillons Ensemble",
+      "description": "Nous sommes une agence digitale qui aide les entreprises à créer des expériences utilisateur immersives et engageantes",
+      "copyright": "Droits d’auteur © {{ year }} Folex / Réalisé avec [Getastrothemes](https://getastrothemes.com/)",
+      "contactForm": {
+        "emailSubject": "Nouvelle soumission de formulaire depuis le site folex",
+        "submitLabel": "ENVOYER LE MESSAGE",
+        "fields": [
+          {
+            "_key": "35e8f4fdf138",
+            "_type": "formField",
+            "name": "Nom complet",
+            "placeholder": "Nom complet *",
+            "required": true,
+            "halfWidth": true,
+            "fieldType": "text"
+          },
+          {
+            "_key": "18f9f031db84",
+            "_type": "formField",
+            "name": "Adresse e-mail",
+            "placeholder": "Adresse e-mail *",
+            "required": true,
+            "halfWidth": true,
+            "fieldType": "email"
+          },
+          {
+            "_key": "02ddf94fd424",
+            "_type": "formField",
+            "name": "Sujet",
+            "placeholder": "Sujet *",
+            "required": false,
+            "halfWidth": true,
+            "fieldType": "select",
+            "options": [
+              {
+                "_type": "formOption",
+                "_key": "a1254e479823",
+                "label": "Demande générale",
+                "value": "Demande générale"
+              },
+              {
+                "_type": "formOption",
+                "_key": "a96695396b58",
+                "label": "Opportunité de partenariat",
+                "value": "Opportunité de partenariat"
+              },
+              {
+                "_type": "formOption",
+                "_key": "0f597a1c4ca8",
+                "label": "Opportunité d'investissement",
+                "value": "Opportunité d'investissement"
+              }
+            ]
+          },
+          {
+            "_key": "68919da9b5f9",
+            "_type": "formField",
+            "name": "Sujet avec recherche",
+            "placeholder": "Sujet avec recherche *",
+            "required": false,
+            "halfWidth": true,
+            "fieldType": "searchSelect",
+            "searchPlaceholder": "Sujet avec recherche",
+            "options": [
+              {
+                "_type": "formOption",
+                "_key": "0317724d0754",
+                "label": "Demande générale",
+                "value": "Demande générale"
+              },
+              {
+                "_type": "formOption",
+                "_key": "0018e707fd5b",
+                "label": "Opportunité de partenariat",
+                "value": "Opportunité de partenariat"
+              },
+              {
+                "_type": "formOption",
+                "_key": "4c1a0bff0254",
+                "label": "Opportunité de carrière",
+                "value": "Opportunité de carrière"
+              },
+              {
+                "_type": "formOption",
+                "_key": "c754f3bddb18",
+                "label": "Opportunité d'investissement",
+                "value": "Opportunité d'investissement"
+              },
+              {
+                "_type": "formOption",
+                "_key": "8d0b6e4d2d84",
+                "label": "Demande média",
+                "value": "Demande média"
+              }
+            ]
+          },
+          {
+            "_key": "8d19d4cccb42",
+            "_type": "formField",
+            "name": "Message",
+            "placeholder": "Comment pouvons-nous vous aider *",
+            "required": true,
+            "halfWidth": false,
+            "fieldType": "textarea",
+            "rows": 2
+          },
+          {
+            "_key": "11e7ba0d9b6f",
+            "_type": "formField",
+            "name": "Source Utilisateur",
+            "required": true,
+            "halfWidth": true,
+            "fieldType": "radio",
+            "groupLabel": "Comment avez-vous entendu parler de nous ?",
+            "options": [
+              {
+                "_type": "formOption",
+                "_key": "c6aabc3b6c02",
+                "label": "Recherche Google",
+                "value": "Recherche Google"
+              },
+              {
+                "_type": "formOption",
+                "_key": "e5e63c685528",
+                "label": "Réseaux sociaux",
+                "value": "Réseaux sociaux"
+              }
+            ]
+          },
+          {
+            "_key": "e9d11153b7d6",
+            "_type": "formField",
+            "name": "Consentement confidentialité",
+            "label": "J'accepte les termes et conditions ainsi que la [politique de confidentialité](/).",
+            "required": true,
+            "halfWidth": false,
+            "fieldType": "checkbox",
+            "checkboxValue": "Accepté"
+          }
+        ],
+        "successMessage": "Nous avons bien reçu votre message ! Nous vous répondrons dès que possible.",
+        "errorMessage": "Une erreur est survenue ! Veuillez réessayer plus tard ou nous contacter par e-mail."
+      }
+    },
+    {
+      "_id": "page-fr-privacy-policy",
+      "_type": "page",
+      "title": "Politique de confidentialit",
+      "slug": {
+        "_type": "slug",
+        "current": "privacy-policy"
+      },
+      "language": "fr",
+      "body": [
+        {
+          "_type": "block",
+          "_key": "4f5dcd8e61bc",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "fce5b196ba19",
+              "text": "Effective Date: July, 2022",
+              "marks": [
+                "strong"
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "d0eba4a74ec2",
+          "style": "normal",
+          "markDefs": [
+            {
+              "_key": "1568cf81c88f",
+              "_type": "link",
+              "href": "https://www.folex.com",
+              "openInNewTab": true
+            }
+          ],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "af8a39b63503",
+              "text": "Welcome to Folex (“we,” “our,” or “us”). Your privacy is important to us, and we are committed to protecting the personal information you share with us. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website, ",
+              "marks": []
+            },
+            {
+              "_type": "span",
+              "_key": "3b65ba8e213f",
+              "text": "https://www.folex.com",
+              "marks": [
+                "1568cf81c88f"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "3053f0444e7a",
+              "text": " (“Website”).",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "6abc9d471081",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "ea1466e5e36e",
+              "text": "Information We Collect",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "85ecb1a3322e",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "a7519b811127",
+              "text": "We collect two types of information from you:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "ebc3e0fa83cc",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "18900a870796",
+              "text": "Personal Information:",
+              "marks": [
+                "strong"
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "a94d47914a67",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "e60f12a8bc8a",
+              "text": "Name",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "ff90c018f4ae",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "cb06970c4d53",
+              "text": "Email address",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "47c1f7220dcc",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "b28efd51465c",
+              "text": "Billing information (e.g., credit card details)",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "2050b44904c3",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "6bc48d64fbd8",
+              "text": "Any information you provide voluntarily through forms, surveys, or account creation",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "51a942129869",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "ac73bdb476be",
+              "text": "Non-Personal Information:",
+              "marks": [
+                "strong"
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "23b45e147a21",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "2aaddd15f240",
+              "text": "IP address",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "33952f2e1589",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "48cd04005690",
+              "text": "Browser type",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "fba174b94fd0",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "233da67c3d50",
+              "text": "Operating system",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "595dc8e55b94",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "1fa146017273",
+              "text": "Pages visited and time spent on our site",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "c8fd3339504d",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 2,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "c4474a1c374a",
+              "text": "Referring website",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "f5e5a6b835e9",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "b66ff395ddc4",
+              "text": "How We Use Your Information",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "6b5d871089f7",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "f309408c840d",
+              "text": "We use the information we collect for the following purposes:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "36e7b76c34a2",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "124a180c566a",
+              "text": "To provide and improve our services",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "8b1cd5371809",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "fd130d7fba70",
+              "text": "To process transactions and send receipts",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "22f89edfd75d",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9d5f2f228adc",
+              "text": "To send you updates, promotions, and service-related communications",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "38fea428a29f",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9a503c9f6f28",
+              "text": "To personalize your experience on our Website",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "665efd7142dc",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "cb69b6fd3cf3",
+              "text": "To comply with legal obligations",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "744f4f3bd83e",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "188fce693995",
+              "text": "To detect and prevent fraudulent activity",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "e56d56561322",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "3c845b224b2c",
+              "text": "Cookies and Tracking Technologies",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "d7bcbd90d3b1",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "c2843cc50947",
+              "text": "We use cookies and similar tracking technologies to enhance your experience on our Website. These include:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "2d43e7492ce6",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "c81d9f73ab34",
+              "text": "Essential Cookies:",
+              "marks": [
+                "strong"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "1f14aeebc02f",
+              "text": " Required for the operation of our Website.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "9ef98e257922",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "33df2ab35443",
+              "text": "Performance Cookies:",
+              "marks": [
+                "strong"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "464bfb9e9913",
+              "text": " Help us understand how you use our site.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "b2c866218121",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "87bac6ceb5b9",
+              "text": "Marketing Cookies:",
+              "marks": [
+                "strong"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "3903ae1a25dc",
+              "text": " Track your browsing behavior for targeted advertising.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "243e5abe92de",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "2e72636505a7",
+              "text": "You can control cookies through your browser settings.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "91b30ee0b0f0",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "c4493f22fd7d",
+              "text": "Sharing of Information",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "f33be0e3315f",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "b2fd010331f9",
+              "text": "We do not sell, rent, or trade your personal information. However, we may share your information with:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "e26117555874",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "8f08b8650e94",
+              "text": "Service Providers:",
+              "marks": [
+                "strong"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "be232af9fad4",
+              "text": " Third-party companies that help us operate our Website and provide services.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "9e8c20dee23d",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "631dfe2ab9f4",
+              "text": "Legal Authorities:",
+              "marks": [
+                "strong"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "71e5aee78965",
+              "text": " When required by law or to protect our rights and property.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "fc4ab5b5117b",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "2f324c3b24b3",
+              "text": "Business Transfers:",
+              "marks": [
+                "strong"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "f48317bb1c31",
+              "text": " In case of a merger, acquisition, or sale of assets.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "5d4551910158",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "29cdc6f5e3c0",
+              "text": "Data Security",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "e1e0aeead63d",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "b9a6aa27d776",
+              "text": "We implement industry-standard security measures to protect your data. However, no method of transmission over the Internet or electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your personal information, we cannot guarantee absolute security.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "02e67bd213bf",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "059f676da0c5",
+              "text": "Your Rights",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "567756db046d",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "5ffdd264322b",
+              "text": "Depending on your location, you may have the following rights regarding your personal information:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "c44b43abe571",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "8b42da47e77f",
+              "text": "Access your data",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "5d2da0d21921",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "dabe32dcc4c3",
+              "text": "Correct or update your data",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "723d7182fb24",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "49a6b547fd2e",
+              "text": "Request deletion of your data",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "4497f8c0f91a",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9303f0cb8915",
+              "text": "Restrict processing of your data",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "fd63f83f3bc1",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "c13344af4ab7",
+              "text": "Withdraw consent for data usage",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "7fd485041465",
+          "style": "normal",
+          "markDefs": [
+            {
+              "_key": "d34d73f644ea",
+              "_type": "link",
+              "href": "mailto:privacy@folex.com",
+              "openInNewTab": false
+            }
+          ],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "08c88ad2bca3",
+              "text": "To exercise your rights, please contact us at ",
+              "marks": []
+            },
+            {
+              "_type": "span",
+              "_key": "a26a72ef4c00",
+              "text": "privacy@folex.com",
+              "marks": [
+                "d34d73f644ea"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "b4096cf3321f",
+              "text": ".",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "7fde2b1cbf15",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "5a2679e6dc6b",
+              "text": "Third-Party Links",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "8263e95e7780",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "961e19eecd36",
+              "text": "Our Website may contain links to third-party websites. We are not responsible for the privacy practices of these websites. We encourage you to review their privacy policies before providing any personal information.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "3674afa6a3fb",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9da81f18027d",
+              "text": "Children’s Privacy",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "e7b0558ac2c1",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "fd8b033df374",
+              "text": "Our Website is not intended for individuals under the age of 13. We do not knowingly collect personal information from children under 13. If you believe we have collected such information, please contact us immediately.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "80611203754e",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "2794b1e0e32d",
+              "text": "Changes to This Privacy Policy",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "5747fe0eebc6",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "6185f715aba9",
+              "text": "We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated “Effective Date.” We encourage you to review this Privacy Policy periodically.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "7e0c65572e32",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9e84748d8a02",
+              "text": "Contact Us",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "ed82f1109a3a",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "675aedbb77fe",
+              "text": "If you have any questions or concerns about this Privacy Policy, please contact us at:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "19e43610b0b1",
+          "style": "normal",
+          "markDefs": [
+            {
+              "_key": "835c333c586b",
+              "_type": "link",
+              "href": "mailto:privacy@folex.com",
+              "openInNewTab": false
+            }
+          ],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "11fc15918965",
+              "text": "Folex Email: ",
+              "marks": []
+            },
+            {
+              "_type": "span",
+              "_key": "5d77934c7db9",
+              "text": "privacy@folex.com",
+              "marks": [
+                "835c333c586b"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "3687ebf2de4d",
+              "text": " Address: 123 Folex Lane, Imaginary City, IC 12345, USA",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "46980035ad02",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "973454ae38ca",
+              "text": "Thank you for trusting Folex with your personal information!",
+              "marks": []
+            }
+          ]
+        }
+      ],
+      "seo": {
+        "_type": "seo",
+        "metaDescription": "Ceci est un exemple de description m ta"
+      }
+    },
+    {
+      "_id": "page-fr-terms-conditions",
+      "_type": "page",
+      "title": "Conditions d'utilisation",
+      "slug": {
+        "_type": "slug",
+        "current": "terms-conditions"
+      },
+      "language": "fr",
+      "body": [
+        {
+          "_type": "block",
+          "_key": "b0c8df1a4b87",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9d014359f747",
+              "text": "Effective Date:",
+              "marks": [
+                "strong"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "d2d9afa186af",
+              "text": " July, 2022",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "eec6e53d59e8",
+          "style": "normal",
+          "markDefs": [
+            {
+              "_key": "f2811926fb93",
+              "_type": "link",
+              "href": "https://www.folex.com",
+              "openInNewTab": true
+            }
+          ],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "3e770f32c327",
+              "text": "Welcome to Folex (“we,” “our,” or “us”). By accessing or using our website, ",
+              "marks": []
+            },
+            {
+              "_type": "span",
+              "_key": "422424b81c1d",
+              "text": "https://www.folex.com",
+              "marks": [
+                "f2811926fb93"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "482e46665117",
+              "text": " (“Website”), you agree to comply with and be bound by the following Terms and Conditions (“Terms”). If you do not agree with these Terms, please do not use our Website.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "deff009db106",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "74e74b02bc9f",
+              "text": "Acceptance of Terms",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "34776e452a50",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "0ddf64425b70",
+              "text": "By accessing or using the Website, you confirm that you are at least 18 years old or have the legal consent of a parent or guardian. Your continued use of the Website constitutes your agreement to these Terms.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "f86177295e92",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "a17833b69c31",
+              "text": "Use of the Website",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "1728a9c0fd6b",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "863bc539e716",
+              "text": "You agree to use the Website only for lawful purposes and in a manner that does not infringe on the rights of others or restrict their use of the Website. Prohibited uses include but are not limited to:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "6d758ab23738",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "38f969251fe8",
+              "text": "Engaging in any unlawful activity.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "59063cb4e57c",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9f24f6d40f43",
+              "text": "Attempting to gain unauthorized access to the Website or its servers.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "224593358b5a",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "6b58ac0fa0fd",
+              "text": "Introducing harmful software or code, such as viruses or malware.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "0ed859788951",
+          "style": "normal",
+          "listItem": "bullet",
+          "level": 1,
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "89508393b2c3",
+              "text": "Misrepresenting your identity or affiliations.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "ae3b15a1ca4c",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "c426118c12cb",
+              "text": "User Accounts",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "63382d2a7699",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "d31ac9db936b",
+              "text": "If you create an account on our Website, you are responsible for maintaining the confidentiality of your login credentials. You agree to notify us immediately of any unauthorized use of your account. We reserve the right to terminate accounts that violate these Terms.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "d3eea144fb75",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "174e6b0495dd",
+              "text": "Intellectual Property",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "1ce4d0e6b6b3",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "b69b375fddf5",
+              "text": "All content on the Website, including but not limited to text, images, logos, and software, is the property of Folex or its licensors and is protected by copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, or modify any content without prior written consent from Folex.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "323e6d89149f",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "c597a5162c42",
+              "text": "Purchases and Payments",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "52c088439ee1",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "f8e9f10b8b5b",
+              "text": "All purchases made on the Website are subject to our pricing and payment terms. You agree to provide accurate payment information and authorize us to charge your payment method for the agreed-upon amounts. Refunds, if applicable, will be processed according to our Refund Policy.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "1cb4784a28e1",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "aa7876347341",
+              "text": "Disclaimer of Warranties",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "1e282a549bd2",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "392a8a79a498",
+              "text": "The Website and its content are provided “as is” without warranties of any kind, either express or implied. We do not guarantee that the Website will be error-free, secure, or available at all times.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "cbd675e3f9ed",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "a2fa48d946ef",
+              "text": "Limitation of Liability",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "3c2d1c9cfb42",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "431698d3972a",
+              "text": "To the fullest extent permitted by law, Folex shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of the Website or inability to access it. Our total liability for any claims related to the Website shall not exceed the amount paid by you, if any, to Folex.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "d5da456bd8f3",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "a44107f73463",
+              "text": "Termination",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "504d8bbe411e",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "a05b54cdb594",
+              "text": "We reserve the right to suspend or terminate your access to the Website at our sole discretion, without notice, if we believe you have violated these Terms or any applicable law.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "7d235a7a1cb0",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "3f353132c5f2",
+              "text": "Third-Party Links",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "3624f9567237",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "b581d93b66aa",
+              "text": "Our Website may contain links to third-party websites. We are not responsible for the content or practices of these websites. Your use of third-party sites is at your own risk.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "0d5a0708ab37",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "03ad2f634254",
+              "text": "Governing Law",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "648602951a92",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "2a525310791e",
+              "text": "These Terms are governed by and construed in accordance with the laws of the State of Imaginary, USA, without regard to its conflict of law principles. Any disputes arising under these Terms shall be resolved in the courts located in Imaginary City, USA.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "a9d13863a06d",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "b2fa7fb4e57e",
+              "text": "Changes to Terms",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "16eb9ba2e9f3",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9890844f1a20",
+              "text": "We reserve the right to update or modify these Terms at any time without prior notice. Any changes will be effective immediately upon posting on this page. Your continued use of the Website constitutes acceptance of the revised Terms.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "fa09644865eb",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "81b166fce799",
+              "text": "Contact Us",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "177fd6ccfbad",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "465359f457d8",
+              "text": "If you have any questions or concerns about these Terms, please contact us at:",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "cb4ba2f7b613",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "dc3702c56ff1",
+              "text": "Folex",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "06c2effb0e80",
+          "style": "normal",
+          "markDefs": [
+            {
+              "_key": "7f1bfe743e94",
+              "_type": "link",
+              "href": "mailto:support@folex.com",
+              "openInNewTab": false
+            }
+          ],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "09d037e44719",
+              "text": "Email: ",
+              "marks": []
+            },
+            {
+              "_type": "span",
+              "_key": "a3fa3ba12921",
+              "text": "support@folex.com",
+              "marks": [
+                "7f1bfe743e94"
+              ]
+            },
+            {
+              "_type": "span",
+              "_key": "f9a9e5664bbc",
+              "text": "\nAddress: 123 Folex Lane, Imaginary City, IC 12345, USA",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "df2459637614",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "05e5e4ada067",
+              "text": "Thank you for using Folex!",
+              "marks": []
+            }
+          ]
+        }
+      ],
+      "seo": {
+        "_type": "seo",
+        "metaDescription": "Ceci est un exemple de description m ta"
+      }
+    },
+    {
+      "_id": "project-fr-portfolio-01",
+      "_type": "project",
+      "title": "Scanner de Conformité à la Lutte contre le Blanchiment d'Argent",
+      "slug": {
+        "_type": "slug",
+        "current": "custom-portfolio-slug"
+      },
+      "language": "fr",
+      "date": "2022-06-13",
+      "order": 1,
+      "categories": [
+        "Branding",
+        "Développement",
+        "Marketing"
+      ],
+      "coverImage": {
+        "_type": "image",
+        "_sanityAsset": "image@file://./src/assets/images/portfolio/1.jpg",
+        "alt": "Scanner de Conformité à la Lutte contre le Blanchiment d'Argent"
+      },
+      "gallery": [
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/2.jpg",
+          "alt": "Scanner de Conformité à la Lutte contre le Blanchiment d'Argent image 1",
+          "_key": "b3e936f3db6c"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/3.jpg",
+          "alt": "Scanner de Conformité à la Lutte contre le Blanchiment d'Argent image 2",
+          "_key": "029f7ce27fc7"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/4.jpg",
+          "alt": "Scanner de Conformité à la Lutte contre le Blanchiment d'Argent image 3",
+          "_key": "b19bee0fbbde"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/5.jpg",
+          "alt": "Scanner de Conformité à la Lutte contre le Blanchiment d'Argent image 4",
+          "_key": "16dd04a2ea12"
+        }
+      ],
+      "details": [
+        {
+          "_type": "projectDetail",
+          "_key": "38a8a791f74c",
+          "label": "Catégorie :",
+          "valueType": "categories"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "dd9407e3d64a",
+          "label": "Logiciels :",
+          "valueType": "custom",
+          "value": "WordPress, Figma"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "e5a5e1ff7aac",
+          "label": "Service :",
+          "valueType": "custom",
+          "value": "Développement"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "4c8e0e7b8763",
+          "label": "Client :",
+          "valueType": "custom",
+          "value": "Eunice Mills"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "9625ae6eb94b",
+          "label": "Date :",
+          "valueType": "date"
+        }
+      ],
+      "body": [
+        {
+          "_type": "block",
+          "_key": "8009f3ec20b0",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "ea52b5ab1665",
+              "text": "BaseCreate est heureux d’annoncer qu’il a été mandaté par Leighton Asia pour repositionner sa marque. Nous aiderons Leighton Asia à faire évoluer sa stratégie de marque et serons responsables de la mise à jour de l’identité de marque, du site web et des autres supports.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "fdf0e9c2dea6",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "acc567e1c1ac",
+              "text": "Depuis près de 50 ans, Leighton Asia, l’une des plus grandes et respectées entreprises de construction de la région, construit progressivement un avenir meilleur en combinant expertise internationale et intelligence locale. Pendant ce temps, Leighton a livré certains des bâtiments prestigieux et projets d’infrastructure transformationnels d’Asie.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "f9f520bac110",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "db70509219a9",
+              "text": "Défi & Solution",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "909c4d4446fe",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "bccd47a9cbc7",
+              "text": "Future, qui cherche à devenir leader dans l’industrie en matière d’innovation technologique et de pratiques de construction durables pour offrir une valeur durable à ses clients.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "3eff8a51c7c9",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "aceb08a9a1a2",
+              "text": "Résultat Final",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "0e47fa4affa4",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "a187479bbadb",
+              "text": "Depuis près de 50 ans, Leighton Asia, l’une des plus grandes et respectées entreprises de construction de la région, construit progressivement un avenir meilleur en combinant expertise internationale et intelligence locale. Pendant ce temps, Leighton a livré certains des bâtiments prestigieux et projets d’infrastructure transformationnels d’Asie.",
+              "marks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "project-fr-portfolio-02",
+      "_type": "project",
+      "title": "Optimisation de l'efficacité de la chaîne d'approvisionnement",
+      "slug": {
+        "_type": "slug",
+        "current": "portfolio-02"
+      },
+      "language": "fr",
+      "date": "2022-06-12",
+      "order": 2,
+      "categories": [
+        "Branding",
+        "Développement",
+        "Marketing"
+      ],
+      "coverImage": {
+        "_type": "image",
+        "_sanityAsset": "image@file://./src/assets/images/portfolio/2.jpg",
+        "alt": "Optimisation de l'efficacité de la chaîne d'approvisionnement"
+      },
+      "gallery": [
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/2.jpg",
+          "alt": "Optimisation de l'efficacité de la chaîne d'approvisionnement image 1",
+          "_key": "6625902af74e"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/3.jpg",
+          "alt": "Optimisation de l'efficacité de la chaîne d'approvisionnement image 2",
+          "_key": "e4e754b961aa"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/4.jpg",
+          "alt": "Optimisation de l'efficacité de la chaîne d'approvisionnement image 3",
+          "_key": "a1fbdb127671"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/5.jpg",
+          "alt": "Optimisation de l'efficacité de la chaîne d'approvisionnement image 4",
+          "_key": "05490af65e52"
+        }
+      ],
+      "details": [
+        {
+          "_type": "projectDetail",
+          "_key": "6b0a735ac1ae",
+          "label": "Catégorie :",
+          "valueType": "categories"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "b176e769fafe",
+          "label": "Logiciels :",
+          "valueType": "custom",
+          "value": "WordPress, Figma"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "b025b18e6e91",
+          "label": "Service :",
+          "valueType": "custom",
+          "value": "Développement"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "b1393eb72a05",
+          "label": "Client :",
+          "valueType": "custom",
+          "value": "Eunice Mills"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "88b2b9425b36",
+          "label": "Date :",
+          "valueType": "date"
+        }
+      ],
+      "body": [
+        {
+          "_type": "block",
+          "_key": "434a47170ce0",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "6bccca46dc82",
+              "text": "BaseCreate est heureux d’annoncer qu’il a été mandaté par Leighton Asia pour repositionner sa marque. Nous aiderons Leighton Asia à faire évoluer sa stratégie de marque et serons responsables de la mise à jour de l’identité de marque, du site web et des autres supports.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "bdc0c9cdc875",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "a4e4b17bb826",
+              "text": "Depuis près de 50 ans, Leighton Asia, l’une des plus grandes et respectées entreprises de construction de la région, construit progressivement un avenir meilleur en combinant expertise internationale et intelligence locale. Pendant ce temps, Leighton a livré certains des bâtiments prestigieux et projets d’infrastructure transformationnels d’Asie.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "444d767d43c7",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "bf21854eb277",
+              "text": "Défi & Solution",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "49a916059b70",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "22062bb589bd",
+              "text": "Future, qui cherche à devenir leader dans l’industrie en matière d’innovation technologique et de pratiques de construction durables pour offrir une valeur durable à ses clients.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "604125c3bbd6",
+          "style": "h4",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "ad4f2309aa52",
+              "text": "Résultat Final",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "67619c064b4c",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "bbd4c72bc83f",
+              "text": "Depuis près de 50 ans, Leighton Asia, l’une des plus grandes et respectées entreprises de construction de la région, construit progressivement un avenir meilleur en combinant expertise internationale et intelligence locale. Pendant ce temps, Leighton a livré certains des bâtiments prestigieux et projets d’infrastructure transformationnels d’Asie.",
+              "marks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "project-fr-portfolio-03",
+      "_type": "project",
+      "title": "Enhancing Workplace Safety Protocols",
+      "slug": {
+        "_type": "slug",
+        "current": "portfolio-03"
+      },
+      "language": "fr",
+      "date": "2022-06-11",
+      "order": 3,
+      "categories": [
+        "Branding",
+        "Development",
+        "Marketing"
+      ],
+      "coverImage": {
+        "_type": "image",
+        "_sanityAsset": "image@file://./src/assets/images/portfolio/3.jpg",
+        "alt": "Enhancing Workplace Safety Protocols"
+      },
+      "gallery": [
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/2.jpg",
+          "alt": "Enhancing Workplace Safety Protocols image 1",
+          "_key": "c939bff3482a"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/3.jpg",
+          "alt": "Enhancing Workplace Safety Protocols image 2",
+          "_key": "09d1393090d7"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/4.jpg",
+          "alt": "Enhancing Workplace Safety Protocols image 3",
+          "_key": "2dbfc9b79579"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/5.jpg",
+          "alt": "Enhancing Workplace Safety Protocols image 4",
+          "_key": "7290d4d70a0f"
+        }
+      ],
+      "details": [
+        {
+          "_type": "projectDetail",
+          "_key": "ee69f19b096a",
+          "label": "Category:",
+          "valueType": "categories"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "749514b53e72",
+          "label": "Software:",
+          "valueType": "custom",
+          "value": "WordPress, Figma"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "afe0c5ca9ed1",
+          "label": "Service:",
+          "valueType": "custom",
+          "value": "Development"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "12983fdabb71",
+          "label": "Client:",
+          "valueType": "custom",
+          "value": "Eunice Mills"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "b7bf6378e868",
+          "label": "Date:",
+          "valueType": "date"
+        }
+      ],
+      "body": [
+        {
+          "_type": "block",
+          "_key": "3aa8fe755b6c",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "8fdb3b0f4f4e",
+              "text": "BaseCreate is pleased to announce that it has been commissioned by Leighton Asia reposition its brand. We will help Leighton Asia evolve its brand strategy, and will be responsible updating Leighton Asia’s brand identity, website, and other collaterals. For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "7555d120fe44",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "f884ecec50b1",
+              "text": "Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "495ccc9476a5",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "eb9e956a51c8",
+              "text": "Challenge & Solution",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "40b757dd7577",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "9b5e1d9f2c30",
+              "text": "Future, as it seeks to lead the industry in technological innovation and sustainable building practices to deliver long-lasting value for its clients.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "163089d33c01",
+          "style": "h4",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "c257bb8594dc",
+              "text": "Final Result",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "075570307a65",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "ae7f301945b9",
+              "text": "For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "project-fr-portfolio-04",
+      "_type": "project",
+      "title": "Streamlining Financial Reporting",
+      "slug": {
+        "_type": "slug",
+        "current": "portfolio-04"
+      },
+      "language": "fr",
+      "date": "2022-06-10",
+      "order": 4,
+      "categories": [
+        "Branding",
+        "Development",
+        "Marketing"
+      ],
+      "coverImage": {
+        "_type": "image",
+        "_sanityAsset": "image@file://./src/assets/images/portfolio/4.jpg",
+        "alt": "Streamlining Financial Reporting"
+      },
+      "gallery": [
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/2.jpg",
+          "alt": "Streamlining Financial Reporting image 1",
+          "_key": "9ba4bb62c1f0"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/3.jpg",
+          "alt": "Streamlining Financial Reporting image 2",
+          "_key": "811c04bdcd4a"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/4.jpg",
+          "alt": "Streamlining Financial Reporting image 3",
+          "_key": "29d091519c0d"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/5.jpg",
+          "alt": "Streamlining Financial Reporting image 4",
+          "_key": "1192d4e35041"
+        }
+      ],
+      "details": [
+        {
+          "_type": "projectDetail",
+          "_key": "6fecdf9da430",
+          "label": "Category:",
+          "valueType": "categories"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "5b24e0bd3a47",
+          "label": "Software:",
+          "valueType": "custom",
+          "value": "WordPress, Figma"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "4ae1a10e2dc4",
+          "label": "Service:",
+          "valueType": "custom",
+          "value": "Development"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "1958765caee6",
+          "label": "Client:",
+          "valueType": "custom",
+          "value": "Eunice Mills"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "c72987289f4b",
+          "label": "Date:",
+          "valueType": "date"
+        }
+      ],
+      "body": [
+        {
+          "_type": "block",
+          "_key": "aa2ad82a0b0b",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "752b9ce6a7cc",
+              "text": "BaseCreate is pleased to announce that it has been commissioned by Leighton Asia reposition its brand. We will help Leighton Asia evolve its brand strategy, and will be responsible updating Leighton Asia’s brand identity, website, and other collaterals. For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "f5484e0ead0e",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "dcb6e6851bdc",
+              "text": "Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "f30b3b3c0330",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "2dfb779ff7cb",
+              "text": "Challenge & Solution",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "2a1d223ba6fd",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "261cfc109fc9",
+              "text": "Future, as it seeks to lead the industry in technological innovation and sustainable building practices to deliver long-lasting value for its clients.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "2e04ad7db12c",
+          "style": "h4",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "f87609cc1bb5",
+              "text": "Final Result",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "fe982c89b57e",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "2098f53e9167",
+              "text": "For almost 50 years Leighton Asia, one of the region’s largest and most respected construction companies, has been progressively building for a better future by leveraging international expertise with local intelligence. In that time Leighton has delivered some of Asia’s prestigious buildings and transformational infrastructure projects.",
+              "marks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "project-fr-portfolio-05",
+      "_type": "project",
+      "title": "Amélioration des processus de développement produit",
+      "slug": {
+        "_type": "slug",
+        "current": "portfolio-05"
+      },
+      "language": "fr",
+      "date": "2022-06-09",
+      "order": 5,
+      "categories": [
+        "Branding",
+        "Développement",
+        "Marketing"
+      ],
+      "coverImage": {
+        "_type": "image",
+        "_sanityAsset": "image@file://./src/assets/images/portfolio/5.jpg",
+        "alt": "Amélioration des processus de développement produit"
+      },
+      "gallery": [
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/2.jpg",
+          "alt": "Amélioration des processus de développement produit image 1",
+          "_key": "fcb5736d30e2"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/3.jpg",
+          "alt": "Amélioration des processus de développement produit image 2",
+          "_key": "24cd2efd839f"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/4.jpg",
+          "alt": "Amélioration des processus de développement produit image 3",
+          "_key": "d875d910d9b0"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/5.jpg",
+          "alt": "Amélioration des processus de développement produit image 4",
+          "_key": "1a9f2e010580"
+        }
+      ],
+      "details": [
+        {
+          "_type": "projectDetail",
+          "_key": "7e87e2aa6d28",
+          "label": "Catégorie :",
+          "valueType": "categories"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "110a755f8cb0",
+          "label": "Logiciels :",
+          "valueType": "custom",
+          "value": "WordPress, Figma"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "f7d51501f68b",
+          "label": "Service :",
+          "valueType": "custom",
+          "value": "Développement"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "d7bf87fdf7a9",
+          "label": "Client :",
+          "valueType": "custom",
+          "value": "Eunice Mills"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "a5e28cb19f76",
+          "label": "Date :",
+          "valueType": "date"
+        }
+      ],
+      "body": [
+        {
+          "_type": "block",
+          "_key": "050071a967f1",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "bd2daca874ec",
+              "text": "BaseCreate est heureux d’annoncer qu’il a été mandaté par Leighton Asia pour repositionner sa marque. Nous aiderons Leighton Asia à faire évoluer sa stratégie de marque et serons responsables de la mise à jour de l’identité de marque, du site web et des autres supports.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "89b6a8460ede",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "d7dab5da9c5d",
+              "text": "Depuis près de 50 ans, Leighton Asia, l’une des plus grandes et respectées entreprises de construction de la région, construit progressivement un avenir meilleur en combinant expertise internationale et intelligence locale. Pendant ce temps, Leighton a livré certains des bâtiments prestigieux et projets d’infrastructure transformationnels d’Asie.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "8ab3de212790",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "51558051352d",
+              "text": "Défi & Solution",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "ae49f758387a",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "5fac0f42e80e",
+              "text": "Future, qui cherche à devenir leader dans l’industrie en matière d’innovation technologique et de pratiques de construction durables pour offrir une valeur durable à ses clients.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "017b81c73635",
+          "style": "h4",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "49f18aa8c179",
+              "text": "Résultat Final",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "df759dc0c1b3",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "8e52dce3d4f8",
+              "text": "Depuis près de 50 ans, Leighton Asia, l’une des plus grandes et respectées entreprises de construction de la région, construit progressivement un avenir meilleur en combinant expertise internationale et intelligence locale. Pendant ce temps, Leighton a livré certains des bâtiments prestigieux et projets d’infrastructure transformationnels d’Asie.",
+              "marks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "project-fr-portfolio-06",
+      "_type": "project",
+      "title": "Amélioration de l'expérience utilisateur grâce au design UX",
+      "slug": {
+        "_type": "slug",
+        "current": "portfolio-06"
+      },
+      "language": "fr",
+      "date": "2022-06-08",
+      "order": 6,
+      "categories": [
+        "Branding",
+        "Développement",
+        "Marketing"
+      ],
+      "coverImage": {
+        "_type": "image",
+        "_sanityAsset": "image@file://./src/assets/images/portfolio/6.jpg",
+        "alt": "Amélioration de l'expérience utilisateur grâce au design UX"
+      },
+      "gallery": [
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/2.jpg",
+          "alt": "Amélioration de l'expérience utilisateur grâce au design UX image 1",
+          "_key": "4f96a36a1db7"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/3.jpg",
+          "alt": "Amélioration de l'expérience utilisateur grâce au design UX image 2",
+          "_key": "010fb4c2e7b6"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/4.jpg",
+          "alt": "Amélioration de l'expérience utilisateur grâce au design UX image 3",
+          "_key": "d4276a1f3dc9"
+        },
+        {
+          "_type": "image",
+          "_sanityAsset": "image@file://./src/assets/images/portfolio/5.jpg",
+          "alt": "Amélioration de l'expérience utilisateur grâce au design UX image 4",
+          "_key": "bf3fccb7b0b0"
+        }
+      ],
+      "details": [
+        {
+          "_type": "projectDetail",
+          "_key": "4636a6f9ae16",
+          "label": "Catégorie :",
+          "valueType": "categories"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "2956126ae05a",
+          "label": "Logiciels :",
+          "valueType": "custom",
+          "value": "WordPress, Figma"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "44f5c4219835",
+          "label": "Service :",
+          "valueType": "custom",
+          "value": "Développement"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "ed1707c5da0b",
+          "label": "Client :",
+          "valueType": "custom",
+          "value": "Eunice Mills"
+        },
+        {
+          "_type": "projectDetail",
+          "_key": "f03b5c67673e",
+          "label": "Date :",
+          "valueType": "date"
+        }
+      ],
+      "body": [
+        {
+          "_type": "block",
+          "_key": "cb9d953d6375",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "e354af45c538",
+              "text": "BaseCreate est heureux d’annoncer qu’il a été mandaté par Leighton Asia pour repositionner sa marque. Nous aiderons Leighton Asia à faire évoluer sa stratégie de marque et serons responsables de la mise à jour de l’identité de marque, du site web et des autres supports.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "9c6baedced07",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "aa581fb5e9b7",
+              "text": "Depuis près de 50 ans, Leighton Asia, l’une des plus grandes et respectées entreprises de construction de la région, construit progressivement un avenir meilleur en combinant expertise internationale et intelligence locale. Pendant ce temps, Leighton a livré certains des bâtiments prestigieux et projets d’infrastructure transformationnels d’Asie.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "4e799491ff93",
+          "style": "h3",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "5e6798905502",
+              "text": "Défi & Solution",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "0a61f457d049",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "13b8aa98e849",
+              "text": "Future, qui cherche à devenir leader dans l’industrie en matière d’innovation technologique et de pratiques de construction durables pour offrir une valeur durable à ses clients.",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "e4c7522241e2",
+          "style": "h4",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "4239b56d971e",
+              "text": "Résultat Final",
+              "marks": []
+            }
+          ]
+        },
+        {
+          "_type": "block",
+          "_key": "0e41b7ad537c",
+          "style": "normal",
+          "markDefs": [],
+          "children": [
+            {
+              "_type": "span",
+              "_key": "fa3ee2d8cf5b",
+              "text": "Depuis près de 50 ans, Leighton Asia, l’une des plus grandes et respectées entreprises de construction de la région, construit progressivement un avenir meilleur en combinant expertise internationale et intelligence locale. Pendant ce temps, Leighton a livré certains des bâtiments prestigieux et projets d’infrastructure transformationnels d’Asie.",
+              "marks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_id": "service-fr-service-01",
+      "_type": "service",
+      "title": "Branding Design",
+      "language": "fr",
+      "description": "Good website tells a story that will make users fully immerse themselves operating",
+      "order": 1
+    },
+    {
+      "_id": "service-fr-service-02",
+      "_type": "service",
+      "title": "Développement Web",
+      "language": "fr",
+      "description": "Un site bien conçu raconte une histoire qui captive profondément les utilisateurs et enrichit leur expérience.",
+      "order": 2
+    },
+    {
+      "_id": "service-fr-service-03",
+      "_type": "service",
+      "title": "Marketing numérique",
+      "language": "fr",
+      "description": "Un site web efficace raconte une histoire captivante qui engage profondément les utilisateurs et améliore leur expérience.",
+      "order": 3
+    },
+    {
+      "_id": "service-fr-service-04",
+      "_type": "service",
+      "title": "Modélisation d’Illustration",
+      "language": "fr",
+      "description": "Un bon site web raconte une histoire qui immerge totalement les utilisateurs dans l’expérience.",
+      "order": 4
+    },
+    {
+      "_id": "service-fr-service-05",
+      "_type": "service",
+      "title": "Publicité sur les réseaux sociaux",
+      "language": "fr",
+      "description": "Un site web bien conçu raconte une histoire qui engage profondément les utilisateurs et améliore leur expérience.",
+      "order": 5
+    },
+    {
+      "_id": "service-fr-service-06",
+      "_type": "service",
+      "title": "Marketing de contenu",
+      "language": "fr",
+      "description": "Un bon site web raconte une histoire qui plonge pleinement les utilisateurs dans l’expérience.",
+      "order": 6
+    }
+  ]
+}

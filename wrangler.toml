@@ -1,3 +1,20 @@
+# Cloudflare Pages settings for the static website.
+#
+# In the Cloudflare dashboard (Workers & Pages > your project > Settings):
+#   Build command:          npm run build
+#   Build output directory: dist
+#   Environment variables:
+#     PUBLIC_SANITY_PROJECT_ID   your Sanity project ID (empty = bundled demo content)
+#     PUBLIC_SANITY_DATASET      usually "production"
+#     PUBLIC_SANITY_STUDIO_URL   e.g. https://your-name.sanity.studio
+#     NODE_VERSION               22
+# Do NOT set SANITY_API_READ_TOKEN or SANITY_VISUAL_EDITING here: the live site
+# is a static build that only shows published content.
+#
+# To rebuild when you publish in Sanity, create a deploy hook
+# (Settings > Builds > Deploy hooks) and add its URL as a webhook in
+# https://www.sanity.io/manage > your project > API > Webhooks.
+
 name                   = "folex-lite"
 compatibility_date     = "2025-01-01"
 pages_build_output_dir = "./dist"

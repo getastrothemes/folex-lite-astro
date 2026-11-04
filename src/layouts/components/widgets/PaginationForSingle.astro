@@ -1,15 +1,18 @@
 ---
-import { getCollectionCTM } from "@/lib/contentParser.astro";
+import { stegaClean } from "@sanity/client/stega";
 import { getLocaleUrlCTM, useTranslations } from "@/lib/utils/i18nUtils";
 import CustomButton from "@/components/CustomButton.astro";
-import type { CollectionEntry } from "astro:content";
-import extractSlug from "@/lib/utils/extractSlug";
+
+// Previous/next item ({ title, slug }), e.g. from `getProject()`
+type PageLink = { title?: string; slug: string } | null | undefined;
 
 interface Props {
   prevBtnText?: string;
-  collection?: string;
   nextBtnText?: string;
-  currentPage?: CollectionEntry<"portfolio">;
+  prev?: PageLink;
+  next?: PageLink;
+  // URL folder of the items, e.g. "portfolio" → /portfolio/{slug}/
+  collection?: string;
   class?: string;
 }
 
@@ -18,33 +21,14 @@ const t = await useTranslations(Astro.currentLocale as string);
 let {
   prevBtnText = t("common.paginationPrevious"),
   nextBtnText = t("common.paginationNext"),
+  prev,
+  next,
   collection,
-  currentPage,
   class: className,
 } = Astro.props;
 
-let pages;
-if (collection) {
-  pages = await getCollectionCTM(
-    collection as "portfolio",
-    Astro.currentLocale,
-  );
-}
-
-if (!pages) return;
-
-const currentIndex = pages.findIndex(
-  (item) => item.filePath === currentPage?.filePath,
-);
-
-// if (import.meta.env.DEV) console.log("Current page index:", currentIndex);
-
-if (currentIndex === -1) {
-  return;
-}
-
-const prevPage = pages[currentIndex - 1];
-const nextPage = pages[currentIndex + 1];
+const toUrl = (item: NonNullable<PageLink>) =>
+  getLocaleUrlCTM(stegaClean(item.slug), Astro.currentLocale, collection);
 ---
 
 <nav
@@ -56,14 +40,10 @@ const nextPage = pages[currentIndex + 1];
   aria-label="Pagination">
   {/* previous */}
   {
-    prevPage && (
+    prev?.slug && (
       <CustomButton
         hoverEffect="creative-fill"
-        url={getLocaleUrlCTM(
-          extractSlug(prevPage),
-          Astro.currentLocale,
-          collection,
-        )}
+        url={toUrl(prev)}
         label={prevBtnText}
         class="effect-color-accent me-auto"
       />
@@ -72,14 +52,10 @@ const nextPage = pages[currentIndex + 1];
 
   {/* next page */}
   {
-    nextPage && (
+    next?.slug && (
       <CustomButton
         hoverEffect="creative-fill"
-        url={getLocaleUrlCTM(
-          extractSlug(nextPage),
-          Astro.currentLocale,
-          collection,
-        )}
+        url={toUrl(next)}
         label={nextBtnText}
         class="effect-color-accent ms-auto"
       />

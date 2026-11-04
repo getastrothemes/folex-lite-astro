@@ -1,24 +1,24 @@
 ---
-import Base from "@/layouts/Base.astro";
-import { generatePaths } from "@/lib/utils/i18nUtils";
-import { getEntryCTM } from "@/lib/contentParser.astro";
-import Clients from "@/components/sections/Clients.astro";
-import BannerAgencyStartup from "@/components/sections/Banner.astro";
-import PricingSection from "@/components/sections/PricingSection.astro";
-import ServicesSection from "@/components/sections/ServicesSection.astro";
-import PortfolioSection from "@/components/sections/PortfolioSection.astro";
+import HomeLayout from "@/layouts/HomeLayout.astro";
+import { getHomePage } from "@/lib/sanity/data";
+import { generatePaths, resolveLangParam } from "@/lib/utils/i18nUtils";
 
+// Static builds: one home page per enabled language (`/` and `/fr/`)
 export function getStaticPaths() {
   return generatePaths();
 }
 
-const page = await getEntryCTM("homepage", "-index", Astro.currentLocale);
+// The data is resolved from the URL (not from getStaticPaths props) so the
+// same page also works on the preview server
+const lang = resolveLangParam(Astro.params.lang);
+const page = lang
+  ? await getHomePage(lang, Astro.locals.preview === true)
+  : null;
+
+// Unknown language prefix or missing home page document → 404 page
+if (!page) {
+  return new Response(null, { status: 404 });
+}
 ---
 
-<Base {...page?.data} headerPosition="fixed" hasHeaderDarkBackground={true}>
-  <BannerAgencyStartup />
-  <Clients />
-  <ServicesSection />
-  <PortfolioSection />
-  <PricingSection />
-</Base>
+<HomeLayout page={page} />

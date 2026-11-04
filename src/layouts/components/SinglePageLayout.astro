@@ -1,19 +1,20 @@
 ---
-import OptimizedImage from "./utilities/OptimizedImage.astro";
-import formatRelativeDate from "@/lib/utils/formatRelativeDate";
-import { markdownify } from "@/lib/utils/textConverter";
-import { render } from "astro:content";
-import type { CollectionEntry } from "astro:content";
+import { stegaClean } from "@sanity/client/stega";
+import type { PageData } from "@/lib/sanity/types";
+import { portableTextToHtml } from "@/lib/sanity/portableText";
+import SanityImage from "./utilities/SanityImage.astro";
 
 interface Props {
-  content: CollectionEntry<"pages">;
-  [key: string]: any;
+  // Page from Sanity (title, optional cover image and rich text body)
+  content: Pick<PageData, "title" | "image" | "body">;
+  class?: string;
 }
 
 const { content, class: className } = Astro.props;
-let { title, date, image, categories } = content.data;
+const { title, image, body } = content;
 
-const { Content } = await render(content);
+// Rich text → HTML (headings, lists, links and inline images)
+const bodyHtml = body?.length ? await portableTextToHtml(body) : "";
 ---
 
 <section>
@@ -21,45 +22,24 @@ const { Content } = await render(content);
     <div
       class:list={["has-video-modal max-w-full space-y-10 lg:p-5", className]}>
       {
-        image && (
-          <OptimizedImage
+        image?.asset && (
+          <SanityImage
             width={896}
             height={500}
-            alt={title}
-            src={image as string}
-            class:list={["h-125 w-full object-cover"]}
+            alt={image.alt || stegaClean(title)}
+            image={image}
+            class="h-125 w-full object-cover"
           />
         )
       }
 
       <div class="space-y-2">
-        <ul
-          class="text-dark flex flex-wrap items-center gap-x-5 gap-y-1 tracking-wide">
-          {
-            date && (
-              <li>
-                {date && markdownify(formatRelativeDate(date, "dd MMM, yyyy"))}
-              </li>
-            )
-          }
-
-          {
-            categories?.map((category: string) => (
-              <li class="before:bg-dark relative pe-5 before:absolute before:end-0 before:top-1/2 before:h-1 before:w-1 before:-translate-y-1/2 before:rounded-full before:content-['']">
-                {markdownify(category)}
-              </li>
-            ))
-          }
-        </ul>
         {title && <h1 class="text-h2-sm md:text-h2" set:html={title} />}
       </div>
-      {
-        Content && (
-          <div class="prose-styles content has-video-modal prose-headings:mb-6 prose-headings:mt-10">
-            <Content />
-          </div>
-        )
-      }
+      <div
+        class="prose-styles content has-video-modal prose-headings:mb-6 prose-headings:mt-10"
+        set:html={bodyHtml}
+      />
     </div>
   </div>
 </section>

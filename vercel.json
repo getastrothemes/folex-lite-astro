@@ -1,6 +1,6 @@
 {
   "trailingSlash": true,
-  "buildCommand": "sh vercel.sh",
+  "buildCommand": "bash vercel.sh",
   "redirects": [
     {
       "source": "/sitemap.xml",

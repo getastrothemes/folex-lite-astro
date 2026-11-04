@@ -1,0 +1,52 @@
+---
+/**
+ * Small floating notice shown while draft (preview) mode is on.
+ * Render it only when `Astro.locals.preview` is true.
+ *
+ * It stays hidden inside the Studio's Presentation tool (an iframe), where
+ * the Studio already shows its own controls, and appears when the preview
+ * is opened in a normal browser tab.
+ */
+import { studioUrl } from "@/lib/sanity/env";
+
+// "Open Studio" goes straight to the Presentation tool
+const presentationUrl = `${studioUrl.replace(/\/+$/, "")}/presentation`;
+
+// "Exit preview" brings the visitor back to this same page
+const currentPath = Astro.url.pathname + Astro.url.search;
+const exitUrl = `/api/draft-mode/disable/?redirect=${encodeURIComponent(currentPath)}`;
+---
+
+<aside
+  id="sanity-preview-bar"
+  aria-label="Preview mode"
+  hidden
+  class:list={[
+    "bg-primary fixed start-4 z-100 me-4 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-3xl border border-white/20 px-4 py-2 text-xs text-white shadow-lg",
+    // Sit above the dev-only breakpoint indicator
+    import.meta.env.DEV ? "bottom-16" : "bottom-4",
+  ]}>
+  <span class="flex items-center gap-2">
+    <span class="bg-accent size-2 rounded-full" aria-hidden="true"></span>
+    Preview mode: showing unpublished changes
+  </span>
+  <a
+    href={presentationUrl}
+    target="_blank"
+    rel="noopener"
+    class="hover:text-accent focus-visible:outline-accent rounded-sm underline underline-offset-2 focus-visible:outline-2 focus-visible:outline-offset-2">
+    Open Studio
+  </a>
+  <a
+    href={exitUrl}
+    class="hover:text-accent focus-visible:outline-accent rounded-sm underline underline-offset-2 focus-visible:outline-2 focus-visible:outline-offset-2">
+    Exit preview
+  </a>
+</aside>
+
+<script is:inline>
+  // Show the bar only when the page is not inside the Studio iframe
+  if (window.self === window.top) {
+    document.getElementById("sanity-preview-bar")?.removeAttribute("hidden");
+  }
+</script>

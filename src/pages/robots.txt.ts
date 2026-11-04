@@ -1,6 +1,9 @@
 import config from ".astro/config.generated.json";
 import type { APIRoute } from "astro";
 
+// Always built as a static file (also on the preview server)
+export const prerender = true;
+
 const { enable, disallow } = config.seo.robotsTxt;
 
 const getRobotsTxt = (

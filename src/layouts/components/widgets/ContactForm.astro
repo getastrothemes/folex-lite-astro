@@ -1,32 +1,38 @@
 ---
+import { stegaClean } from "@sanity/client/stega";
 import { markdownify, toLowerCase } from "@/lib/utils/textConverter";
 import CustomButton from "@/components/CustomButton.astro";
-import type { z } from "astro/zod";
-import type { contactFormSchema } from "@/sections.schema";
-import type { inputFieldSchema } from "@/sections.schema";
+import type {
+  ContactFormData,
+  ContactFormInput,
+  SiteSettings,
+} from "@/lib/sanity/types";
 import { getPrelineSelectConfig } from "@/lib/utils/preline";
-import config from ".astro/config.generated.json";
 
 interface Props {
-  form: z.infer<typeof contactFormSchema>;
+  // Form fields from Studio ("Footer & contact form")
+  form: ContactFormData;
+  // Form provider and endpoint from Studio ("Site settings" → contact form)
+  settings: SiteSettings["contactForm"];
   class?: string;
 }
 
-const {
-  settings: { contactFormAction, contactFormProvider },
-} = config;
+const { provider: contactFormProvider, action: contactFormAction } =
+  Astro.props.settings;
 
-// Generate ID from label (Required for Input Radio and Checkbox)
-const genIdFromLabel = (label: string) => toLowerCase(label).replace(" ", "-");
+// Generate ID from label (Required for Input Radio and Checkbox).
+// Visual-editing markers are removed first so ids stay valid in preview.
+const genIdFromLabel = (label: string) =>
+  toLowerCase(stegaClean(label)).replace(" ", "-");
 
 // Combine same group radio to show them together without space
-const combineRadio = (list: z.infer<typeof inputFieldSchema>[]) => {
+const combineRadio = (list: ContactFormInput[]) => {
   const groupMap: Record<
     string,
     {
       index: number;
       groupLabel?: string;
-      items: z.infer<typeof inputFieldSchema>[];
+      items: ContactFormInput[];
     }
   > = {};
   const result: any[] = [...list];
@@ -63,13 +69,12 @@ const combineRadio = (list: z.infer<typeof inputFieldSchema>[]) => {
   return result;
 };
 
-let { form } = Astro.props;
-form = {
-  ...form,
-  inputs: combineRadio(form.inputs),
+const form = {
+  ...Astro.props.form,
+  inputs: combineRadio(Astro.props.form.inputs || []),
 };
 
-const noteStyles = {
+const noteStyles: Record<string, string> = {
   info: "border-[#1e90ff]/80 bg-[#f2f7fc]",
   warning: "border-[#FFA500]/80 bg-[#FFF4E5]",
   success: "border-[#32CD32]/80 bg-[#E6FFE6]",
@@ -141,7 +146,7 @@ const noteStyles = {
               )}
               class="hidden">
               <option value="">Choose</option>
-              {input.dropdown?.items?.map((option) => (
+              {input.dropdown?.items?.map((option: any) => (
                 <option
                   {...(option.selected && { selected: true })}
                   value={option.value}>
@@ -167,7 +172,7 @@ const noteStyles = {
           />
         ) : input.items ? (
           <div class="form-check-wrapper">
-            {input.items?.map((input) => (
+            {input.items?.map((input: any) => (
               <div class="form-check">
                 <input
                   {...{

@@ -1,68 +1,48 @@
 ---
+import type { SanityImageValue, SiteSettings } from "@/lib/sanity/types";
 import { getLocaleUrlCTM } from "@/lib/utils/i18nUtils";
-import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
+import SanityImage from "@/components/utilities/SanityImage.astro";
 import { markdownify, toSentenceCase } from "@/lib/utils/textConverter";
 
-import config from ".astro/config.generated.json";
-
 type Props = {
-  src?: string;
+  // Global settings from Studio ("Site settings")
+  settings: SiteSettings;
+  // Show this image instead of the main logo (e.g. the light logo)
+  image?: SanityImageValue | null;
   class?: string;
+  // CSS sizes that override the logo size from Studio (e.g. "11.25rem")
   width?: string;
   height?: string;
   [key: string]: any;
 };
 
-let { src, class: className } = Astro.props;
+const { settings, image, class: className } = Astro.props;
+const { logo, logoLight, logoText, title } = settings;
 
-let {
-  logo,
-  logoWidth = "1.8125rem",
-  logoHeight = "1.8125rem",
-  logoText,
-  logoAlternate,
-  title,
-}: {
-  logo: string;
-  logoAlternate: string;
-  logoWidth: string;
-  logoHeight: string;
-  logoText: string;
-  title: string;
-} = config.site;
+// Logo size from Studio (numbers in px), unless overridden by props
+const logoWidth = Astro.props.width || `${settings.logoWidth}px`;
+const logoHeight = Astro.props.height || `${settings.logoHeight}px`;
+const style = { height: logoHeight, width: logoWidth };
+const alt = toSentenceCase("Brand logo of " + title);
 
-if (Astro.props.width) {
-  logoWidth = Astro.props.width;
-}
-if (Astro.props.height) {
-  logoHeight = Astro.props.height;
-}
+const mainLogo = image?.asset ? image : logo;
 ---
 
 <a
   href={getLocaleUrlCTM("/", Astro.currentLocale)}
   class:list={["logo-wrapper", className]}>
   {
-    src || logoAlternate || logo ? (
+    mainLogo?.asset || logoLight?.asset ? (
       <>
-        <OptimizedImage
-          src={src ? src : logo}
-          class="logo"
-          alt={toSentenceCase("Brand logo of " + title)}
-          style={{
-            height: logoHeight,
-            width: logoWidth,
-          }}
-        />
-        {logoAlternate && (
-          <OptimizedImage
-            src={logoAlternate}
+        {mainLogo?.asset && (
+          <SanityImage image={mainLogo} class="logo" alt={alt} style={style} />
+        )}
+        {logoLight?.asset && (
+          <SanityImage
+            image={logoLight}
             class="logo-alternate"
-            alt={toSentenceCase("Brand logo of " + title)}
-            style={{
-              height: logoHeight,
-              width: logoWidth,
-            }}
+            alt={alt}
+            style={style}
           />
         )}
 

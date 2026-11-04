@@ -1,4 +1,12 @@
-// scripts/process-sitemaps.mjs
+// scripts/remove-draft-from-sitemap.mjs
+//
+// Runs after `astro build` and cleans up the generated sitemap:
+// - removes pages whose HTML has <meta name="robots" content="noindex">
+//   (the "Hide from search engines" SEO option in Sanity Studio),
+// - removes folders listed in config.toml (seo.sitemap.exclude),
+// - removes draft/excluded Markdown pages when an `src/content` folder exists.
+// Sanity drafts are never published, so they never reach the sitemap.
+// Every step is skipped safely when its input does not exist.
 import path from "node:path";
 import { promises as fs } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -74,6 +82,9 @@ function safePathname(loc) {
 async function getContentFrontmatter(folder = CONTENT_FOLDER) {
   const frontmatterMap = {};
 
+  // The Sanity edition keeps content in the CMS, so there may be no folder.
+  if (!(await pathExists(folder))) return frontmatterMap;
+
   async function walk(dir) {
     const entries = await fs.readdir(dir, { withFileTypes: true });
     for (const entry of entries) {
@@ -94,7 +105,8 @@ async function getContentFrontmatter(folder = CONTENT_FOLDER) {
           excludeFromSitemap: Boolean(data?.excludeFromSitemap),
           draft: Boolean(data?.draft),
           originalSlug: typeof data?.id === "string" ? data.id : null,
-          customSlug: typeof data?.customSlug === "string" ? data.customSlug : null,
+          customSlug:
+            typeof data?.customSlug === "string" ? data.customSlug : null,
         };
       } catch (err) {
         console.error(`Error reading file ${full}:`, err);
@@ -108,7 +120,9 @@ async function getContentFrontmatter(folder = CONTENT_FOLDER) {
 
 // Determine language by contentDir in the file path
 function getLanguageCode(filePathPosix, languages) {
-  const match = languages.find((lang) => filePathPosix.includes(`/${lang.contentDir}/`));
+  const match = languages.find((lang) =>
+    filePathPosix.includes(`/${lang.contentDir}/`),
+  );
   return match?.languageCode ?? null;
 }
 
@@ -125,7 +139,10 @@ function getTopSection(filePathPosix) {
 
 // Build slug: <section>/<originalSlug or filename> (handles -index)
 function getSlug(filePathPosix, metadata) {
-  const fileName = path.posix.basename(filePathPosix, path.posix.extname(filePathPosix));
+  const fileName = path.posix.basename(
+    filePathPosix,
+    path.posix.extname(filePathPosix),
+  );
   const section = getTopSection(filePathPosix);
 
   // fallback if structure isn't src/content/<section>/...
@@ -155,15 +172,54 @@ function generateUrl(filePathPosix, metadata, settings) {
 }
 
 function buildExcludedFolders(config) {
-  const fromConfig = Array.isArray(config?.seo?.sitemap?.exclude) ? config.seo.sitemap.exclude : [];
+  const fromConfig = Array.isArray(config?.seo?.sitemap?.exclude)
+    ? config.seo.sitemap.exclude
+    : [];
   return ["widgets", "sections", "author", ...fromConfig];
 }
 
-async function getSitemapFiles() {
-  const files = await fs.readdir(DIST_FOLDER);
+// Static builds write to dist/, server (preview) builds to dist/client/.
+async function getHtmlRoot() {
+  const clientDir = path.join(DIST_FOLDER, "client");
+  return (await pathExists(clientDir)) ? clientDir : DIST_FOLDER;
+}
+
+async function getSitemapFiles(htmlRoot) {
+  const files = await fs.readdir(htmlRoot);
   return files
     .filter((f) => SITEMAP_FILE_PATTERN.test(f))
-    .map((f) => path.join(DIST_FOLDER, f));
+    .map((f) => path.join(htmlRoot, f));
+}
+
+// Read a JSON file, or return a fallback when it is missing or invalid.
+async function readJsonOr(filePath, fallback) {
+  try {
+    return await readJsonFile(filePath);
+  } catch {
+    return fallback;
+  }
+}
+
+const NOINDEX_META = /<meta\b[^>]*\bname=["']?robots["']?[^>]*>/gi;
+
+// True when the built HTML page for this URL path asks not to be indexed.
+async function isNoIndexPage(htmlRoot, pathname) {
+  const clean = decodeURIComponent(pathname).replace(/^\/+|\/+$/g, "");
+  const candidates = [
+    path.join(htmlRoot, clean, "index.html"),
+    path.join(htmlRoot, `${clean}.html`),
+  ];
+
+  for (const file of candidates) {
+    // Never look outside the build folder
+    if (!file.startsWith(htmlRoot)) continue;
+    const html = await fs.readFile(file, "utf8").catch(() => null);
+    if (html === null) continue;
+    const metas = html.match(NOINDEX_META) ?? [];
+    return metas.some((tag) => /noindex/i.test(tag));
+  }
+
+  return false;
 }
 
 // ---------------- Main ----------------
@@ -178,8 +234,9 @@ async function processSitemaps() {
       return;
     }
 
-    const languagesJSON = await readJsonFile(LANG_FILE);
-    const config = await readJsonFile(ASTRO_CONFIG_FILE);
+    const languagesJSON = await readJsonOr(LANG_FILE, []);
+    const config = await readJsonOr(ASTRO_CONFIG_FILE, {});
+    const htmlRoot = await getHtmlRoot();
 
     const settings = {
       ...(config?.settings?.multilingual ?? {}),
@@ -188,7 +245,7 @@ async function processSitemaps() {
 
     const EXCLUDE_FOLDERS = buildExcludedFolders(config);
 
-    const sitemapFiles = await getSitemapFiles();
+    const sitemapFiles = await getSitemapFiles(htmlRoot);
     const contentFrontmatter = await getContentFrontmatter();
 
     // Precompute excluded/draft URLs from content
@@ -224,24 +281,31 @@ async function processSitemaps() {
 
       const urls = Array.isArray(urlset.url) ? urlset.url : [urlset.url];
 
-      const filtered = urls.filter((u) => {
+      const filtered = [];
+      for (const u of urls) {
         const pathname = safePathname(u?.loc);
-        if (!pathname) return true; // if we can't parse it, don't delete it
+        if (!pathname) {
+          filtered.push(u); // if we can't parse it, don't delete it
+          continue;
+        }
 
         // Remove "-index" pages
-        if (pathname.includes("-index")) return false;
+        if (pathname.includes("-index")) continue;
 
         // Exclude folders
-        if (EXCLUDE_FOLDERS.some((folder) => pathname.includes(folder))) return false;
+        if (EXCLUDE_FOLDERS.some((folder) => pathname.includes(folder)))
+          continue;
 
         // Remove draft/excluded URLs
         // Match on either customSlug or generated url path
-        for (const bad of excludedUrlSet) {
-          if (bad && pathname.includes(bad)) return false;
-        }
+        if ([...excludedUrlSet].some((bad) => bad && pathname.includes(bad)))
+          continue;
 
-        return true;
-      });
+        // Remove pages marked "noindex" (SEO setting in Sanity Studio)
+        if (await isNoIndexPage(htmlRoot, pathname)) continue;
+
+        filtered.push(u);
+      }
 
       sitemapObj.urlset.url = filtered;
 

@@ -2,9 +2,16 @@
 import { absoluteUrl } from "@/lib/utils/absoluteUrl";
 import JsonLdGenerator from "@/lib/utils/JsonLdGenerator";
 import { supportedLanguages } from "@/lib/utils/i18nUtils";
-import config from ".astro/config.generated.json";
+import type { SiteConfig } from "@/lib/utils/sanityAdapters";
 
-const { content } = Astro.props;
+interface Props {
+  // Title, description, image, ... of the current page
+  content: Record<string, any>;
+  // config.toml merged with the "Site settings" from Studio
+  config: SiteConfig;
+}
+
+const { content, config } = Astro.props;
 
 let {
   title = config.site.title,
@@ -33,7 +40,7 @@ title =
 description = metaDescription ? metaDescription : description;
 canonical = canonical ? canonical : Astro.url.href;
 lang = Astro.currentLocale;
-image = absoluteUrl(image, Astro);
+image = image ? absoluteUrl(image, Astro) : undefined;
 
 // Generate JSON-LD dynamically
 const jsonLdData = JsonLdGenerator(

@@ -1,16 +1,19 @@
 ---
 import "aos/dist/aos.css";
 import "@/styles/global.css";
+import { VisualEditing } from "@sanity/astro/visual-editing";
+import config from ".astro/config.generated.json";
 import Head from "@/components/global/Head.astro";
-import removeEmptyKeys from "@/lib/utils/removeEmptyKeys";
 import Header from "@/components/global/header/Header.astro";
-import type { JSONLDProps } from "@/lib/utils/JsonLdGenerator";
 import HelperButtons from "@/components/utilities/HelperButtons.astro";
 import BreakpointIndicator from "@/components/widgets/BreakpointIndicator.astro";
+import PreviewBar from "@/components/widgets/PreviewBar.astro";
 import FooterThree from "@/components/global/FooterThree.astro";
 import GlobalScripts from "./components/widgets/GlobalScripts.astro";
+import { getFooter, getNavigation, getSiteSettings } from "@/lib/sanity/data";
+import { buildSiteConfig, type PageSeo } from "@/lib/utils/sanityAdapters";
 
-interface Props extends JSONLDProps {
+interface Props extends PageSeo {
   className?: string;
   fitToScreen?: boolean;
   footerSpaceTop?: boolean;
@@ -18,23 +21,12 @@ interface Props extends JSONLDProps {
   hasHeaderDarkBackground?: boolean;
   hasBodyDarkBackground?: boolean;
   hideOffcanvas?: boolean;
-  draft?: boolean;
-  metaTitle?: string;
-  metaDescription?: string;
-  robots?: string;
-  excludeFromSitemap?: boolean;
-  customSlug?: string;
-  canonical?: string;
-  keywords?: string[];
-  disableTagline?: boolean;
-  structuredData?: Props;
   footerLayout?: "footer-1" | "footer-2" | "footer-3";
 }
 
-// destructure frontmatter
+// destructure props
 let {
   className,
-  structuredData,
   headerPosition = "sticky",
   hideOffcanvas = false,
   hasHeaderDarkBackground = false,
@@ -42,10 +34,40 @@ let {
   footerSpaceTop = true,
   footerLayout = "footer-3",
   fitToScreen = true,
+  // SEO props (see `PageSeo`)
+  title,
+  description,
+  seo,
+  image,
+  disableTagline,
+  canonical,
+  pageType,
 } = Astro.props;
 
-// Exclude empty key value weather it may empty string, object or array from Astro.props
-let props = removeEmptyKeys(Astro.props);
+// Current language, e.g. "en" or "fr"
+const lang =
+  Astro.currentLocale || config.settings.multilingual.defaultLanguage;
+
+// True only on the preview server with a valid draft-mode cookie
+const preview = Astro.locals.preview === true;
+
+// Global content from Studio, fetched once per page and passed down
+const [settings, navigation, footer] = await Promise.all([
+  getSiteSettings(preview),
+  getNavigation(lang, preview),
+  getFooter(lang, preview),
+]);
+
+// Meta tags: config.toml + "Site settings" + this page's SEO fields
+const { config: siteConfig, meta } = await buildSiteConfig(settings, {
+  title,
+  description,
+  seo,
+  image,
+  disableTagline,
+  canonical,
+  pageType,
+});
 
 // Conditionally add min-h-[102vh] class to prevent FOUC (flash of unstyled content) while fast navigation
 className = fitToScreen
@@ -54,13 +76,15 @@ className = fitToScreen
 ---
 
 <!doctype html>
-<html lang="en">
-  <Head {...props} structuredData={structuredData} />
+<html lang={lang}>
+  <Head config={siteConfig} meta={meta} />
   <body class:list={[hasBodyDarkBackground && "bg-body-dark"]}>
     <Header
       position={headerPosition}
       hasDarkBackground={hasHeaderDarkBackground}
       hideOffcanvas={hideOffcanvas}
+      settings={settings}
+      navigation={navigation}
     />
 
     <main class:list={[className]}>
@@ -79,12 +103,20 @@ className = fitToScreen
           Folex premium version to unlock this layout.
         </div>
       ) : footerLayout === "footer-3" ? (
-        <FooterThree footerSpaceTop={footerSpaceTop} />
+        <FooterThree
+          footerSpaceTop={footerSpaceTop}
+          settings={settings}
+          footer={footer}
+        />
       ) : null
     }
 
     <HelperButtons />
     <GlobalScripts />
     <BreakpointIndicator />
+
+    {/* Draft preview only: preview bar + click-to-edit overlays */}
+    {preview && <PreviewBar />}
+    <VisualEditing enabled={preview} />
   </body>
 </html>

@@ -2,30 +2,40 @@
 import Logo from "@/components/global/Logo.astro";
 import Offcanvas from "../../widgets/Offcanvas.astro";
 import config from ".astro/config.generated.json";
-import { useTranslations } from "@/lib/utils/i18nUtils";
+import type { NavigationData, SiteSettings } from "@/lib/sanity/types";
 import NavbarToggler from "@/layouts/components/global/header/NavbarToggler.astro";
 import HeaderOffcanvasContent from "@/components/widgets/HeaderOffcanvasContent.astro";
 import LanguageSwitcher from "@/layouts/components/global/header/LanguageSwitcher.astro";
 import Navbar from "./Navbar.astro";
 import CustomButton from "@/components/CustomButton.astro";
 
-const t = await useTranslations(Astro.currentLocale as string);
+interface Props {
+  position?: "fixed" | "static" | "sticky";
+  hasDarkBackground?: boolean;
+  hideOffcanvas?: boolean;
+  class?: string;
+  // Global settings from Studio ("Site settings")
+  settings: SiteSettings;
+  // Menu, header button and side panel from Studio ("Navigation menu")
+  navigation: NavigationData;
+}
 
 const isCategoryFilteredPage = ["/category/", "/tag/"].some((path) =>
   Astro.url.pathname.includes(`/${config.settings.blogFolder}${path}`),
 );
 
 const {
-  site: { logoAlternate },
-  settings: { stickyHeader, navigationButton, headerOffcanvas },
-} = config;
-
-const {
   position,
   hasDarkBackground,
   hideOffcanvas,
   class: ClassName,
+  settings,
+  navigation,
 } = Astro.props;
+
+const { stickyHeader, logoLight } = settings;
+const navigationButton = navigation.headerButton;
+const sidePanel = navigation.sidePanel;
 ---
 
 <header
@@ -40,10 +50,16 @@ const {
   <nav class="xl:container-12xl relative max-xl:container">
     <div
       class="hs-dropdown relative flex items-center justify-between py-6 [--auto-close:inside] [--gpu-acceleration:false] [--strategy:absolute] lg:[--strategy:static]">
-      {hasDarkBackground ? <Logo src={logoAlternate} /> : <Logo />}
+      {
+        hasDarkBackground ? (
+          <Logo settings={settings} image={logoLight} />
+        ) : (
+          <Logo settings={settings} />
+        )
+      }
 
       <!-- Navbar For Header -->
-      <Navbar />
+      <Navbar navigation={navigation} />
 
       {/* Language Switcher For Small Devices */}
       {
@@ -58,19 +74,18 @@ const {
 
       {/* Navigation Button For Large Devices */}
       {
-        (navigationButton.enable || config.settings.multilingual.enable) && (
+        (navigationButton?.enable || config.settings.multilingual.enable) && (
           <div class="hidden gap-3.5 max-lg:ms-auto max-lg:me-4 lg:flex lg:items-center">
             {config.settings.multilingual.enable && !isCategoryFilteredPage && (
               <LanguageSwitcher
                 appearance={hasDarkBackground ? "light" : "dark"}
               />
             )}
-            {navigationButton.enable && (
+            {navigationButton?.enable && (
               <CustomButton
                 variant="fill"
                 hoverEffect="creative-fill"
                 {...navigationButton}
-                label={navigationButton.label || t("navigation.buttonLabel")}
                 class:list={[
                   hasDarkBackground
                     ? "btn-accent effect-color-dark"
@@ -84,7 +99,7 @@ const {
 
       {/* Desktop Sidebar Offcanvas Toggle Button */}
       {
-        headerOffcanvas?.enable && (
+        sidePanel?.enable && (
           <NavbarToggler
             title="Open sidebar content"
             appearance={hasDarkBackground ? "light" : "dark"}
@@ -108,13 +123,17 @@ const {
 <div>
   {/* Desktop Sidebar Offcanvas */}
   {
-    headerOffcanvas?.enable && (
+    sidePanel?.enable && (
       <Offcanvas
         class={hideOffcanvas ? "lg:hidden" : ""}
         id="offcanvas-main"
         direction="right"
         size="md">
-        <HeaderOffcanvasContent offcanvas={"offcanvas-main"} />
+        <HeaderOffcanvasContent
+          offcanvas={"offcanvas-main"}
+          settings={settings}
+          navigation={navigation}
+        />
       </Offcanvas>
     )
   }

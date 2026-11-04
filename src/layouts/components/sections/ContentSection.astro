@@ -1,0 +1,33 @@
+---
+import type { ContentSectionData } from "@/lib/sanity/types";
+import { portableTextToHtml } from "@/lib/sanity/portableText";
+
+type Props = {
+  // Section data from Sanity (see `contentSection` in Studio)
+  content: ContentSectionData;
+  // `data-sanity` attribute for visual editing (preview only)
+  dataSanity?: string;
+};
+
+const { content, dataSanity } = Astro.props;
+const { title, body } = content;
+
+// Rich text is rendered with the same prose styles as the legal pages
+const bodyHtml = body?.length ? await portableTextToHtml(body) : "";
+---
+
+<section data-sanity={dataSanity}>
+  <div class="container">
+    <div class="max-w-full space-y-10 lg:p-5">
+      {title && <h2 class="text-h2-sm md:text-h2" set:html={title} />}
+      {
+        bodyHtml && (
+          <div
+            class="prose-styles content has-video-modal prose-headings:mb-6 prose-headings:mt-10"
+            set:html={bodyHtml}
+          />
+        )
+      }
+    </div>
+  </div>
+</section>

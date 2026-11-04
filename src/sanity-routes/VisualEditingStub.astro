@@ -1,0 +1,12 @@
+---
+/**
+ * Empty stand-in for Sanity's <VisualEditing /> in static builds.
+ *
+ * `astro.config.mjs` points `@sanity/astro/visual-editing` here when
+ * `SANITY_VISUAL_EDITING` is not "true", so the live site ships none of the
+ * visual editing CSS/JS (it is only used on the preview server).
+ */
+interface Props {
+  enabled?: boolean;
+}
+---

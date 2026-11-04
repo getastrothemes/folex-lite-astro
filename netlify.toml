@@ -1,6 +1,22 @@
+# Netlify settings for the static website.
+#
+# Add these environment variables in Netlify:
+#   Site configuration > Environment variables
+#
+#   PUBLIC_SANITY_PROJECT_ID   your Sanity project ID (empty = bundled demo content)
+#   PUBLIC_SANITY_DATASET      usually "production"
+#   PUBLIC_SANITY_STUDIO_URL   e.g. https://your-name.sanity.studio
+#
+# Do NOT set SANITY_API_READ_TOKEN or SANITY_VISUAL_EDITING here: the live site
+# is a static build that only shows published content.
+#
+# To rebuild the site when you publish in Sanity, create a build hook
+# (Site configuration > Build & deploy > Build hooks) and add its URL as a
+# webhook in https://www.sanity.io/manage > your project > API > Webhooks.
+
 [build]
   publish = "dist"
-  command = "yarn build"
+  command = "npm run build"
 
   [build.environment]
     NODE_VERSION = "22"

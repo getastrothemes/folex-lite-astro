@@ -1,0 +1,59 @@
+---
+/**
+ * Renders the "Page sections" list of a Sanity document (home page or page).
+ * Each section `_type` from Studio is mapped to its section component.
+ * Hidden sections are already removed by the GROQ query.
+ */
+import { stegaClean } from "@sanity/client/stega";
+import type { SectionData } from "@/lib/sanity/types";
+import { dataAttribute } from "@/lib/sanity/visualEditing";
+import Banner from "./Banner.astro";
+import Clients from "./Clients.astro";
+import ContentSection from "./ContentSection.astro";
+import PortfolioSection from "./PortfolioSection.astro";
+import PricingSection from "./PricingSection.astro";
+import ServicesSection from "./ServicesSection.astro";
+
+type Props = {
+  // The document that owns the sections (used for visual editing)
+  document: { _id: string; _type: string };
+  sections?: (SectionData & { hidden?: boolean })[];
+};
+
+const { document, sections = [] } = Astro.props;
+
+// Section type in Studio → component that renders it
+const components: Record<SectionData["_type"], any> = {
+  bannerSection: Banner,
+  clientsSection: Clients,
+  servicesSection: ServicesSection,
+  portfolioSection: PortfolioSection,
+  pricingSection: PricingSection,
+  contentSection: ContentSection,
+};
+
+// In preview, each section gets a `data-sanity` attribute so clicking it
+// in the Presentation tool opens the matching section in Studio
+const preview = Astro.locals.preview === true;
+const getDataSanity = (key: string) =>
+  preview
+    ? dataAttribute({
+        id: document._id,
+        type: document._type,
+        path: `sections[_key=="${key}"]`,
+      })
+    : undefined;
+
+const visibleSections = sections.filter(
+  (section) => section && section.hidden !== true,
+);
+---
+
+{
+  visibleSections.map((section) => {
+    const Component = components[stegaClean(section._type)];
+    return Component ? (
+      <Component content={section} dataSanity={getDataSanity(section._key)} />
+    ) : null;
+  })
+}

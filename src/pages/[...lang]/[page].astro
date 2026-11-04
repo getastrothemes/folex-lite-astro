@@ -1,42 +1,62 @@
 ---
 import Base from "@/layouts/Base.astro";
-import { getCollectionCTM } from "@/lib/contentParser.astro";
-import { supportedLanguages } from "@/lib/utils/i18nUtils";
-import config from ".astro/config.generated.json";
+import HomeLayout from "@/layouts/HomeLayout.astro";
 import SinglePageLayout from "@/components/SinglePageLayout.astro";
-import extractSlug from "@/lib/utils/extractSlug";
+import PageSections from "@/components/sections/PageSections.astro";
+import { getAllPageSlugs, getHomePage, getPage } from "@/lib/sanity/data";
+import { langToParam, resolveLangParam } from "@/lib/utils/i18nUtils";
+import { startsWithBanner } from "@/lib/utils/sanityAdapters";
 
-// get static paths for all pages
+// Static builds: every published page of every enabled language
 export async function getStaticPaths() {
-  const paths = await Promise.all(
-    supportedLanguages.map(async (lang) => {
-      const { defaultLanguage, showDefaultLangInUrl } =
-        config.settings.multilingual;
-
-      let pages = await getCollectionCTM("pages", lang.languageCode);
-
-      // Generate static path entry
-      return pages.map((page) => ({
-        params: {
-          lang:
-            !showDefaultLangInUrl && lang.languageCode === defaultLanguage
-              ? undefined
-              : lang.languageCode,
-          page: extractSlug(page).split("/").pop(),
-        },
-        props: {
-          page,
-        },
-      }));
-    }),
-  );
-
-  return paths.flat();
+  const pages = await getAllPageSlugs();
+  return pages.map(({ lang, slug }) => ({
+    params: { lang: langToParam(lang), page: slug },
+  }));
 }
 
-const { page } = Astro.props;
+// The data is resolved from the URL (not from getStaticPaths props) so the
+// same page also works on the preview server
+const preview = Astro.locals.preview === true;
+const { lang: langParam, page: slug } = Astro.params;
+
+// On the preview server a language home such as `/fr/` also matches this
+// route (as `{ page: "fr" }`), so that home page is rendered here
+const homeLang = !langParam && slug ? resolveLangParam(slug) : null;
+const home = homeLang ? await getHomePage(homeLang, preview) : null;
+
+const lang = resolveLangParam(langParam);
+const page = !home && lang && slug ? await getPage(lang, slug, preview) : null;
+
+// Unknown language prefix or page → 404 page
+if (!home && !page) {
+  return new Response(null, { status: 404 });
+}
+
+// The title/body block is shown when the page has a body or cover image,
+// or when it has nothing else to show
+const hasBody = !!page?.body?.length;
+const showPageContent =
+  hasBody || !!page?.image?.asset || !page?.sections.length;
+
+// A page that starts with a banner gets the fixed, transparent header
+const hasBanner = !showPageContent && startsWithBanner(page?.sections);
 ---
 
-<Base {...page.data}>
-  <SinglePageLayout content={{ ...page.data, ...page }} />
-</Base>
+{
+  home ? (
+    <HomeLayout page={home} />
+  ) : (
+    page && (
+      <Base
+        title={page.title}
+        seo={page.seo}
+        image={page.image}
+        headerPosition={hasBanner ? "fixed" : "sticky"}
+        hasHeaderDarkBackground={hasBanner}>
+        {showPageContent && <SinglePageLayout content={page} />}
+        <PageSections document={page} sections={page.sections} />
+      </Base>
+    )
+  )
+}

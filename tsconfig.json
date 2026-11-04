@@ -8,7 +8,8 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
     "isolatedModules": true,
     "incremental": true,
     "allowSyntheticDefaultImports": true,
@@ -33,6 +34,8 @@
   ],
   "exclude": [
     "dist",
-    "public"
+    "public",
+    "studio-dist",
+    ".sanity"
   ]
 }

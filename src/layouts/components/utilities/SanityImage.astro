@@ -1,0 +1,109 @@
+---
+/**
+ * Renders an image field from Sanity.
+ *
+ * - Demo images in `src/assets/images` → `OptimizedImage` (Astro optimization)
+ * - Demo images in `public/` and SVGs → a plain <img>
+ * - Images uploaded to Sanity → responsive <img> from the Sanity image CDN
+ *
+ * `alt` is a fallback: the alt text written in Studio wins when present.
+ */
+import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
+import {
+  getImageDimensions,
+  getResponsiveImage,
+  isLocalImage,
+  isPublicImage,
+  isSvgImage,
+} from "@/lib/sanity/image";
+import type { SanityImageValue } from "@/lib/sanity/types";
+
+interface Props {
+  image?: SanityImageValue | null;
+  alt?: string;
+  width?: number;
+  height?: number;
+  sizes?: string;
+  class?: string;
+  loading?: "eager" | "lazy";
+  style?: any;
+  [key: string]: any;
+}
+
+const {
+  image,
+  alt: fallbackAlt,
+  width,
+  height,
+  sizes = "100vw",
+  class: className,
+  loading = "lazy",
+  style,
+  ...rest
+} = Astro.props;
+
+const url = image?.asset?.url;
+const alt = image?.alt || fallbackAlt || "";
+
+// Choose how to render this image
+const mode = !url
+  ? "none"
+  : isPublicImage(image)
+    ? "plain"
+    : isLocalImage(image)
+      ? "local"
+      : isSvgImage(image)
+        ? "plain"
+        : "cdn";
+
+const intrinsic = getImageDimensions(image);
+const responsive =
+  mode === "cdn" && image ? getResponsiveImage(image, { width, height }) : null;
+---
+
+{
+  mode === "local" && url && (
+    <OptimizedImage
+      src={url}
+      alt={alt}
+      width={width}
+      height={height}
+      loading={loading}
+      class={className}
+      style={style}
+      {...rest}
+    />
+  )
+}
+{
+  mode === "plain" && (
+    <img
+      src={url}
+      alt={alt}
+      width={width ?? intrinsic?.width}
+      height={height ?? intrinsic?.height}
+      loading={loading}
+      decoding="async"
+      class={className}
+      style={style}
+      {...rest}
+    />
+  )
+}
+{
+  responsive && (
+    <img
+      src={responsive.src}
+      srcset={responsive.srcset}
+      sizes={sizes}
+      alt={alt}
+      width={responsive.width}
+      height={responsive.height}
+      loading={loading}
+      decoding="async"
+      class={className}
+      style={style}
+      {...rest}
+    />
+  )
+}

@@ -1,16 +1,12 @@
 ---
-import type { z } from "astro/zod";
 import Icons from "@/helpers/Icons.astro";
+import type { PricingPlan } from "@/lib/sanity/types";
 import { markdownify } from "@/lib/utils/textConverter";
-import type { pricingSectionSchema } from "@/sections.schema";
 import CustomButton from "../CustomButton.astro";
 
-type PricingCardType = NonNullable<
-  z.infer<typeof pricingSectionSchema>
->["list"][0];
-
 type Props = {
-  content: PricingCardType;
+  // One pricing plan from the Sanity `pricingSection`
+  content: PricingPlan;
   class?: string;
 };
 

@@ -3,9 +3,18 @@ import SEO from "@/components/seo/Seo.astro";
 import JsonLD from "../widgets/JsonLD.astro";
 import Favicons from "../seo/Favicons.astro";
 import OpenGraph from "../seo/OpenGraph.astro";
-import config from ".astro/config.generated.json";
+import type { ResolvedPageMeta, SiteConfig } from "@/lib/utils/sanityAdapters";
 import { Font } from "astro:assets";
 import fontsJson from "@/config/fonts.json";
+
+interface Props {
+  // config.toml merged with the "Site settings" from Studio
+  config: SiteConfig;
+  // Title, description, image and robots of the current page
+  meta: ResolvedPageMeta;
+}
+
+const { config, meta } = Astro.props;
 
 const fontVariables = fontsJson.map((font) => font.cssVariable) as any[];
 ---
@@ -19,13 +28,13 @@ const fontVariables = fontsJson.map((font) => font.cssVariable) as any[];
     content="width=device-width, initial-scale=1, maximum-scale=5"
   />
   <SEO
-    content={{
-      title: Astro.props.title,
-      metaTitle: Astro.props.metaTitle,
-      description: Astro.props.description,
-      metaDescription: Astro.props.metaDescription,
-      canonical: Astro.props.canonical,
-    }}
+    title={meta.title}
+    metaTitle={meta.metaTitle}
+    description={meta.description}
+    metaDescription={meta.metaDescription}
+    canonical={meta.canonical}
+    disableTagline={meta.disableTagline}
+    robots={meta.robots}
     config={config}
   />
   <meta
@@ -48,24 +57,27 @@ const fontVariables = fontsJson.map((font) => font.cssVariable) as any[];
   }
   <OpenGraph
     content={{
-      title: Astro.props.title,
-      metaTitle: Astro.props.metaTitle,
-      description: Astro.props.description,
-      metaDescription: Astro.props.metaDescription,
-      disableTagline: Astro.props.disableTagline,
+      title: meta.title,
+      metaTitle: meta.metaTitle,
+      description: meta.description,
+      metaDescription: meta.metaDescription,
+      disableTagline: meta.disableTagline,
+      image: meta.image,
     }}
     config={config}
   />
   <Favicons config={config} />
   <JsonLD
     content={{
-      title: Astro.props.title,
-      metaTitle: Astro.props.metaTitle,
-      description: Astro.props.description,
-      metaDescription: Astro.props.metaDescription,
-      disableTagline: Astro.props.disableTagline,
-      pageType: Astro.props.pageType,
+      title: meta.title,
+      metaTitle: meta.metaTitle,
+      description: meta.description,
+      metaDescription: meta.metaDescription,
+      disableTagline: meta.disableTagline,
+      image: meta.image,
+      pageType: meta.pageType,
     }}
+    config={config}
   />
 
   <!------------------

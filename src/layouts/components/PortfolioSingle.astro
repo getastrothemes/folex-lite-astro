@@ -1,55 +1,33 @@
 ---
+import { stegaClean } from "@sanity/client/stega";
 import Icons from "@/helpers/Icons.astro";
 import { Swiper, SwiperWrapper, SwiperSlide } from "astro-swiper";
+import type { Project } from "@/lib/sanity/types";
+import { portableTextToHtml } from "@/lib/sanity/portableText";
 import { markdownify } from "@/lib/utils/textConverter";
 import { useTranslations } from "@/lib/utils/i18nUtils";
-import OptimizedImage from "./utilities/OptimizedImage.astro";
+import SanityImage from "./utilities/SanityImage.astro";
 import PaginationForSingle from "./widgets/PaginationForSingle.astro";
-import { render } from "astro:content";
 import "aos/dist/aos.css";
 
-let {
-  collection,
-  data: { title, images, information },
-}: {
-  render: any;
-  id: string;
-  collection: string;
-  data: {
-    title: string;
-    images: string[];
-    categories: string[];
-    information: { label: string; value: string }[];
-  };
+interface Props {
+  // Portfolio project from Sanity
+  content: Project;
+}
+
+const {
+  title,
+  gallery: images,
+  details: information,
+  body,
+  prev,
+  next,
 } = Astro.props.content;
 
 const t = await useTranslations(Astro.currentLocale as string);
-const { Content } = await render(Astro.props.content);
 
-if (Array.isArray(information)) {
-  information = information.map((item) => {
-    const newItem = { ...item };
-    switch (item.value) {
-      case "date":
-        if (Astro.props.content.data.date) {
-          newItem.value = new Date(
-            Astro.props.content.data.date,
-          ).toLocaleDateString(Astro.currentLocale, {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          });
-        }
-        break;
-      case "categories":
-        if (Astro.props.content.data.categories) {
-          newItem.value = Astro.props.content.data.categories.join(", ");
-        }
-        break;
-    }
-    return newItem;
-  });
-}
+// Rich text → HTML (headings, lists, links and inline images)
+const bodyHtml = body?.length ? await portableTextToHtml(body) : "";
 ---
 
 <section class="overflow-hidden pt-16 md:pt-32">
@@ -76,11 +54,11 @@ if (Array.isArray(information)) {
               loop: true,
             }}>
             <SwiperWrapper>
-              {images.map((item: string, index: number) => (
+              {images.map((item, index: number) => (
                 <SwiperSlide class="h-auto!">
-                  <OptimizedImage
-                    src={item}
-                    alt={`${title} image ${index + 1}`}
+                  <SanityImage
+                    image={item}
+                    alt={item.alt || `${stegaClean(title)} image ${index + 1}`}
                     class="h-112.5 w-full object-cover md:h-137.5"
                   />
                 </SwiperSlide>
@@ -106,43 +84,43 @@ if (Array.isArray(information)) {
       <div
         class="grid max-w-full grid-cols-1 max-xl:space-y-8 xl:grid-cols-7 xl:gap-x-20">
         {
-          information && Array.isArray(information) && (
-            <ul class="space-y-4 xl:order-2 xl:col-span-2">
-              {information.map((item) => (
-                <li class="w-fit">
-                  {item.label && (
-                    <span
-                      class="text-dark/80 font-medium"
-                      set:html={item.label}
+          information &&
+            Array.isArray(information) &&
+            information.length > 0 && (
+              <ul class="space-y-4 xl:order-2 xl:col-span-2">
+                {information.map((item) => (
+                  <li class="w-fit">
+                    {item.label && (
+                      <span
+                        class="text-dark/80 font-medium"
+                        set:html={item.label}
+                      />
+                    )}
+                    <div
+                      class="prose-a:underline text-dark font-secondary font-medium capitalize"
+                      set:html={markdownify(item.value, true)}
                     />
-                  )}
-                  <div
-                    class="prose-a:underline text-dark font-secondary font-medium capitalize"
-                    set:html={markdownify(item.value, true)}
-                  />
-                </li>
-              ))}
-            </ul>
-          )
+                  </li>
+                ))}
+              </ul>
+            )
         }
         <div class="space-y-10 pe-10 xl:col-span-5">
           {title && <h1 class="md:text-display-5" set:html={title} />}
 
-          {
-            Content && (
-              <div class="prose-styles has-video-modal [&_.image-list-component]:xl:-ms-31.5 [&_.image-list-component]:xl:w-6xl">
-                <Content />
-              </div>
-            )
-          }
+          <div
+            class="prose-styles has-video-modal [&_.image-list-component]:xl:-ms-31.5 [&_.image-list-component]:xl:w-6xl"
+            set:html={bodyHtml}
+          />
         </div>
       </div>
       <div class="mt-10 flex justify-between border-t pt-10">
         <PaginationForSingle
           prevBtnText={t("common.paginationPortfolioPrev")}
           nextBtnText={t("common.paginationPortfolioNext")}
-          currentPage={Astro.props.content}
-          collection={collection}
+          prev={prev}
+          next={next}
+          collection="portfolio"
         />
       </div>
     </div>

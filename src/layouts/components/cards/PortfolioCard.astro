@@ -1,112 +1,108 @@
 ---
+import { stegaClean } from "@sanity/client/stega";
+import type { ProjectCard } from "@/lib/sanity/types";
 import { markdownify, toSentenceCase } from "@/lib/utils/textConverter";
 import { getLocaleUrlCTM, useTranslations } from "@/lib/utils/i18nUtils";
-import OptimizedImage from "@/components/utilities/OptimizedImage.astro";
-import type { CollectionEntry } from "astro:content";
+import SanityImage from "@/components/utilities/SanityImage.astro";
 
 type Props = {
   index?: number;
   class?: string;
   translations?: any;
-  content: CollectionEntry<"portfolio">;
-  options: CollectionEntry<"portfolio">["data"]["options"];
+  // Project from Sanity
+  content: ProjectCard;
+  options?: { layout?: "grid" | "masonry"; appearance?: string };
   [key: string]: any;
 };
 
 let {
   index,
-  rest,
   content,
   options: { layout = "grid" } = {},
   options,
+  translations,
   class: className,
+  ...rest
 } = Astro.props;
 
-let {
-  id,
-  collection,
-  data: { title, categories, image, description, customSlug },
-} = content;
+const { title, slug, categories, coverImage, description } = content;
 
-const t = await useTranslations(Astro.currentLocale as string);
-const slug = getLocaleUrlCTM(customSlug || id, Astro.currentLocale, collection);
+const t =
+  translations || (await useTranslations(Astro.currentLocale as string));
+// Project pages live under /portfolio/{slug}/
+const href = getLocaleUrlCTM(
+  stegaClean(slug),
+  Astro.currentLocale,
+  "portfolio",
+);
 const hasCategories = Array.isArray(categories) && categories.length > 0;
 const isDarkAppearance = options?.appearance === "dark";
+// Link titles are attributes, so visual-editing markers are removed
+const linkTitle = toSentenceCase(
+  t("common.learnMoreAbout") + " " + stegaClean(title),
+);
 ---
 
-{
-  layout === "masonry" || layout === "grid" ? (
-    // For Masonry and Grid Layouts
-    <div
-      class:list={[
-        className,
-        "group",
-        layout === "grid" && "flex flex-col items-start justify-start",
-        isDarkAppearance ? "text-white" : "text-text-default",
-      ]}
-      {...rest}>
-      {image && (
-        <a
-          title={toSentenceCase(t("common.learnMoreAbout") + " " + title)}
-          class:list={[
-            "order-1 inline-block w-full overflow-hidden",
-            layout === "grid" && "mb-8",
-          ]}
-          href={slug}
-          {...{
-            "data-aos":
-              index !== undefined &&
-              ["reveal-anim-left", "reveal-anim-right", "reveal-anim-top"][
-                index % 3
-              ],
-          }}>
-          <OptimizedImage
-            src={image}
-            alt={title || "Project image"}
-            class:list={[
-              "h-100 scale-110 object-cover transition duration-500 group-hover:translate-x-2",
-            ]}
-          />
+<div
+  class:list={[
+    className,
+    "group",
+    layout === "grid" && "flex flex-col items-start justify-start",
+    isDarkAppearance ? "text-white" : "text-text-default",
+  ]}
+  {...rest}>
+  {
+    coverImage?.asset && (
+      <a
+        title={linkTitle}
+        class:list={[
+          "order-1 inline-block w-full overflow-hidden",
+          layout === "grid" && "mb-8",
+        ]}
+        href={href}
+        {...{
+          "data-aos":
+            index !== undefined &&
+            ["reveal-anim-left", "reveal-anim-right", "reveal-anim-top"][
+              index % 3
+            ],
+        }}>
+        <SanityImage
+          image={coverImage}
+          alt={coverImage.alt || stegaClean(title) || "Project image"}
+          class="h-100 scale-110 object-cover transition duration-500 group-hover:translate-x-2"
+        />
+      </a>
+    )
+  }
+
+  {
+    hasCategories && (
+      <ul
+        class:list={[
+          "flex flex-wrap items-center gap-x-2 gap-y-1 opacity-80",
+          layout === "grid" && "order-3 mt-3",
+          isDarkAppearance ? "text-light" : "text-inherit",
+        ]}>
+        {categories.map((category: string, index: number) => (
+          <>
+            {index > 0 && <li>/</li>}
+            <li set:html={markdownify(category)} />
+          </>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    title && (
+      <h3 class="text-h3-sm md:text-h3 order-2 leading-snug text-inherit">
+        <a href={href} title={linkTitle}>
+          {title}
         </a>
-      )}
+      </h3>
+    )
+  }
 
-      {hasCategories && (
-        <ul
-          class:list={[
-            "flex flex-wrap items-center gap-x-2 gap-y-1 opacity-80",
-            layout === "grid" && "order-3 mt-3",
-            isDarkAppearance ? "text-light" : "text-inherit",
-          ]}>
-          {categories.map((category: string, index: number) => (
-            <>
-              {index > 0 && <li>/</li>}
-              <li set:html={markdownify(category)} />
-            </>
-          ))}
-        </ul>
-      )}
-
-      {title && (
-        <h3 class="text-h3-sm md:text-h3 order-2 leading-snug text-inherit">
-          <a
-            href={slug}
-            title={toSentenceCase(t("common.learnMoreAbout") + " " + title)}>
-            {title}
-          </a>
-        </h3>
-      )}
-
-      {description && <p class="mt-4" set:html={markdownify(description)} />}
-    </div>
-  ) : layout === "slider" ? (
-    <div class="py-8 text-center text-sm text-gray-400 italic">
-      "Slider Layout" is only available in the Pro version. Purchase Folex
-      premium version to unlock this layout.
-    </div>
-  ) : layout === "full-width" ? (
-    <div class="py-8 text-center text-sm text-gray-400 italic">
-      "Full Width Layout" is only available in the Pro version. Purchase Folex
-      premium version to unlock this layout.
-    </div>
-  ) : null
-}
+  {description && <p class="mt-4" set:html={markdownify(description)} />}
+</div>

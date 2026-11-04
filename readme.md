@@ -10,9 +10,9 @@ This is the **Tina CMS edition**. Your website looks and works exactly like the 
 
 ## 🌿 Editions
 
-| Branch     | Edition                                                    |
-| ---------- | ---------------------------------------------------------- |
-| `main`     | Original theme (edit Markdown files directly)              |
+| Branch     | Edition                                                       |
+| ---------- | ------------------------------------------------------------- |
+| `main`     | Original theme (edit Markdown files directly)                 |
 | `tina-cms` | Tina CMS edition (this branch): visual editing in the browser |
 
 Both editions use the same content files, design and features.
@@ -38,22 +38,22 @@ Both editions use the same content files, design and features.
 
 Everything below is editable in the CMS, in every language of the site (English and French by default):
 
-| In the CMS menu                    | What it controls                                                                 |
-| ---------------------------------- | -------------------------------------------------------------------------------- |
-| **Homepage**                       | Page title, SEO, and the **order of the homepage sections** (add, remove, drag)   |
-| **Pages**                          | Pages like Privacy Policy. Create new pages, add sections, write the page text   |
-| **Portfolio**                      | Projects: title, cover image, gallery, categories, project details, story        |
-| **Services**                       | The services in the homepage services list                                       |
-| **Section · Hero banner**          | The big headline, text, image and button at the top of the homepage              |
-| **Section · Client logos**         | Client logos and their descriptions                                              |
-| **Section · Services / Portfolio** | Heading and layout options of those homepage sections                            |
-| **Section · Pricing plans**        | Plans, prices, features and buttons                                              |
-| **Section · Footer call to action**| The large heading and text in the footer                                         |
-| **Section · Footer contact form**  | Contact form fields, send button, email subject and messages                     |
-| **Settings · Site**                | Website name, logo, contact details, SEO, social sharing image, header button, contact form service |
-| **Settings · Navigation menu**     | Header menu with dropdowns (three levels)                                        |
-| **Settings · Social links**        | Social profiles shown in the footer and side menu                                |
-| **Settings · Interface text**      | Small texts like "Previous", "Next" and the copyright line, per language        |
+| In the CMS menu                     | What it controls                                                                                    |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------- |
+| **Homepage**                        | Page title, SEO, and the **order of the homepage sections** (add, remove, drag)                     |
+| **Pages**                           | Pages like Privacy Policy. Create new pages, add sections, write the page text                      |
+| **Portfolio**                       | Projects: title, cover image, gallery, categories, project details, story                           |
+| **Services**                        | The services in the homepage services list                                                          |
+| **Section · Hero banner**           | The big headline, text, image and button at the top of the homepage                                 |
+| **Section · Client logos**          | Client logos and their descriptions                                                                 |
+| **Section · Services / Portfolio**  | Heading and layout options of those homepage sections                                               |
+| **Section · Pricing plans**         | Plans, prices, features and buttons                                                                 |
+| **Section · Footer call to action** | The large heading and text in the footer                                                            |
+| **Section · Footer contact form**   | Contact form fields, send button, email subject and messages                                        |
+| **Settings · Site**                 | Website name, logo, contact details, SEO, social sharing image, header button, contact form service |
+| **Settings · Navigation menu**      | Header menu with dropdowns (three levels)                                                           |
+| **Settings · Social links**         | Social profiles shown in the footer and side menu                                                   |
+| **Settings · Interface text**       | Small texts like "Previous", "Next" and the copyright line, per language                            |
 
 Every field has a plain-language label, most have a short explanation, and where it matters a check tells you what to fix (for example, a link that does not start with `/` or `https://`). Fields that the Lite theme does not display are hidden from the editor but kept in your files.
 
@@ -150,11 +150,11 @@ Your hosting provider then rebuilds the website. Changes are usually live within
 
 Connect your repository to a host and make sure it builds the **`tina-cms`** branch (the default branch of your copy, see [step 0](#0-get-your-own-copy)). The build settings are already included:
 
-| Host                 | Settings                                                     | Online visual editing |
-| -------------------- | ------------------------------------------------------------ | --------------------- |
-| **Netlify**          | Uses `netlify.toml` automatically                            | ✅                    |
-| **Vercel**           | Uses `vercel.json` automatically                             | ✅                    |
-| **Cloudflare Pages** | Build command `npm run build`, output directory `dist`        | Form editing only     |
+| Host                 | Settings                                               | Online visual editing |
+| -------------------- | ------------------------------------------------------ | --------------------- |
+| **Netlify**          | Uses `netlify.toml` automatically                      | ✅                    |
+| **Vercel**           | Uses `vercel.json` automatically                       | ✅                    |
+| **Cloudflare Pages** | Build command `npm run build`, output directory `dist` | Form editing only     |
 
 ## 4. Edit the live website online (Tina Cloud)
 
@@ -171,14 +171,14 @@ Do this once if you (or your client) want to edit the website from any browser, 
 5. **Copy two values** from the project:
    - **Client ID** (on the **Overview** tab)
    - a **Content (read-only) token** (on the **Tokens** tab)
-6. **Add them to your host** (Netlify: *Site configuration → Environment variables*; Vercel: *Settings → Environment Variables*; Cloudflare Pages: *Settings → Environment variables*):
+6. **Add them to your host** (Netlify: _Site configuration → Environment variables_; Vercel: _Settings → Environment Variables_; Cloudflare Pages: _Settings → Environment variables_):
 
-   | Name                    | Value                      |
-   | ----------------------- | -------------------------- |
-   | `PUBLIC_TINA_CLIENT_ID` | the Client ID              |
-   | `TINA_TOKEN`            | the read-only token        |
+   | Name                    | Value               |
+   | ----------------------- | ------------------- |
+   | `PUBLIC_TINA_CLIENT_ID` | the Client ID       |
+   | `TINA_TOKEN`            | the read-only token |
 
-7. **Redeploy** the website (Netlify: *Deploys → Trigger deploy*; Vercel: *Deployments → Redeploy*).
+7. **Redeploy** the website (Netlify: _Deploys → Trigger deploy_; Vercel: _Deployments → Redeploy_).
 8. Open `https://your-website/admin/`, click **Log in**, and edit.
 
 **How saving works online:** when you click **Save**, Tina Cloud saves the change straight to your GitHub repository (on the branch the site is built from). Your host notices it and rebuilds the website. After a minute or two, the change is live. New images are uploaded to the repository too.
@@ -193,11 +193,11 @@ Do this once if you (or your client) want to edit the website from any browser, 
 
 ## 👀 Live visual editing on the deployed site
 
-| Where you edit                                   | Click-to-edit and live preview while typing | Form editing |
-| ------------------------------------------------ | ------------------------------------------- | ------------ |
-| Your computer (`npm run dev`)                    | ✅                                          | ✅           |
-| Online, website on **Netlify** or **Vercel**     | ✅                                          | ✅           |
-| Online, website on **Cloudflare Pages** or another static host | ❌ (the editor shows forms instead) | ✅           |
+| Where you edit                                                 | Click-to-edit and live preview while typing | Form editing |
+| -------------------------------------------------------------- | ------------------------------------------- | ------------ |
+| Your computer (`npm run dev`)                                  | ✅                                          | ✅           |
+| Online, website on **Netlify** or **Vercel**                   | ✅                                          | ✅           |
+| Online, website on **Cloudflare Pages** or another static host | ❌ (the editor shows forms instead)         | ✅           |
 
 Why the difference: the live preview re-renders a piece of the page on the server while you type. Netlify and Vercel run this as one small serverless function, set up automatically; all normal pages stay static. Cloudflare Pages cannot run it with the current Astro Cloudflare adapter, so on Cloudflare Pages you edit with forms and see changes after saving and redeploying.
 
@@ -209,13 +209,13 @@ For a self-hosted Node.js server: run `npm install @astrojs/node@11.1.2` (newer 
 
 All variables are optional. Without any of them the website builds and local editing works. See [`.env.example`](.env.example).
 
-| Variable                   | Public or private | Needed for                                    |
-| -------------------------- | ----------------- | --------------------------------------------- |
-| `PUBLIC_TINA_CLIENT_ID`    | Public            | Online editing (Tina Cloud project ID)        |
-| `TINA_TOKEN`               | **Private**       | Online editing (read-only content token)      |
-| `TINA_BRANCH`              | Public            | Choosing the edited branch (default: detected, else `main`) |
+| Variable                   | Public or private | Needed for                                                          |
+| -------------------------- | ----------------- | ------------------------------------------------------------------- |
+| `PUBLIC_TINA_CLIENT_ID`    | Public            | Online editing (Tina Cloud project ID)                              |
+| `TINA_TOKEN`               | **Private**       | Online editing (read-only content token)                            |
+| `TINA_BRANCH`              | Public            | Choosing the edited branch (default: detected, else `main`)         |
 | `TINA_HOSTING`             | Public            | Forcing `netlify`, `vercel`, `node` or `static` (default: detected) |
-| `PUBLIC_TINA_ADMIN_ORIGIN` | Public            | Admin on another domain (e.g. GitHub Codespaces) |
+| `PUBLIC_TINA_ADMIN_ORIGIN` | Public            | Admin on another domain (e.g. GitHub Codespaces)                    |
 
 `npm run dev` always edits the files on your computer and ignores these values. To try the Tina Cloud login on your computer, copy `.env.example` to `.env`, fill in the values, add `http://localhost:4321` to **Site URLs** in Tina Cloud, then run `npm run build` and `npm run preview` and open <http://localhost:4321/admin/>. `.env` is ignored by Git.
 
@@ -270,14 +270,14 @@ The theme ships with the placeholder `your_email@example.com`, so the form will 
 
 ### Commands
 
-| Command                   | Action                                                              |
-| :------------------------ | :------------------------------------------------------------------ |
-| `npm install`             | Installs dependencies                                               |
-| `npm run dev`             | Website and Tina editor at `localhost:4321` (Tina API on port 4001) |
-| `npm run build`           | Builds the Tina admin and the website into `./dist/`                |
-| `npm run preview`         | Builds, then previews the build locally                             |
-| `npm run astro-check`     | Type checks the project (generates the Tina client first if needed) |
-| `npm run tina:audit`      | Checks every content file against the Tina schema (read-only)       |
+| Command               | Action                                                              |
+| :-------------------- | :------------------------------------------------------------------ |
+| `npm install`         | Installs dependencies                                               |
+| `npm run dev`         | Website and Tina editor at `localhost:4321` (Tina API on port 4001) |
+| `npm run build`       | Builds the Tina admin and the website into `./dist/`                |
+| `npm run preview`     | Builds, then previews the build locally                             |
+| `npm run astro-check` | Type checks the project (generates the Tina client first if needed) |
+| `npm run tina:audit`  | Checks every content file against the Tina schema (read-only)       |
 
 ### How the Tina integration is built
 
